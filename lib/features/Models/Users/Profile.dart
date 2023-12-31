@@ -6,10 +6,13 @@ class Profile {
   String? email;
   String? password;
   String? password_confirmation;
+  String? role;
+  String? roles;
+  int? active;
+
   String? updatedAt;
   String? createdAt;
   int? id;
-
   Profile(
       {this.username,
       this.phone,
@@ -18,6 +21,9 @@ class Profile {
       this.email,
       this.password,
       this.password_confirmation,
+      this.role,
+      this.roles,
+      this.active,
       this.updatedAt,
       this.createdAt,
       this.id});
@@ -30,9 +36,20 @@ class Profile {
     email = json['email'];
     password = json['password'];
     password_confirmation = json['password_confirmation'];
+    role = json['role'];
+    roles = json['roles'];
+    active = json['active'];
     updatedAt = json['updated_at'];
     createdAt = json['created_at'];
     id = json['id'];
+  }
+  Map<String, dynamic> toJsonActive() {
+
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+        data['active'] = this.active;
+
+        return data;
+
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +61,9 @@ class Profile {
     data['email'] = this.email;
     data['password'] = this.password;
     data['password_confirmation'] = this.password_confirmation;
+    data['role'] = this.role;
+    data['roles'] = this.roles;
+    data['active'] = this.active;
     data['updated_at'] = this.updatedAt;
     data['created_at'] = this.createdAt;
     data['id'] = this.id;

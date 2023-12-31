@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 errorLoginDialog({required BuildContext context,required String title,String? description,}) {
   return AwesomeDialog(
-    autoHide: const Duration(seconds: 3),
+    //autoHide: const Duration(seconds: 3),
     context: context,
     dialogType: DialogType.error,
     animType: AnimType.rightSlide,

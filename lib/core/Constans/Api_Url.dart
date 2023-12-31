@@ -5,5 +5,15 @@ class APIurl {
   static const String logoutUrl = baseUrl + 'logout';
   static const String indexUrl = baseUrl + 'index';
   static const String getImageUrl = baseUrl + 'retImage';
-  static const String deleteBrandUrl =baseUrl + "prand/delete/";
+  static const String deleteBrandUrl = baseUrl + "prand/delete/";
+  static const String baseAdmin = baseUrl + 'admin/';
+  static const String updateByAdminUrl = baseAdmin + 'update/';
+  static const String indexByAdminUrl = baseAdmin + 'index';
+  static const String baseCarUrl = baseUrl + 'car/';
+  static const String viewAllCarsUlrl = baseCarUrl + 'index';
+  static const String storeCarsUlrl = baseCarUrl + 'store';
+  static const String baseImageUrl = baseUrl + 'image/';
+  static const String uploadImageImageCarUrl = baseImageUrl + 'uploadImage';
+  static const String retImageImageCarUrl = baseImageUrl + 'retImage';
+  static const String getImageIdImageCarUrl = baseImageUrl + 'getImageId';
 }

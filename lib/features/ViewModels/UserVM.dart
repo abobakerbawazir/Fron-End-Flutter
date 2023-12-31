@@ -54,10 +54,10 @@ class UserVM with ChangeNotifier {
   }
 
   Future<List<dynamic>> allUserslistOfMap() async {
-    Response responce = await connect.get(APIurl.indexUrl);
+    Response responce = await connect.get(APIurl.indexByAdminUrl);
     var x = await responce.data['data'];
-     var y = x[0]['username'];
-     print(y);
+    var y = x[0]['username'];
+    print(y);
     _usersRole = responce.data['data'];
 
     //print(_usersRole);
@@ -65,7 +65,7 @@ class UserVM with ChangeNotifier {
   }
 
   Future<List<Profile>> getAllUsersFromAPi() async {
-    Response responce = await connect.get(APIurl.indexUrl);
+    Response responce = await connect.get(APIurl.indexByAdminUrl);
     print(responce.data['data']);
     List<dynamic> dataProfile = responce.data['data'];
     print(responce.data['data']);
@@ -84,6 +84,7 @@ class UserVM with ChangeNotifier {
       email,
       password,
       password_confirmation,
+      role,
       required BuildContext context}) async {
     print(APIurl.SignupUrl);
     try {
@@ -96,7 +97,8 @@ class UserVM with ChangeNotifier {
                 userType: user_type,
                 email: email,
                 password: password,
-                password_confirmation: password_confirmation)
+                password_confirmation: password_confirmation,
+                role: role)
             .toJson(),
 
         /*
@@ -114,7 +116,13 @@ class UserVM with ChangeNotifier {
       );
       if (responce.statusCode == 200) {
         var code = responce.data['code'];
+        var usernamemessage = responce.data['data']['username'] ?? "";
+        var emailmessage = responce.data['data']['email'] ?? "";
+        var phonemessage = responce.data['data']['phone'] ?? "";
+        var passwordmessage = responce.data['data']['password'] ?? "";
+        //var data = responce.data;
         if (responce.data['code'] == 200) {
+          print(responce.data);
           print("User added Successfully $code");
           SuceessLoginDialog(
               description: "Email = $email and Password = $password",
@@ -123,10 +131,15 @@ class UserVM with ChangeNotifier {
               password: password,
               title: messageLoginInTitleSeccues);
         } else {
+          print(responce.data);
+
+          print(
+              "User added Faield $code $usernamemessage $emailmessage $phonemessage $passwordmessage");
           errorLoginDialog(
               context: context,
               title: "خطا $code",
-              description: 'تأكد من المعلومات المدخلة');
+              description: '''تأكد من المعلومات المدخلة
+               $code $usernamemessage $emailmessage $phonemessage $passwordmessage''');
         }
       } else {
         throw Exception('Failed to add User');
@@ -160,9 +173,17 @@ class UserVM with ChangeNotifier {
           throw Exception('Failed to login@@@@@@@@@@@@');
         }
         var token_login = responce.data['data']['token'];
+        var user_id = responce.data['data']['id'];
+        var role_user = responce.data['data']['role'];
         box.write('token_login', token_login);
+        box.write('role_user', role_user);
+        box.write('user_id', user_id);
         print(token_login);
+        print(user_id);
+        print(role_user);
         print(box.read('token_login'));
+        print(box.read('role_user'));
+        print(box.read('user_id'));
         print(responce.data);
         print("Login Successfully ${responce.data['data']['token']}");
         SuceessLoginDialog(
@@ -193,6 +214,27 @@ class UserVM with ChangeNotifier {
       print(responce.data);
     } catch (e) {
       throw Exception("Failed to Logout $e");
+    }
+  }
+
+  Future confirmBranchFromAdmin(
+      String id, Profile p, BuildContext context) async {
+    try {
+      print(APIurl.updateByAdminUrl + id);
+      final responce = await connect.put(APIurl.updateByAdminUrl + id,
+          data: p.toJsonActive());
+      print(APIurl.updateByAdminUrl + id);
+      var code = responce.data['code'];
+      print(code);
+      if (code == 200) {
+        print("Succesfully");
+      } else {
+        print("Faield");
+      }
+      notifyListeners();
+      return code;
+    } catch (e) {
+      throw Exception("$e");
     }
   }
 }
