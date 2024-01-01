@@ -8,6 +8,7 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/awasome_dialo
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login_Page_Ui extends StatefulWidget {
   const Login_Page_Ui({super.key});
@@ -23,116 +24,124 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Stack(
-                    clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        child: Container(
-                            height: MediaQuery.of(context).size.height / 2.5,
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  opacity: 0.7,
-                                  image: AssetImage(
-                                      "assets/images/2021_4_16_14_20_42_541.jpg"),
-                                  fit: BoxFit.cover),
-                              color: Colors.black,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          child: Container(
+                              height: MediaQuery.of(context).size.height / 2.5,
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                    opacity: 0.7,
+                                    image: AssetImage(
+                                        "assets/images/2021_4_16_14_20_42_541.jpg"),
+                                    fit: BoxFit.cover),
+                                color: Colors.black,
+                              )),
+                        ),
+                        Positioned(
+                            left: 35,
+                            top: 130,
+                            child: Text(
+                              "صفحة تسجيل الدخول",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: colorprimarywhite,
+                                  fontSize: 30),
                             )),
-                      ),
-                      Positioned(
-                          left: 30,
-                          top: 130,
-                          child: Text(
-                            "Login Screen",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: colorprimarywhite,
-                                fontSize: 45),
-                          )),
-                      Positioned(
-                        top: 300,
-                        child: Container(
-                            child: Container(
-                                padding: EdgeInsets.all(10),
-                                child: Column(children: [
-                                  MyTextFormField(
-                                    hintText: "email",
-                                    controller: emailTxt,
-                                    suffixIcon: Icon(
-                                      Icons.email,
-                                      color: colorprimarygreen,
-                                    ),
-                                  ),
-                                  MyTextFormField(
-                                      obscureText: userProvider.iconObsecure,
-                                      suffixIcon: IconButton(
-                                        onPressed: () {
-                                          userProvider.changeIconStateLogin();
-                                        },
-                                        icon: Icon(
-                                            color: colorprimarygreen,
-                                            userProvider.iconObsecure == false
-                                                ? Icons.visibility
-                                                : Icons.visibility_off),
+                        Positioned(
+                          top: 300,
+                          child: Container(
+                              child: Container(
+                                  padding: EdgeInsets.all(10),
+                                  child: Column(children: [
+                                    MyTextFormField(
+                                      hintText: "الايميل",
+                                      controller: emailTxt,
+                                      suffixIcon: Icon(
+                                        Icons.email,
+                                        color: colorprimarygrey,
                                       ),
-                                      hintText: "password",
-                                      controller: passwordTxt),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  AnimatedButton(
-                                    text: 'Login',
-                                    color: Colors.green,
-                                    pressEvent: () async {
-                                      await userProvider.login(
-                                        context: context,
-                                        email: emailTxt.text,
-                                        password: passwordTxt.text,
-                                      );
-                                      Future.delayed(
-                                        Duration(seconds: 3),
-                                        () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                            builder: (context) {
-                                              return Test_page_Screens();
-                                            },
-                                          ));
-                                        },
-                                      );
+                                    ),
+                                    MyTextFormField(
+                                        obscureText: userProvider.iconObsecure,
+                                        suffixIcon: IconButton(
+                                          onPressed: () {
+                                            userProvider.changeIconStateLogin();
+                                          },
+                                          icon: Icon(
+                                              color: colorprimarygrey,
+                                              userProvider.iconObsecure == false
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off),
+                                        ),
+                                        hintText: "كلمة المرور",
+                                        controller: passwordTxt),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    AnimatedButton(
+                                      width: MediaQuery.of(context).size.width -
+                                          40,
+                                      text: 'تسجيل الدخول',
+                                      color: colorprimarygreen,
+                                      pressEvent: () async {
+                                        await userProvider.login(
+                                          context: context,
+                                          email: emailTxt.text,
+                                          password: passwordTxt.text,
+                                        );
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        prefs.setBool('token', true);
+                                        Future.delayed(
+                                          Duration(seconds: 3),
+                                          () {
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return Test_page_Screens();
+                                              },
+                                            ));
+                                          },
+                                        );
 
-                                      ;
-                                    },
-                                  ),
-                                ])),
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            decoration: const BoxDecoration(
-                                // image: DecorationImage(
-                                //     opacity: 0.5,
-                                //     image: AssetImage(
-                                //         "assets/images/Tropical- Seascapes_117.jpg"),
-                                //     fit: BoxFit.cover),
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(20),
-                                    topLeft: Radius.circular(20)))),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            )),
+                                        ;
+                                      },
+                                    ),
+                                  ])),
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              decoration: const BoxDecoration(
+                                  // image: DecorationImage(
+                                  //     opacity: 0.5,
+                                  //     image: AssetImage(
+                                  //         "assets/images/Tropical- Seascapes_117.jpg"),
+                                  //     fit: BoxFit.cover),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(20),
+                                      topLeft: Radius.circular(20)))),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )),
+        ),
       ),
     );
   }

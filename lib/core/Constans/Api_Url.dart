@@ -9,6 +9,7 @@ class APIurl {
   static const String baseAdmin = baseUrl + 'admin/';
   static const String updateByAdminUrl = baseAdmin + 'update/';
   static const String indexByAdminUrl = baseAdmin + 'index';
+  static const String viewAllBranchActive = baseAdmin + 'viewAllBranchActive';
   static const String baseCarUrl = baseUrl + 'car/';
   static const String viewAllCarsUlrl = baseCarUrl + 'index';
   static const String storeCarsUlrl = baseCarUrl + 'store';

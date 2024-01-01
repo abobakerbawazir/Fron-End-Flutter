@@ -76,6 +76,19 @@ class UserVM with ChangeNotifier {
     return _allUsers;
   }
 
+  Future<List<Profile>> getAllBranchesActiveFromAPi() async {
+    print(APIurl.viewAllBranchActive);
+    Response responce = await connect.get(APIurl.viewAllBranchActive);
+    print(responce.data['data']);
+    List<dynamic> dataProfile = responce.data['data'];
+    print(responce.data['data']);
+    _allUsers = dataProfile
+        .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+        .toList();
+    print(_allUsers);
+    return _allUsers;
+  }
+
   Future signUP(
       {required String username,
       phone,
@@ -175,22 +188,26 @@ class UserVM with ChangeNotifier {
         var token_login = responce.data['data']['token'];
         var user_id = responce.data['data']['id'];
         var role_user = responce.data['data']['role'];
+        var active_user = responce.data['data']['active'];
         box.write('token_login', token_login);
         box.write('role_user', role_user);
         box.write('user_id', user_id);
+        box.write('active_user', active_user);
         print(token_login);
         print(user_id);
         print(role_user);
+        print(active_user);
         print(box.read('token_login'));
         print(box.read('role_user'));
         print(box.read('user_id'));
+        print(box.read('active_user'));
         print(responce.data);
         print("Login Successfully ${responce.data['data']['token']}");
         SuceessLoginDialog(
             context: context,
             email: email,
             password: password,
-            title: messageSignupInTitleSeccues);
+            title: messageLoginInTitleSeccues);
       } else {
         print("########### ${responce.data}");
         throw Exception('Failed to login@@@@@@@@@@@@');
@@ -201,7 +218,7 @@ class UserVM with ChangeNotifier {
     notifyListeners();
   }
 
-  logout() async {
+  Future logout() async {
     final token = box.read('token_login');
     print(token);
     try {
@@ -212,6 +229,8 @@ class UserVM with ChangeNotifier {
             },
           ));
       print(responce.data);
+      print(responce.data['data']);
+      return responce.data['data'];
     } catch (e) {
       throw Exception("Failed to Logout $e");
     }

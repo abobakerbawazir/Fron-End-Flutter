@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -94,19 +95,24 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
             child: Column(
               children: [
                 SizedBox(height: 40),
-                Text(' صفحة أضافة الماركات '),
+                Text(
+                  ' صفحة أضافة الماركات ',
+                  style: TextStyle(fontSize: 20),
+                ),
                 MyTextFormField(
                   controller: _titleController,
                   hintText: 'الماركة',
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter الماركة';
+                      return 'لو سمحت اضف الماركة ولا تترك حقل فارغ';
                     }
                     return null;
                   },
                 ),
                 Container(
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: colorprimarygreen),
                         onPressed: () async {
                           await showDialog(
                             context: context,
@@ -116,13 +122,15 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                                   ElevatedButton(
                                       onPressed: () {
                                         getImagegallery();
+                                        Navigator.pop(context);
                                       },
-                                      child: Text("gallery")),
+                                      child: Text("أضف من المعرض")),
                                   ElevatedButton(
                                       onPressed: () {
                                         getImageCamera();
+                                        Navigator.pop(context);
                                       },
-                                      child: Text("camera"))
+                                      child: Text("اضف من الكاميرا"))
                                 ],
                               );
                             },
@@ -133,6 +141,8 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                   height: 20,
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: colorprimarygreen),
                   onPressed: () {
                     if (_addFormKey.currentState!.validate()) {
                       _addFormKey.currentState!.save();
@@ -141,24 +151,26 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                       };
                       service.addImage(body, _image!.path);
                     }
+                    setState(() {});
                   },
-                  child: Text('Save'),
+                  child: Text(
+                    'حفظ',
+                    style: TextStyle(fontSize: 20),
+                  ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(_image == null ? "" : _image!.path),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      _pickImageDio(_titleController.text);
-                    },
-                    child: Text("dio")),
-                SizedBox(
-                  height: 40,
-                ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(_image == null ? "" : _image!.path),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       _pickImageDio(_titleController.text);
+                //     },
+                //     child: Text("dio")),
+
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 2,
                   width: MediaQuery.of(context).size.width,
@@ -169,20 +181,63 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                         if (snapshot.data!.isEmpty) {
                           return Text("Empty");
                         }
-                        return ListView.builder(
+                        return GridView.builder(
+                          clipBehavior: Clip.none,
                           itemCount: snapshot.data!.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 0.75,
+                                  crossAxisSpacing: 30,
+                                  mainAxisSpacing: 30,
+                                  crossAxisCount: 2),
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  height: 300,
-                                  width: 200,
-                                  child: Image.network(
-                                      snapshot.data![index].path!,
-                                      scale: 1.0),
+                            return SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 54, 140, 75),
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Stack(
+                                  clipBehavior: Clip.none,
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          color: colorprimarywhite,
+                                        )),
+                                    Positioned(
+                                      top: 25,
+                                      left: 10,
+                                      child: SizedBox(
+                                        height: 140,
+                                        width: 140,
+                                        child: ClipOval(
+                                          clipBehavior: Clip.antiAlias,
+                                          child: Image.network(
+                                              fit: BoxFit.cover,
+                                              snapshot.data![index].path!),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 15,
+                                      left: 20,
+                                      child: Wrap(
+                                        children: [
+                                          Text(snapshot.data![index].name!,
+                                              style: TextStyle(
+                                                // fontWeight: FontWeight.bold,
+                                                color: colorprimarywhite,
+                                                fontSize: 20,
+                                              )),
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Text("${snapshot.data![index].name}"),
-                              ],
+                              ),
                             );
                           },
                         );
@@ -206,7 +261,7 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
       padding: EdgeInsets.all(10),
       child: Row(
         children: [
-          Text(" اضف من المتصفح"),
+          Text(" اضف من الهاتف"),
           Icon(
             Icons.add,
             color: Colors.grey,

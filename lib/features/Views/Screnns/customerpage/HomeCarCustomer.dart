@@ -8,17 +8,20 @@ import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormFie
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddCarScrrens extends StatefulWidget {
-  const AddCarScrrens({super.key});
+class AddCarsByUserAndBrand extends StatefulWidget {
+  const AddCarsByUserAndBrand({super.key});
 
   @override
-  State<AddCarScrrens> createState() => _AddCarScrrensState();
+  State<AddCarsByUserAndBrand> createState() => _AddCarsByUserAndBrandState();
 }
 
-class _AddCarScrrensState extends State<AddCarScrrens> {
+class _AddCarsByUserAndBrandState extends State<AddCarsByUserAndBrand> {
+  final box = GetStorage();
+
   final _addFormKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _modelController = TextEditingController();
@@ -92,11 +95,15 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
   }
 
   List<dynamic> xxx = [];
-  Future<List<dynamic>> getCarsWithApi() async {
-    print(APIurl.viewAllCarsUlrl);
+
+  Future<List<dynamic>> getCarsWithIdUserAndIdPrandWithApi(
+      {required int user_id, prand_id}) async {
+    print(
+        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
     Dio dio = DioSingelton.getInstance();
 
-    Response response = await dio.get(APIurl.viewAllCarsUlrl);
+    Response response = await dio.get(
+        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
     xxx = response.data['data'];
     print(xxx);
     return xxx;
@@ -105,13 +112,16 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
   @override
   Widget build(BuildContext context) {
     final prandProvider = Provider.of<PrandVM>(context);
+    final prand_id = box.read('prand_id_forAddCar');
+    final user_id = box.read('user_id');
 
     return Scaffold(
       appBar: AppBar(
         actions: [
           TextButton(
               onPressed: () async {
-                await getCarsWithApi();
+                await getCarsWithIdUserAndIdPrandWithApi(
+                    user_id: user_id, prand_id: prand_id);
                 setState(() {});
               },
               child: Text(
@@ -236,8 +246,8 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                           model: _modelController.text,
                                           price:
                                               int.parse(_priceController.text),
-                                          prand_id: 1,
-                                          user_id: 1);
+                                          prand_id: prand_id,
+                                          user_id: user_id);
                                       if (x == 200) {
                                         print("Succesffuly");
                                       } else {
@@ -270,7 +280,8 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
-                    future: getCarsWithApi(),
+                    future: getCarsWithIdUserAndIdPrandWithApi(
+                        user_id: user_id, prand_id: prand_id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(

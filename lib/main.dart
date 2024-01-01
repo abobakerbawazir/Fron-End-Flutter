@@ -1,6 +1,6 @@
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
-import 'package:booking_car_project_flutter/features/Views/Screnns/Add.BrandPage.dart';
-import 'package:booking_car_project_flutter/features/Views/Screnns/AddCars.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/AddBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCars.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AddimageApi/addImageApi.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserScreens.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/HomePageScreen.dart';
@@ -10,22 +10,36 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.da
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Test_page_Screens.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/awasome_dialog_page.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCarsByUserAndBrand.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/BranchPageIsNotActive.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
+  final prefs = await SharedPreferences.getInstance();
+  final token = prefs.getBool('token') ?? false;
 
-  runApp(const MyApp());
+  runApp(MyApp(
+    token: token,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool token;
+
+  MyApp({super.key, required this.token});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext contextt) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -39,15 +53,22 @@ class MyApp extends StatelessWidget {
           create: (context) => UserVM(),
           child: Consumer(
             builder: (context, value, child) {
-              return MaterialApp(
-                title: 'Flutter Demo',
-                theme: ThemeData(
-                  colorScheme:
-                      ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-                  //useMaterial3: true,
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Flutter Demo',
+                  theme: ThemeData(
+                    textTheme: GoogleFonts.tajawalTextTheme(
+                        Theme.of(context).textTheme),
+                    colorScheme:
+                        ColorScheme.fromSeed(seedColor: colorprimarygreen),
+                    //useMaterial3: true,
+                  ),
+                  home: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: token ? Test_page_Screens() : SignupPage()),
                 ),
-                home: Directionality(
-                    textDirection: TextDirection.rtl, child: AddCarScrrens()),
               );
             },
           )),

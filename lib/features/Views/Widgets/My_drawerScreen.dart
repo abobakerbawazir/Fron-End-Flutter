@@ -1,3 +1,4 @@
+import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -77,6 +78,11 @@ class My_drawerScreen extends StatelessWidget {
         style: const TextStyle(color: Color(0xFF047921)),
       ),
       onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context) {
+            return SignupPage();
+          },
+        ));
         Navigator.pushNamed(context, "/$pageNameRoute");
       },
     );
@@ -123,8 +129,8 @@ class My_drawerScreen extends StatelessWidget {
             ListTile_me(
                 context: context,
                 Name_icon: (Icons.logout),
-                title: 'Sign Out',
-                pageNameRoute: 'login'),
+                title: 'Log Out',
+                pageNameRoute: ''),
           ],
         ),
       ),
