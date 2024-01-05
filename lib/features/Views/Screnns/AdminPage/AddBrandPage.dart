@@ -87,93 +87,117 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
     final prandProvider = Provider.of<PrandVM>(context);
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(12),
-          child: Form(
-            key: _addFormKey,
-            child: Column(
-              children: [
-                SizedBox(height: 40),
-                Text(
-                  ' صفحة أضافة الماركات ',
-                  style: TextStyle(fontSize: 20),
-                ),
-                MyTextFormField(
-                  controller: _titleController,
-                  hintText: 'الماركة',
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'لو سمحت اضف الماركة ولا تترك حقل فارغ';
-                    }
-                    return null;
-                  },
-                ),
-                Container(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: colorprimarygreen),
-                        onPressed: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                actions: [
-                                  ElevatedButton(
+      body: Container(
+        padding: EdgeInsets.all(12),
+        child: Form(
+          key: _addFormKey,
+          child: Column(
+            children: [
+              SizedBox(height: 40),
+              Text(
+                ' صفحة أضافة الماركات ',
+                style: TextStyle(fontSize: 20),
+              ),
+              MyTextFormField(
+                controller: _titleController,
+                hintText: 'الماركة',
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'لو سمحت اضف الماركة ولا تترك حقل فارغ';
+                  }
+                  return null;
+                },
+              ),
+              Container(
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: colorprimarygreen),
+                      onPressed: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              actions: [
+                                SizedBox(
+                                  height: 120,
+                                  width: 120,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: colorprimarywhite),
                                       onPressed: () {
                                         getImagegallery();
                                         Navigator.pop(context);
                                       },
-                                      child: Text("أضف من المعرض")),
-                                  ElevatedButton(
+                                      child: Center(
+                                        child: Icon(
+                                          color: colorprimarygrey,
+                                          Icons.photo,
+                                          size: 100,
+                                        ),
+                                      )),
+                                ),
+                                Padding(padding: EdgeInsets.all(8)),
+                                SizedBox(
+                                  height: 120,
+                                  width: 120,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: colorprimarywhite),
                                       onPressed: () {
                                         getImageCamera();
                                         Navigator.pop(context);
                                       },
-                                      child: Text("اضف من الكاميرا"))
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: _buildImage())),
-                SizedBox(
-                  height: 20,
+                                      child: Center(
+                                        child: Icon(
+                                          color: colorprimarygrey,
+                                          Icons.camera_alt,
+                                          size: 100,
+                                        ),
+                                      )),
+                                )
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      child: _buildImage())),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: colorprimarygreen),
+                onPressed: () {
+                  if (_addFormKey.currentState!.validate()) {
+                    _addFormKey.currentState!.save();
+                    Map<String, String> body = {'name': _titleController.text};
+                    service.addImage(body, _image!.path);
+                  }
+                  setState(() {});
+                },
+                child: Text(
+                  'حفظ',
+                  style: TextStyle(fontSize: 20),
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: colorprimarygreen),
-                  onPressed: () {
-                    if (_addFormKey.currentState!.validate()) {
-                      _addFormKey.currentState!.save();
-                      Map<String, String> body = {
-                        'name': _titleController.text
-                      };
-                      service.addImage(body, _image!.path);
-                    }
-                    setState(() {});
-                  },
-                  child: Text(
-                    'حفظ',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // Text(_image == null ? "" : _image!.path),
-                // SizedBox(
-                //   height: 20,
-                // ),
-                // ElevatedButton(
-                //     onPressed: () {
-                //       _pickImageDio(_titleController.text);
-                //     },
-                //     child: Text("dio")),
+              ),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // Text(_image == null ? "" : _image!.path),
+              // SizedBox(
+              //   height: 20,
+              // ),
+              // ElevatedButton(
+              //     onPressed: () {
+              //       _pickImageDio(_titleController.text);
+              //     },
+              //     child: Text("dio")),
 
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2,
+                width: MediaQuery.of(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: FutureBuilder(
                     future: prandProvider.getAllPrandsFromAPi(),
                     builder: (context, snapshot) {
@@ -181,65 +205,69 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                         if (snapshot.data!.isEmpty) {
                           return Text("Empty");
                         }
-                        return GridView.builder(
-                          clipBehavior: Clip.none,
-                          itemCount: snapshot.data!.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 0.75,
-                                  crossAxisSpacing: 30,
-                                  mainAxisSpacing: 30,
-                                  crossAxisCount: 2),
-                          itemBuilder: (context, index) {
-                            return SizedBox(
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 54, 140, 75),
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: Stack(
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.favorite,
-                                          color: colorprimarywhite,
-                                        )),
-                                    Positioned(
-                                      top: 25,
-                                      left: 10,
-                                      child: SizedBox(
-                                        height: 140,
-                                        width: 140,
-                                        child: ClipOval(
-                                          clipBehavior: Clip.antiAlias,
-                                          child: Image.network(
-                                              fit: BoxFit.cover,
-                                              snapshot.data![index].path!),
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height / 2,
+                          width: MediaQuery.of(context).size.width,
+                          child: GridView.builder(
+                            clipBehavior: Clip.none,
+                            itemCount: snapshot.data!.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 0.75,
+                                    crossAxisSpacing: 30,
+                                    mainAxisSpacing: 30,
+                                    crossAxisCount: 2),
+                            itemBuilder: (context, index) {
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height / 2,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 210, 215, 216),
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
+                                          )),
+                                      Positioned(
+                                        top: 25,
+                                        left: 10,
+                                        child: SizedBox(
+                                          height: 140,
+                                          width: 140,
+                                          child: ClipOval(
+                                            clipBehavior: Clip.antiAlias,
+                                            child: Image.network(
+                                                fit: BoxFit.cover,
+                                                snapshot.data![index].path!),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Positioned(
-                                      bottom: 15,
-                                      left: 20,
-                                      child: Wrap(
-                                        children: [
-                                          Text(snapshot.data![index].name!,
-                                              style: TextStyle(
-                                                // fontWeight: FontWeight.bold,
-                                                color: colorprimarywhite,
-                                                fontSize: 20,
-                                              )),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                      Positioned(
+                                        bottom: 15,
+                                        left: 20,
+                                        child: Wrap(
+                                          children: [
+                                            Text(snapshot.data![index].name!,
+                                                style: TextStyle(
+                                                  // fontWeight: FontWeight.bold,
+                                                  color: colorprimarywhite,
+                                                  fontSize: 20,
+                                                )),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         );
                       }
                       return Center(
@@ -247,9 +275,9 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                       );
                     },
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

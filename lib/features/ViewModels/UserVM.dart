@@ -1,17 +1,28 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/Messge.dart';
+import 'package:booking_car_project_flutter/features/Models/Booking/Booking.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/Profile.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/User.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/DialogMessage.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyWidgwtShowDialogLogin.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 class UserVM with ChangeNotifier {
+  static UserVM? _objectDio;
+  static UserVM getInstanceSinglton() {
+    if (_objectDio == null) _objectDio = UserVM();
+    return _objectDio!;
+  }
   final box = GetStorage();
 
   bool iconObsecure = false;
@@ -113,19 +124,6 @@ class UserVM with ChangeNotifier {
                 password_confirmation: password_confirmation,
                 role: role)
             .toJson(),
-
-        /*
-        {
-          "username": username,
-          "phone": phone,
-          "full_name": full_name,
-          "user_type": user_type,
-          "email": email,
-          "password": password,
-          "password_confirmation": password_confirmation
-        }
-         */
-        //options: Options(headers: {})
       );
       if (responce.statusCode == 200) {
         var code = responce.data['code'];
@@ -143,7 +141,7 @@ class UserVM with ChangeNotifier {
               email: email,
               password: password,
               title: messageLoginInTitleSeccues);
-        } else {
+        } else if (responce.data['code'] == 400) {
           print(responce.data);
 
           print(
@@ -157,25 +155,26 @@ class UserVM with ChangeNotifier {
       } else {
         throw Exception('Failed to add User');
       }
+      notifyListeners();
+      print(responce.data['code']);
+      return responce.data['code'];
     } catch (e) {
       throw Exception("Failed to add User $e");
     }
     notifyListeners();
   }
 
-  Future login(
+  Future<int> login(
       {required String email, password, required BuildContext context}) async {
     print(APIurl.loginUrl);
-    try {
-      final responce = await connect.post(
+    final responce = await connect.post(
         APIurl.loginUrl,
         data: Profile(email: email, password: password).toJson(),
-        /* {
-          "email": email,
-          "password": password,
-        } */
       );
-
+     final code = responce.data['code'];
+    try {
+      
+      print(responce.data);
       if (responce.statusCode == 200) {
         if (responce.data['code'] == 400) {
           errorLoginDialog(
@@ -203,16 +202,20 @@ class UserVM with ChangeNotifier {
         print(box.read('active_user'));
         print(responce.data);
         print("Login Successfully ${responce.data['data']['token']}");
-        SuceessLoginDialog(
-            context: context,
-            email: email,
-            password: password,
-            title: messageLoginInTitleSeccues);
+        // SuceessLoginDialog(
+        //     context: context,
+        //     email: email,
+        //     password: password,
+        //     title: messageLoginInTitleSeccues);
+        notifyListeners();
+        return code;
       } else {
         print("########### ${responce.data}");
         throw Exception('Failed to login@@@@@@@@@@@@');
       }
     } catch (e) {
+      notifyListeners();
+      return code;
       throw Exception("Failed to Login $e");
     }
     notifyListeners();
@@ -228,7 +231,10 @@ class UserVM with ChangeNotifier {
               'Authorization': 'Bearer $token',
             },
           ));
+      box.remove('token_login');
+
       print(responce.data);
+      print(box.read('token_login'));
       print(responce.data['data']);
       return responce.data['data'];
     } catch (e) {
@@ -256,4 +262,7 @@ class UserVM with ChangeNotifier {
       throw Exception("$e");
     }
   }
+
+  
+
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
@@ -105,22 +106,23 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
     return xxx;
   }
 
-  Future<List<dynamic>> getCarsWithIdUserAndIdPrandWithApi(
-      {required int user_id, prand_id}) async {
-    print(
-        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
-    Dio dio = DioSingelton.getInstance();
+  // Future<List<dynamic>> getCarsWithIdUserAndIdPrandWithApi(
+  //     {required int user_id, prand_id}) async {
+  //   print(
+  //       '${APIurl.getCarWithUserAndPrand}?user_id=$user_id&prand_id=$prand_id');
+  //   Dio dio = DioSingelton.getInstance();
 
-    Response response = await dio.get(
-        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
-    xxx = response.data['data'];
-    print(xxx);
-    return xxx;
-  }
+  //   Response response = await dio.get(
+  //       '${APIurl.getCarWithUserAndPrand}?user_id=$user_id&prand_id=$prand_id');
+  //   xxx = response.data['data'];
+  //   print(xxx);
+  //   return xxx;
+  // }
 
   @override
   Widget build(BuildContext context) {
     final prandProvider = Provider.of<PrandVM>(context);
+    final carProvider = Provider.of<CarVM>(context);
     final prand_id = box.read('prand_id_branch');
     final user_id = box.read('user_id');
     // final prand_id = box.read('prand_id_forAddCar');
@@ -291,7 +293,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                   height: MediaQuery.of(context).size.height / 1.9,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
-                    future: getCarsWithIdUserAndIdPrandWithApi(
+                    future: carProvider.getCarsWithIdUserAndIdPrandWithApi(
                         user_id: user_id, prand_id: prand_id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -355,9 +357,9 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                                       source: ImageSource
                                                                           .camera,
                                                                       car_id: snapshot
-                                                                              .data![index]
-                                                                          [
-                                                                          'id']);
+                                                                          .data![
+                                                                              index]
+                                                                          .id!);
                                                                 },
                                                                 child: Text(
                                                                     "اضف صورة من الكاميرا")),
@@ -376,9 +378,9 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                                       source: ImageSource
                                                                           .gallery,
                                                                       car_id: snapshot
-                                                                              .data![index]
-                                                                          [
-                                                                          'id']);
+                                                                          .data![
+                                                                              index]
+                                                                          .id!);
                                                                 },
                                                                 child: Text(
                                                                     "اضف صورة من المعرض"))
@@ -408,7 +410,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                     color: colorprimarygreen),
                                                 child: Center(
                                                   child: Text(
-                                                    "${snapshot.data![index]['id']}",
+                                                    "${snapshot.data![index].id}",
                                                     style: TextStyle(
                                                         fontSize: 25,
                                                         color:
@@ -420,7 +422,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                               top: 45,
                                               right: 120,
                                               child: Text(
-                                                "${snapshot.data![index]['name']}",
+                                                "${snapshot.data![index].name}",
                                                 style: TextStyle(fontSize: 25),
                                               )),
                                           Positioned(
@@ -437,7 +439,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                       BorderRadius.circular(20),
                                                   child: Image.network(
                                                     snapshot.data![index]
-                                                        ['image_car_brands'],
+                                                        .imageCarOfBrands!,
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),

@@ -15,7 +15,7 @@ class MySingleton {
 
   static MySingleton getInstance() {
     if (_instance == null) {
-      _instance = new MySingleton();
+      _instance =  MySingleton();
     }
     return _instance!;
   }

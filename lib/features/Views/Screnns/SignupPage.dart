@@ -189,16 +189,26 @@ class _SignupPageState extends State<SignupPage> {
                                           password: passwordTxt.text,
                                           password_confirmation:
                                               password_confirmationTxt.text);
-
-                                      if (x['code'] == 400) {
-                                        Navigator.pop(context);
-                                      } else if (x['code'] == 200) {
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            return SignupPage();
+                                      print(x);
+                                      if (x == 400) {
+                                        Future.delayed(
+                                          Duration(seconds: 5),
+                                          () {
+                                            print(x + 404);
                                           },
-                                        ));
+                                        );
+                                      } else if (x == 200) {
+                                        Future.delayed(
+                                          Duration(seconds: 5),
+                                          () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                              builder: (context) {
+                                                return Login_Page_Ui();
+                                              },
+                                            ));
+                                          },
+                                        );
                                       }
                                     }),
                                 SizedBox(

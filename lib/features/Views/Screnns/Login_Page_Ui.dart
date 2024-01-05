@@ -1,6 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:booking_car_project_flutter/core/Helpers/Messge.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/HomePageScreen.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Test_page_Screens.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/DialogMessage.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
@@ -95,7 +97,7 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
                                       text: 'تسجيل الدخول',
                                       color: colorprimarygreen,
                                       pressEvent: () async {
-                                        await userProvider.login(
+                                        final code = await userProvider.login(
                                           context: context,
                                           email: emailTxt.text,
                                           password: passwordTxt.text,
@@ -103,17 +105,26 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
                                         final prefs = await SharedPreferences
                                             .getInstance();
                                         prefs.setBool('token', true);
-                                        Future.delayed(
-                                          Duration(seconds: 3),
-                                          () {
-                                            Navigator.pushReplacement(context,
-                                                MaterialPageRoute(
-                                              builder: (context) {
-                                                return Test_page_Screens();
-                                              },
-                                            ));
-                                          },
-                                        );
+                                        print(code);
+                                        if (code == 200) {
+                                          SuceessLoginDialog(
+                                              context: context,
+                                              email: emailTxt.text,
+                                              password: passwordTxt.text,
+                                              title:
+                                                  messageLoginInTitleSeccues);
+                                          Future.delayed(
+                                            Duration(seconds: 3),
+                                            () {
+                                              Navigator.pushReplacement(context,
+                                                  MaterialPageRoute(
+                                                builder: (context) {
+                                                  return Test_page_Screens();
+                                                },
+                                              ));
+                                            },
+                                          );
+                                        }
 
                                         ;
                                       },

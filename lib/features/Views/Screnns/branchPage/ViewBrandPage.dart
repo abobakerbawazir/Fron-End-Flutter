@@ -93,160 +93,155 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
           backgroundColor: colorprimarygreen,
           title: Center(child: Text("الصفحة الماركات")),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(12),
-            child: Form(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: FutureBuilder(
-                          future: prandProvider.getAllPrandsFromAPi(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return GridView.builder(
-                                clipBehavior: Clip.none,
-                                itemCount: snapshot.data!.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 0.75,
-                                        crossAxisSpacing: 40,
-                                        mainAxisSpacing: 40,
-                                        crossAxisCount: 2),
-                                itemBuilder: (context, index) {
-                                  return SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: MediaQuery.of(context).size.height,
-                                    child: InkWell(
-                                      onTap: () {
-                                        final box = GetStorage();
-                                        box.write('prand_id_branch',
-                                            snapshot.data![index].id);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(
-                                          builder: (context) {
-                                            var x = box.read('role_user');
-                                            if (x == 'branch') {
-                                              return AddCarScrrens();
-                                            } else {
-                                              return ViewCarsCustomer();
-                                            }
-                                          },
-                                        ));
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Color.fromARGB(
-                                                255, 54, 140, 75),
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
-                                        child: Stack(
-                                          clipBehavior: Clip.none,
-                                          children: [
-                                            Positioned(
-                                              left: 100,
-                                              top: 14,
-                                              child: IconButton(
-                                                  onPressed: () {},
-                                                  icon: Icon(
-                                                    Icons.favorite,
-                                                    color: colorprimarywhite,
-                                                  )),
-                                            ),
-                                            Positioned(
-                                              top: 35,
-                                              left: 20,
-                                              child: SizedBox(
-                                                height: 100,
-                                                width: 100,
-                                                child: Image.network(
-                                                  snapshot.data![index].path!,
-                                                ),
+        body: Container(
+          padding: EdgeInsets.all(12),
+          child: Form(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height - 130,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: FutureBuilder(
+                        future: prandProvider.getAllPrandsFromAPi(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return GridView.builder(
+                              clipBehavior: Clip.none,
+                              itemCount: snapshot.data!.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: 0.75,
+                                      crossAxisSpacing: 40,
+                                      mainAxisSpacing: 40,
+                                      crossAxisCount: 2),
+                              itemBuilder: (context, index) {
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: MediaQuery.of(context).size.height,
+                                  child: InkWell(
+                                    onTap: () {
+                                      final box = GetStorage();
+                                      box.write('prand_id_branch',
+                                          snapshot.data![index].id);
+                                      Navigator.push(context, MaterialPageRoute(
+                                        builder: (context) {
+                                          var x = box.read('role_user');
+                                          if (x == 'branch') {
+                                            return AddCarScrrens();
+                                          } else {
+                                            return ViewCarsCustomer();
+                                          }
+                                        },
+                                      ));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color:
+                                              Color.fromARGB(255, 54, 140, 75),
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          Positioned(
+                                            left: 100,
+                                            top: 14,
+                                            child: IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.favorite,
+                                                  color: colorprimarywhite,
+                                                )),
+                                          ),
+                                          Positioned(
+                                            top: 35,
+                                            left: 20,
+                                            child: SizedBox(
+                                              height: 100,
+                                              width: 100,
+                                              child: Image.network(
+                                                snapshot.data![index].path!,
                                               ),
                                             ),
-                                            Positioned(
-                                              bottom: 15,
-                                              left: 40,
-                                              child: Wrap(
-                                                children: [
-                                                  Text(
-                                                      snapshot
-                                                          .data![index].name!,
-                                                      style: TextStyle(
-                                                        // fontWeight: FontWeight.bold,
-                                                        color:
-                                                            colorprimarywhite,
-                                                        fontSize: 20,
-                                                      )),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                          ),
+                                          Positioned(
+                                            bottom: 15,
+                                            left: 40,
+                                            child: Wrap(
+                                              children: [
+                                                Text(
+                                                    snapshot.data![index].name!,
+                                                    style: TextStyle(
+                                                      // fontWeight: FontWeight.bold,
+                                                      color: colorprimarywhite,
+                                                      fontSize: 20,
+                                                    )),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  );
-                                },
-                              );
-                            }
-                            return Center(child: CircularProgressIndicator());
-                          }),
-                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                          return Center(child: CircularProgressIndicator());
+                        }),
                   ),
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   child: FutureBuilder(
-                  //     future: prandProvider.getAllPrandsFromAPi(),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         if (snapshot.data!.isEmpty) {
-                  //           return Text("Empty");
-                  //         }
-                  //         return ListView.builder(
-                  //           itemCount: snapshot.data!.length,
-                  //           itemBuilder: (context, index) {
-                  //             return Column(
-                  //               children: [
-                  //                 SizedBox(
-                  //                   height: 300,
-                  //                   width: 200,
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       Navigator.push(context, MaterialPageRoute(
-                  //                         builder: (context) {
-                  //                           final box = GetStorage();
-                  //                           box.write('prand_id_forAddCar',
-                  //                               snapshot.data![index].id!);
-                  //                           print(box.read('prand_id_forAddCar'));
+                ),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: FutureBuilder(
+                //     future: prandProvider.getAllPrandsFromAPi(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         if (snapshot.data!.isEmpty) {
+                //           return Text("Empty");
+                //         }
+                //         return ListView.builder(
+                //           itemCount: snapshot.data!.length,
+                //           itemBuilder: (context, index) {
+                //             return Column(
+                //               children: [
+                //                 SizedBox(
+                //                   height: 300,
+                //                   width: 200,
+                //                   child: InkWell(
+                //                     onTap: () {
+                //                       Navigator.push(context, MaterialPageRoute(
+                //                         builder: (context) {
+                //                           final box = GetStorage();
+                //                           box.write('prand_id_forAddCar',
+                //                               snapshot.data![index].id!);
+                //                           print(box.read('prand_id_forAddCar'));
 
-                  //                           return AddCarsByUserAndBrand();
-                  //                         },
-                  //                       ));
-                  //                     },
-                  //                     child: Image.network(
-                  //                         snapshot.data![index].path!,
-                  //                         scale: 1.0),
-                  //                   ),
-                  //                 ),
-                  //                 Text("${snapshot.data![index].name}"),
-                  //               ],
-                  //             );
-                  //           },
-                  //         );
-                  //       }
-                  //       return Center(
-                  //         child: CircularProgressIndicator(),
-                  //       );
-                  //     },
-                  //   ),
-                  // )
-                ],
-              ),
+                //                           return AddCarsByUserAndBrand();
+                //                         },
+                //                       ));
+                //                     },
+                //                     child: Image.network(
+                //                         snapshot.data![index].path!,
+                //                         scale: 1.0),
+                //                   ),
+                //                 ),
+                //                 Text("${snapshot.data![index].name}"),
+                //               ],
+                //             );
+                //           },
+                //         );
+                //       }
+                //       return Center(
+                //         child: CircularProgressIndicator(),
+                //       );
+                //     },
+                //   ),
+                // )
+              ],
             ),
           ),
         ),

@@ -8,6 +8,11 @@ import 'package:image_picker/image_picker.dart';
 
 
 class PrandVM with ChangeNotifier {
+  static PrandVM? _objectDio;
+  static PrandVM getInstanceSinglton() {
+    if (_objectDio == null) _objectDio = PrandVM();
+    return _objectDio!;
+  }
   Dio connect = DioSingelton.getInstance();
   List<Prand> _allPrands = [];
   List<Prand> get allPrands => _allPrands;

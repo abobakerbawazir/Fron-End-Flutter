@@ -99,11 +99,11 @@ class _AddCarsByUserAndBrandState extends State<AddCarsByUserAndBrand> {
   Future<List<dynamic>> getCarsWithIdUserAndIdPrandWithApi(
       {required int user_id, prand_id}) async {
     print(
-        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
+        '${APIurl.getCarWithUserAndPrand}?user_id=$user_id&prand_id=$prand_id');
     Dio dio = DioSingelton.getInstance();
 
     Response response = await dio.get(
-        'http://192.168.179.98:8000/api/car/getCarWithUserAndPrand?user_id=$user_id&prand_id=$prand_id');
+        '${APIurl.getCarWithUserAndPrand}?user_id=$user_id&prand_id=$prand_id');
     xxx = response.data['data'];
     print(xxx);
     return xxx;

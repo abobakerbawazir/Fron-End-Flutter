@@ -1,5 +1,8 @@
+import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/AddBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/BookingHomePage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCars.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AddimageApi/addImageApi.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserScreens.dart';
@@ -14,6 +17,7 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/Ad
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/BranchPageIsNotActive.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ViewCarsCustomer.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -47,6 +51,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => PrandVM(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookingVM(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CarVM(),
         )
       ],
       child: ChangeNotifierProvider(
