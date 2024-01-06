@@ -43,6 +43,11 @@ class Booking {
     data['status'] = this.status??BookingStatus.Pending.value;
     return data;
   }
+  Map<String, dynamic> toJsonOnlyStatus() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status??BookingStatus.Pending.value;
+    return data;
+  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

@@ -23,68 +23,69 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    onPressed: () async {
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            content: Text("back from Home Page"),
-                            title: Text("Are you sure"),
-                            actions: [
-                              ElevatedButton(
-                                  onPressed: () async {
-                                    userProvider.logout();
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setBool('token', false);
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(
-                                      builder: (context) {
-                                        return SignupPage();
-                                      },
-                                    ));
-                                  },
-                                  child: Text("OK")),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Cancel"))
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    icon: Icon(Icons.logout)),
-                SizedBox(
-                  width: 14,
-                ),
-                Text(' صفحة العملاء الرئيسية ', style: TextStyle(fontSize: 20)),
-                SizedBox(
-                  width: 22,
-                ),
-                TextButton(
-                    onPressed: () {
-                      setState(() {});
-                    },
-                    child: Text(
-                      "تحديث",
-                      style: TextStyle(color: colorprimarywhite),
-                    )),
-                SizedBox(
-                  width: 6,
-                )
-              ],
-            ),
-          ],
-          backgroundColor: colorprimarygreen,
-        ),
+        // appBar: AppBar(
+        //   actions: [
+        //     Row(
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: [
+        //         IconButton(
+        //             onPressed: () async {
+        //               await showDialog(
+        //                 context: context,
+        //                 builder: (context) {
+        //                   return AlertDialog(
+        //                     content: Text("back from Home Page"),
+        //                     title: Text("Are you sure"),
+        //                     actions: [
+        //                       ElevatedButton(
+        //                           onPressed: () async {
+        //                             userProvider.logout();
+        //                             final prefs =
+        //                                 await SharedPreferences.getInstance();
+        //                             prefs.setBool('token', false);
+        //                             Navigator.pushReplacement(context,
+        //                                 MaterialPageRoute(
+        //                               builder: (context) {
+        //                                 return SignupPage();
+        //                               },
+        //                             ));
+        //                           },
+        //                           child: Text("OK")),
+        //                       ElevatedButton(
+        //                           onPressed: () {
+        //                             Navigator.pop(context);
+        //                           },
+        //                           child: Text("Cancel"))
+        //                     ],
+        //                   );
+        //                 },
+        //               );
+        //             },
+        //             icon: Icon(Icons.logout)),
+        //         SizedBox(
+        //           width: 14,
+        //         ),
+        //         Text(' صفحة العملاء الرئيسية ', style: TextStyle(fontSize: 20)),
+        //         SizedBox(
+        //           width: 22,
+        //         ),
+        //         TextButton(
+        //             onPressed: () {
+        //               setState(() {});
+        //             },
+        //             child: Text(
+        //               "تحديث",
+        //               style: TextStyle(color: colorprimarywhite),
+        //             )),
+        //         SizedBox(
+        //           width: 6,
+        //         )
+        //       ],
+        //     ),
+        //   ],
+        //   backgroundColor: colorprimarygreen,
+        // ),
+
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(12),

@@ -23,6 +23,7 @@ class UserVM with ChangeNotifier {
     if (_objectDio == null) _objectDio = UserVM();
     return _objectDio!;
   }
+
   final box = GetStorage();
 
   bool iconObsecure = false;
@@ -168,12 +169,11 @@ class UserVM with ChangeNotifier {
       {required String email, password, required BuildContext context}) async {
     print(APIurl.loginUrl);
     final responce = await connect.post(
-        APIurl.loginUrl,
-        data: Profile(email: email, password: password).toJson(),
-      );
-     final code = responce.data['code'];
+      APIurl.loginUrl,
+      data: Profile(email: email, password: password).toJson(),
+    );
+    final code = responce.data['code'];
     try {
-      
       print(responce.data);
       if (responce.statusCode == 200) {
         if (responce.data['code'] == 400) {
@@ -188,6 +188,16 @@ class UserVM with ChangeNotifier {
         var user_id = responce.data['data']['id'];
         var role_user = responce.data['data']['role'];
         var active_user = responce.data['data']['active'];
+        var username = responce.data['data']['username'];
+        var full_name = responce.data['data']['full_name'];
+        var email = responce.data['data']['email'];
+        var phone = responce.data['data']['phone'];
+        var location = responce.data['data']['location'];
+        box.write('username', username);
+        box.write('full_name', full_name);
+        box.write('email', email);
+        box.write('phone', phone);
+        box.write('location', location);
         box.write('token_login', token_login);
         box.write('role_user', role_user);
         box.write('user_id', user_id);
@@ -221,7 +231,35 @@ class UserVM with ChangeNotifier {
     notifyListeners();
   }
 
-  Future logout() async {
+  Future<int> updateProfile(int id, Profile p) async {
+    int code = 0;
+    try {
+      final responce = await connect.put("${APIurl.updateProfile}$id",
+          data: p.toJsonProfile());
+      print("${APIurl.updateProfile}$id");
+      print(responce.data);
+      print(responce.data['data']);
+
+      code = responce.data!['code'];
+      print(code);
+      if (code == 200) {
+        print(code);
+        box.write('username', p.username);
+        box.write('full_name', p.fullName);
+        box.write('email', p.email);
+        box.write('phone', p.phone);
+        print(code);
+        return code;
+      }
+      return code;
+    } catch (e) {
+      return code;
+    }
+    // box.write('location', p.location);
+  }
+
+  Future logout({BuildContext? context}) async {
+    //int code = 0;
     final token = box.read('token_login');
     print(token);
     try {
@@ -232,7 +270,10 @@ class UserVM with ChangeNotifier {
             },
           ));
       box.remove('token_login');
-
+      // code = responce.data['code'];
+      // if (code == 200) {
+      //   return successDialog(context: context!);
+      // }
       print(responce.data);
       print(box.read('token_login'));
       print(responce.data['data']);
@@ -262,7 +303,4 @@ class UserVM with ChangeNotifier {
       throw Exception("$e");
     }
   }
-
-  
-
 }

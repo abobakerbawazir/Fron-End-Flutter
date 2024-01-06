@@ -9,6 +9,7 @@ class Profile {
   String? role;
   String? roles;
   int? active;
+  String? location;
 
   String? updatedAt;
   String? createdAt;
@@ -24,6 +25,7 @@ class Profile {
       this.role,
       this.roles,
       this.active,
+      this.location,
       this.updatedAt,
       this.createdAt,
       this.id});
@@ -39,17 +41,28 @@ class Profile {
     role = json['role'];
     roles = json['roles'];
     active = json['active'];
+    location = json['location'];
     updatedAt = json['updated_at'];
     createdAt = json['created_at'];
     id = json['id'];
   }
   Map<String, dynamic> toJsonActive() {
-
     final Map<String, dynamic> data = new Map<String, dynamic>();
-        data['active'] = this.active;
+    data['active'] = this.active;
 
-        return data;
+    return data;
+  }
 
+  Map<String, dynamic> toJsonProfile() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    //data['username'] = this.username;
+    data['phone'] = this.phone;
+    data['full_name'] = this.fullName;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['password_confirmation'] = this.password_confirmation;
+    //data['location'] = this.location;
+    return data;
   }
 
   Map<String, dynamic> toJson() {

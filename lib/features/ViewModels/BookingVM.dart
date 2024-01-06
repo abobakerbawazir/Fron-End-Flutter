@@ -20,7 +20,6 @@ class BookingVM with ChangeNotifier {
   Dio connect = DioSingelton.getInstance();
   List<Booking> _allBookings = [];
   List<Booking> get allBookings => _allBookings;
-  
 
   Future<int> addBookingwithObjectByUserIdAndCarId(
       {required Booking b,
@@ -129,5 +128,16 @@ class BookingVM with ChangeNotifier {
       print(e);
     }
     return _allBookings;
+  }
+
+  Future<int> updateBookingStateByBranch(int id, Booking booking) async {
+    print("${APIurl.updateBookingStateByBranch}$id");
+    Response result = await connect.put(
+        "${APIurl.updateBookingStateByBranch}$id",
+        data: booking.toJsonOnlyStatus());
+    var code = result.data["code"];
+    print("%%  code = $code %%");
+    notifyListeners();
+    return code;
   }
 }

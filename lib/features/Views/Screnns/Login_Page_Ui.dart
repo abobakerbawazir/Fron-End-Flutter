@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 class Login_Page_Ui extends StatefulWidget {
   const Login_Page_Ui({super.key});
@@ -25,6 +26,7 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
 
   @override
   Widget build(BuildContext context) {
+    final localt = AppLocalizations.of(context);
     final userProvider = Provider.of<UserVM>(context);
     return Directionality(
       textDirection: TextDirection.rtl,

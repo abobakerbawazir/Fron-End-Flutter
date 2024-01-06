@@ -7,6 +7,7 @@ class APIurl {
   static const String getImageUrl = baseUrl + 'retImage';
   static const String deleteBrandUrl = baseUrl + "prand/delete/";
   static const String baseAdmin = baseUrl + 'admin/';
+  static const String updateProfile = baseAdmin + 'update/';
   static const String updateByAdminUrl = baseAdmin + 'update/';
   static const String indexByAdminUrl = baseAdmin + 'index';
   static const String viewAllBranchActive = baseAdmin + 'viewAllBranchActive';
@@ -25,4 +26,14 @@ class APIurl {
       addBookingCarsWithId_user_And_Id_car_From_To_date_request_car_isNot_activeUrl =
       baseBookingUrl +
           'bookingCarsByUser_id_and_car_id_select_only_date_from_to/';
+  static const String getAllInformationBookingForAllCustomer =
+      baseBookingUrl + 'getAllInformationBookingForAllCustomer';
+  static const String getByIDInformationBookingForAllCustomer =
+      baseBookingUrl + 'getByIDInformationBookingForAllCustomer';
+  static const String getBookingByBranchId =
+      baseBookingUrl + 'getBookingByBranchId';
+  static const String getBookingByBranchIdByCustomerIdForCoustomer =
+      baseBookingUrl + 'getBookingByBranchIdByCustomerIdForCoustomer/5/4';
+  static const String updateBookingStateByBranch =
+      baseBookingUrl + 'updateBookingStateByBranch/';
 }

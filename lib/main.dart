@@ -1,8 +1,16 @@
+import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/CustomerHoemNav.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/editProfile.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:booking_car_project_flutter/features/Models/Booking/BookingCoustomerByBranch.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/BookingCoustomerByBranchVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/AddBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/BookingCoustomerByBranchPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/BookingHomePage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/getByIDInformationBookingForAllCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCars.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AddimageApi/addImageApi.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserScreens.dart';
@@ -16,6 +24,7 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/awasome_dialo
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCarsByUserAndBrand.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/BranchPageIsNotActive.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ViewCarsCustomer.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
@@ -24,6 +33,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_gen/gen_l10n/app_localization.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +67,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => CarVM(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookingCoustomerByBranchVM(),
         )
       ],
       child: ChangeNotifierProvider(
@@ -66,6 +79,14 @@ class MyApp extends StatelessWidget {
               return Directionality(
                 textDirection: TextDirection.rtl,
                 child: MaterialApp(
+                  localizationsDelegates: const [
+                    AppLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate
+                  ],
+                  locale: Locale('ar'),
+                  supportedLocales: const [Locale('en'), Locale('ar')],
                   debugShowCheckedModeBanner: false,
                   title: 'Flutter Demo',
                   theme: ThemeData(
@@ -77,7 +98,7 @@ class MyApp extends StatelessWidget {
                   ),
                   home: Directionality(
                       textDirection: TextDirection.rtl,
-                      child: token ? Test_page_Screens() : SignupPage()),
+                      child: token ? CustomerHoemNav() : CustomerHoemNav()),
                 ),
               );
             },
