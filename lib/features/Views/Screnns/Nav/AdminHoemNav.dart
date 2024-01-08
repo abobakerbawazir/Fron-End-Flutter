@@ -1,23 +1,26 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/getAllInformationBookingPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/HomePageScreen.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/getBookingByBranchIdByCustomerIdForCoustomerPage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-class CustomerHoemNav extends StatefulWidget {
-  const CustomerHoemNav({
+class AdminHomeNav extends StatefulWidget {
+  const AdminHomeNav({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CustomerHoemNav> createState() => _CustomerHoemNavState();
+  State<AdminHomeNav> createState() => _AdminHomeNavState();
 }
 
-class _CustomerHoemNavState extends State<CustomerHoemNav> {
+class _AdminHomeNavState extends State<AdminHomeNav> {
   dynamic selected;
   var heart = false;
   PageController controller = PageController();
@@ -67,7 +70,10 @@ class _CustomerHoemNavState extends State<CustomerHoemNav> {
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
               // backgroundColor: Colors.orange,
-              title: const Text('المميزة'),
+              title: const Text(
+                'المستخدمين',
+                style: TextStyle(fontSize: 10),
+              ),
             ),
             BottomBarItem(
                 icon: const Icon(
@@ -117,9 +123,9 @@ class _CustomerHoemNavState extends State<CustomerHoemNav> {
           child: PageView(
             controller: controller,
             children: const [
-              HoemCustomerPage(),
+              HomePageScreen(),
               Center(child: Text('Star')),
-              getBookingByBranchIdByCustomerIdForCoustomerPage(),
+              getAllInformationBookingPage(),
               ProfileCustomerPage()
             ],
           ),

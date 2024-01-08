@@ -31,9 +31,13 @@ class APIurl {
   static const String getByIDInformationBookingForAllCustomer =
       baseBookingUrl + 'getByIDInformationBookingForAllCustomer';
   static const String getBookingByBranchId =
-      baseBookingUrl + 'getBookingByBranchId';
+      baseBookingUrl + 'getBookingByBranchId/';
   static const String getBookingByBranchIdByCustomerIdForCoustomer =
-      baseBookingUrl + 'getBookingByBranchIdByCustomerIdForCoustomer/5/4';
+      baseBookingUrl + 'getBookingByBranchIdByCustomerIdForCoustomer/';
   static const String updateBookingStateByBranch =
       baseBookingUrl + 'updateBookingStateByBranch/';
+      static const String getAllInformationBookingForOnlyCustomer =
+      baseBookingUrl + 'getAllInformationBookingForOnlyCustomer/';
+      
+      
 }

@@ -20,6 +20,8 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -92,7 +94,7 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height,
+                  height: MediaQuery.of(context).size.height - 150,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
                     future: userProvider.getAllBranchesActiveFromAPi(),
@@ -116,20 +118,39 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                                         },
                                       ));
                                     },
-                                    child: Card(
-                                      color: Color.fromARGB(255, 140, 220, 173),
-                                      child: Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                                snapshot.data![index].fullName!,
-                                                style: TextStyle(fontSize: 20)),
-                                            Text(snapshot.data![index].email!,
-                                                style: TextStyle(fontSize: 20)),
-                                            Text(snapshot.data![index].phone!,
-                                                style: TextStyle(fontSize: 20)),
-                                          ],
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Card(
+                                        color:
+                                            Color.fromARGB(255, 140, 220, 173),
+                                        child: Container(
+                                          margin: EdgeInsets.all(10),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                color: Colors.grey,
+                                                width: 200,
+                                                height: 200,
+                                                child: Image.network(snapshot
+                                                    .data![index].image!),
+                                              ),
+                                              Text(
+                                                  snapshot
+                                                      .data![index].fullName!,
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              Text(snapshot.data![index].email!,
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              Text(snapshot.data![index].phone!,
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              Text(
+                                                  "العنوان : ${snapshot.data![index].location!}",
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

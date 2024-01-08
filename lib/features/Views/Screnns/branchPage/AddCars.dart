@@ -419,18 +419,53 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                 ),
                                               )),
                                           Positioned(
-                                              top: 45,
-                                              right: 120,
+                                              top: 220,
+                                              left: 15,
+                                              child: Text(
+                                                "اسم السيارة",
+                                                style: TextStyle(fontSize: 15),
+                                              )),
+                                          Positioned(
+                                              top: 240,
+                                              left: 15,
                                               child: Text(
                                                 "${snapshot.data![index].name}",
+                                                style: TextStyle(fontSize: 20),
+                                              )),
+                                          Positioned(
+                                              top: 265,
+                                              left: 15,
+                                              child: Text(
+                                                "موديل السيارة",
+                                                style: TextStyle(fontSize: 15),
+                                              )),
+                                          Positioned(
+                                              top: 290,
+                                              left: 15,
+                                              child: Text(
+                                                "${snapshot.data![index].model}",
+                                                style: TextStyle(fontSize: 20),
+                                              )),
+                                          Positioned(
+                                              top: 260,
+                                              right: 15,
+                                              child: Text(
+                                                "RY ${snapshot.data![index].price}",
                                                 style: TextStyle(fontSize: 25),
                                               )),
                                           Positioned(
-                                            top: 90,
+                                              top: 235,
+                                              right: 15,
+                                              child: Text(
+                                                "السعر لليوم الواحد",
+                                                style: TextStyle(fontSize: 15),
+                                              )),
+                                          Positioned(
+                                            top: 50,
                                             left: 20,
                                             child: SizedBox(
-                                              width: 230,
-                                              height: 230,
+                                              width: 160,
+                                              height: 160,
                                               child: Container(
                                                 width: 230,
                                                 height: 230,

@@ -39,67 +39,70 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  await showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: Text("back from Home Page"),
-                        title: Text("Are you sure"),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () async {
-                                final x = await userProvider.logout();
-                                await AwesomeDialog(
-                                  context: context,
-                                  animType: AnimType.leftSlide,
-                                  headerAnimationLoop: false,
-                                  dialogType: DialogType.success,
-                                  showCloseIcon: true,
-                                  title: 'نجاح',
-                                  desc: x[0],
-                                  btnOkOnPress: () {
-                                    debugPrint('OnClcik');
-                                  },
-                                  btnOkIcon: Icons.check_circle,
-                                ).show();
+        // appBar: AppBar(
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () async {
+        //           await showDialog(
+        //             context: context,
+        //             builder: (context) {
+        //               return AlertDialog(
+        //                 content: Text("back from Home Page"),
+        //                 title: Text("Are you sure"),
+        //                 actions: [
+        //                   ElevatedButton(
+        //                       onPressed: () async {
+        //                         final x = await userProvider.logout();
+        //                         await AwesomeDialog(
+        //                           context: context,
+        //                           animType: AnimType.leftSlide,
+        //                           headerAnimationLoop: false,
+        //                           dialogType: DialogType.success,
+        //                           showCloseIcon: true,
+        //                           title: 'نجاح',
+        //                           desc: x[0],
+        //                           btnOkOnPress: () {
+        //                             debugPrint('OnClcik');
+        //                           },
+        //                           btnOkIcon: Icons.check_circle,
+        //                         ).show();
 
-                                final prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setBool('token', false);
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return SignupPage();
-                                  },
-                                ));
-                              },
-                              child: Text("OK")),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text("Cancel"))
-                        ],
-                      );
-                    },
-                  );
-                },
-                icon: Icon(Icons.logout)),
-          ],
-          backgroundColor: colorprimarygreen,
-          title: Center(child: Text("الصفحة الماركات")),
-        ),
+        //                         final prefs =
+        //                             await SharedPreferences.getInstance();
+        //                         prefs.setBool('token', false);
+        //                         Navigator.pushReplacement(context,
+        //                             MaterialPageRoute(
+        //                           builder: (context) {
+        //                             return SignupPage();
+        //                           },
+        //                         ));
+        //                       },
+        //                       child: Text("OK")),
+        //                   ElevatedButton(
+        //                       style: ElevatedButton.styleFrom(
+        //                           backgroundColor: Colors.red),
+        //                       onPressed: () {
+        //                         Navigator.pop(context);
+        //                       },
+        //                       child: Text("Cancel"))
+        //                 ],
+        //               );
+        //             },
+        //           );
+        //         },
+        //         icon: Icon(Icons.logout)),
+        //   ],
+        //   backgroundColor: colorprimarygreen,
+        //   title: Center(child: Text("صفحة الماركات")),
+        // ),
+
         body: Container(
           padding: EdgeInsets.all(12),
           child: Form(
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 130,
+                  height: MediaQuery.of(context).size.height - 180,
                   width: MediaQuery.of(context).size.width,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -138,23 +141,24 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
-                                          color:
-                                              Color.fromARGB(255, 54, 140, 75),
+                                          color: const Color.fromARGB(
+                                              255, 219, 214, 214),
                                           borderRadius:
                                               BorderRadius.circular(30)),
                                       child: Stack(
                                         clipBehavior: Clip.none,
                                         children: [
-                                          Positioned(
-                                            left: 100,
-                                            top: 14,
-                                            child: IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  Icons.favorite,
-                                                  color: colorprimarywhite,
-                                                )),
-                                          ),
+                                          // Positioned(
+                                          //   left: 100,
+                                          //   top: 14,
+                                          //   child: IconButton(
+                                          //       onPressed: () {},
+                                          //       icon: Icon(
+                                          //         Icons.favorite,
+                                          //         color: colorprimarywhite,
+                                          //       )),
+                                          // ),
+
                                           Positioned(
                                             top: 35,
                                             left: 20,
@@ -168,16 +172,20 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
                                           ),
                                           Positioned(
                                             bottom: 15,
-                                            left: 40,
+                                            left: 12,
                                             child: Wrap(
                                               children: [
-                                                Text(
-                                                    snapshot.data![index].name!,
-                                                    style: TextStyle(
-                                                      // fontWeight: FontWeight.bold,
-                                                      color: colorprimarywhite,
-                                                      fontSize: 20,
-                                                    )),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                      "${snapshot.data![index].name!}",
+                                                      style: TextStyle(
+                                                        // fontWeight: FontWeight.bold,
+                                                        color: Colors.black,
+                                                        fontSize: 20,
+                                                      )),
+                                                ),
                                               ],
                                             ),
                                           )

@@ -1,4 +1,7 @@
+import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/AdminHoemNav.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/BranchHomeNav.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/CustomerHoemNav.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/asd.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/editProfile.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -92,13 +95,17 @@ class MyApp extends StatelessWidget {
                   theme: ThemeData(
                     textTheme: GoogleFonts.tajawalTextTheme(
                         Theme.of(context).textTheme),
+
                     colorScheme:
                         ColorScheme.fromSeed(seedColor: colorprimarygreen),
                     //useMaterial3: true,
                   ),
                   home: Directionality(
                       textDirection: TextDirection.rtl,
-                      child: token ? CustomerHoemNav() : CustomerHoemNav()),
+                      child: token
+                          ? Directionality(
+                              textDirection: TextDirection.rtl, child: Steps())
+                          : SignupPage()),
                 ),
               );
             },

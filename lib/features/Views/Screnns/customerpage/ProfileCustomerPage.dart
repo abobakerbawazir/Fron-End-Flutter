@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/editProfile.dart';
@@ -138,7 +139,22 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                               child: Text("غير موافق")),
                           ElevatedButton(
                               onPressed: () async {
-                                userProvider.logout(context: context);
+                                final x = await userProvider.logout();
+                                if(x[0]=='تم تسجيل الخروج بنجاح'){
+                                  await AwesomeDialog(
+                                  context: context,
+                                  animType: AnimType.leftSlide,
+                                  headerAnimationLoop: false,
+                                  dialogType: DialogType.success,
+                                  showCloseIcon: true,
+                                  title: 'نجاح',
+                                  desc: x[0],
+                                  btnOkOnPress: () {
+                                    debugPrint('OnClcik');
+                                  },
+                                  btnOkIcon: Icons.check_circle,
+                                ).show();
+
                                 final prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setBool('token', false);
@@ -148,6 +164,19 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                                     return SignupPage();
                                   },
                                 ));
+                                }
+                                
+                                  //   await userProvider.logout(context: context);
+                                  // final prefs =
+                                  //     await SharedPreferences.getInstance();
+                                  // prefs.setBool('token', false);
+                                  // Navigator.pushReplacement(context,
+                                  //     MaterialPageRoute(
+                                  //   builder: (context) {
+                                  //     return SignupPage();
+                                  //   },
+                                  // ));
+                                
                               },
                               child: Text("موافق")),
                         ],

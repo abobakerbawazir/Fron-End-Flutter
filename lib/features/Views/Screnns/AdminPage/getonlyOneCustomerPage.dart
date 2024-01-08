@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
-class getByIDInformationBookingForAllCustomerPage extends StatefulWidget {
-  getByIDInformationBookingForAllCustomerPage({super.key});
+class getonlyOneCustomerPage extends StatefulWidget {
+  getonlyOneCustomerPage({super.key});
 
   @override
-  State<getByIDInformationBookingForAllCustomerPage> createState() =>
-      _getByIDInformationBookingForAllCustomerPageState();
+  State<getonlyOneCustomerPage> createState() =>
+      _getonlyOneCustomerPageState();
 }
 
-class _getByIDInformationBookingForAllCustomerPageState
-    extends State<getByIDInformationBookingForAllCustomerPage> {
+class _getonlyOneCustomerPageState
+    extends State<getonlyOneCustomerPage> {
   // List<BookingCoustomerByBranch> _allCArs = [];
   // List<BookingCoustomerByBranch> get allCArs => _allCArs;
   // Future<List<BookingCoustomerByBranch>> getBookingCoustomerByBranch() async {
@@ -51,14 +51,14 @@ class _getByIDInformationBookingForAllCustomerPageState
   Widget build(BuildContext context) {
     final bookingCoustomerByBranchProvider =
         Provider.of<BookingCoustomerByBranchVM>(context);
-    final id = box.read('getByIDInformationBookingForAllCustomerPage') ?? 294;
-    final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
+    final id = box.read('getonlyOneCustomerPage') ?? 294;
+    final xx = box.read('id_getonlyOneCustomerPage') ?? 0;
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("getByIDInformationBookingForAllCustomerPage"),
+          title: Text("getonlyOneCustomerPage"),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -103,18 +103,18 @@ class _getByIDInformationBookingForAllCustomerPageState
                                   "موديل السيارة : ${snapshot.data!.cars!.model.toString()}"),
                               Text(
                                   "سعر السيارة لليوم الواحد : ${snapshot.data!.cars!.price.toString()}"),
-                              // Text("معلومات صاحب الفرع",
-                              //     style: TextStyle(
-                              //         fontWeight: FontWeight.bold,
-                              //         fontSize: 17)),
-                              // Text(
-                              //     "الايميل : ${snapshot.data!.cars!.users!.email.toString()}"),
-                              // Text(
-                              //     "الاسم : ${snapshot.data!.cars!.users!.fullName.toString()}"),
-                              // Text(
-                              //     "رقم الهاتف : ${snapshot.data!.cars!.users!.phone.toString()}"),
-                              // Text(
-                              //     "العنوان : ${snapshot.data!.cars!.users!.location.toString()}"),
+                              Text("معلومات صاحب الفرع",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17)),
+                              Text(
+                                  "الايميل : ${snapshot.data!.cars!.users!.email.toString()}"),
+                              Text(
+                                  "الاسم : ${snapshot.data!.cars!.users!.fullName.toString()}"),
+                              Text(
+                                  "رقم الهاتف : ${snapshot.data!.cars!.users!.phone.toString()}"),
+                              Text(
+                                  "العنوان : ${snapshot.data!.cars!.users!.location.toString()}"),
                               Text("الصورة للسيارة",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,

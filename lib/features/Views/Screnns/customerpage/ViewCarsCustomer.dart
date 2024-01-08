@@ -139,7 +139,7 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                       clipBehavior: Clip.none,
                                       children: [
                                         Positioned(
-                                          right: 55,
+                                          left: 20,
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: SizedBox(
@@ -156,8 +156,8 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                     final box = GetStorage();
                                                     box.write(
                                                         'car_id',
-                                                        snapshot.data![index]
-                                                            .id);
+                                                        snapshot
+                                                            .data![index].id);
                                                     print(
                                                         "car_id = ${box.read('car_id')}");
                                                     final token =
@@ -468,9 +468,11 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                                               .Pending
                                                                               .value),
                                                                       carId: snapshot
-                                                                              .data![index]
+                                                                          .data![
+                                                                              index]
                                                                           .id!,
-                                                                      userId: userId);
+                                                                      userId:
+                                                                          userId);
                                                                   print(x);
                                                                   if (x ==
                                                                       201) {
@@ -562,7 +564,25 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                     //   },
                                                     // ));
                                                   },
-                                                  child: Text("احجز السيارة")),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Icon(
+                                                            Icons.car_rental),
+                                                      ),
+                                                      Text(
+                                                        "احجز السيارة",
+                                                        style: TextStyle(
+                                                            fontSize: 17),
+                                                      ),
+                                                    ],
+                                                  )),
                                             ),
                                           ),
                                         ),
@@ -587,7 +607,7 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                               ),
                                             )),
                                         Positioned(
-                                            top: 80,
+                                            top: 12,
                                             right: 20,
                                             child: Container(
                                               width: 50,
@@ -606,18 +626,35 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                               ),
                                             )),
                                         Positioned(
-                                            top: 55,
-                                            right: 120,
-                                            child: Text(
-                                              "${snapshot.data![index].name}",
-                                              style: TextStyle(fontSize: 25),
+                                            top: 220,
+                                            left: 20,
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "${snapshot.data![index].name}",
+                                                  style:
+                                                      TextStyle(fontSize: 25),
+                                                ),
+                                              ],
                                             )),
                                         Positioned(
-                                          top: 90,
+                                            top: 255,
+                                            left: 20,
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "${snapshot.data![index].model}",
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                ),
+                                              ],
+                                            )),
+                                        Positioned(
+                                          top: 70,
                                           left: 20,
                                           child: SizedBox(
-                                            width: 230,
-                                            height: 230,
+                                            width: 150,
+                                            height: 150,
                                             child: Image.network(
                                               snapshot.data![index]
                                                   .imageCarOfBrands!,

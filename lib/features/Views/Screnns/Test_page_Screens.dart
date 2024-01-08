@@ -2,6 +2,7 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/Add
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserScreens.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/HomePageScreen.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Login_Page_Ui.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/CustomerHoemNav.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/awasome_dialog_page.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/AddCars.dart';
@@ -32,7 +33,7 @@ class _Test_page_ScreensState extends State<Test_page_Screens> {
     return role_user == "admin"
         ? HomePageScreen()
         : role_user == "customer"
-            ? HoemCustomerPage()
+            ? CustomerHoemNav()
             : role_user == 'branch' && active_user == 1
                 ? ViewPrandPage()
                 : BranchpageIsNotActive();

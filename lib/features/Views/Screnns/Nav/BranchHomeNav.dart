@@ -1,4 +1,6 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/getBookingByBranchIdByCustomerIdForCoustomerPage.dart';
@@ -8,16 +10,16 @@ import 'package:provider/provider.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-class CustomerHoemNav extends StatefulWidget {
-  const CustomerHoemNav({
+class BranchHomeNav extends StatefulWidget {
+  const BranchHomeNav({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CustomerHoemNav> createState() => _CustomerHoemNavState();
+  State<BranchHomeNav> createState() => _BranchHomeNavState();
 }
 
-class _CustomerHoemNavState extends State<CustomerHoemNav> {
+class _BranchHomeNavState extends State<BranchHomeNav> {
   dynamic selected;
   var heart = false;
   PageController controller = PageController();
@@ -117,9 +119,9 @@ class _CustomerHoemNavState extends State<CustomerHoemNav> {
           child: PageView(
             controller: controller,
             children: const [
-              HoemCustomerPage(),
+              ViewPrandPage(),
               Center(child: Text('Star')),
-              getBookingByBranchIdByCustomerIdForCoustomerPage(),
+              getBookingByBranchIdPage(),
               ProfileCustomerPage()
             ],
           ),

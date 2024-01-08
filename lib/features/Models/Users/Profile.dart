@@ -9,6 +9,7 @@ class Profile {
   String? role;
   String? roles;
   int? active;
+  String? image;
   String? location;
 
   String? updatedAt;
@@ -25,6 +26,7 @@ class Profile {
       this.role,
       this.roles,
       this.active,
+      this.image,
       this.location,
       this.updatedAt,
       this.createdAt,
@@ -41,6 +43,7 @@ class Profile {
     role = json['role'];
     roles = json['roles'];
     active = json['active'];
+    image = json['image'];
     location = json['location'];
     updatedAt = json['updated_at'];
     createdAt = json['created_at'];

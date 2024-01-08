@@ -3,20 +3,22 @@ import 'package:booking_car_project_flutter/features/Models/Booking/Booking.dart
 import 'package:booking_car_project_flutter/features/Models/Booking/enumStatus.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingCoustomerByBranchVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/getonlyOneCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/getByIDInformationBookingForAllCustomerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
-class getBookingByBranchIdPage extends StatefulWidget {
-  const getBookingByBranchIdPage({super.key});
+class getAllInformationBookingPage extends StatefulWidget {
+  const getAllInformationBookingPage({super.key});
 
   @override
-  State<getBookingByBranchIdPage> createState() =>
-      _getBookingByBranchIdPageState();
+  State<getAllInformationBookingPage> createState() =>
+      _getAllInformationBookingPageState();
 }
 
-class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
+class _getAllInformationBookingPageState
+    extends State<getAllInformationBookingPage> {
   BookingStatus? type;
   TextEditingController statusTxt = TextEditingController();
   final box = GetStorage();
@@ -31,12 +33,13 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         // appBar: AppBar(
-        //   title: Center(child: Text("getBookingByBranchIdPage")),
+        //   title: Center(child: Text("getAllInformationBookingPage")),
         // ),
         body: Container(
           padding: EdgeInsets.all(12),
           child: FutureBuilder(
-            future: BookingByBranchIdProvider.getBookingByBranchId(id: user_id),
+            future: BookingByBranchIdProvider
+                .getAllInformationBookingForAllCustomer(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.isEmpty) {
@@ -62,7 +65,7 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                               box.write(
                                   'id_getByIDInformationBookingForAllCustomerPage',
                                   snapshot.data![index].user!.id);
-                              return getByIDInformationBookingForAllCustomerPage();
+                              return getonlyOneCustomerPage();
                             },
                           ));
                         },
@@ -73,63 +76,65 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                               //margin: EdgeInsets.all(8),
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text("تعديل حالة الحجز : "),
-                                      DropdownButton<BookingStatus>(
-                                        value: type,
-                                        onChanged: (value) {
-                                          type = value;
-                                          statusTxt.text = type!.value;
-                                          //type = null;
-                                          setState(() {});
+                                  // Row(
+                                  //   children: [
+                                  //     SizedBox(
+                                  //       width: 5,
+                                  //     ),
+                                  //     Text("تعديل حالة الحجز : "),
+                                  //     DropdownButton<BookingStatus>(
+                                  //       value: type,
+                                  //       onChanged: (value) {
+                                  //         type = value;
+                                  //         statusTxt.text = type!.value;
+                                  //         //type = null;
+                                  //         setState(() {});
 
-                                          // setState(() {
-                                          //   type = null;
-                                          // });
-                                        },
-                                        items: BookingStatus.values.map<
-                                            DropdownMenuItem<BookingStatus>>(
-                                          (BookingStatus e) {
-                                            return DropdownMenuItem<
-                                                BookingStatus>(
-                                              child: Text("${e.value}"),
-                                              value: e,
-                                            );
-                                          },
-                                        ).toList(),
-                                      ),
-                                    ],
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () async {
-                                        AwesomeDialog(
-                                          context: context,
-                                          dialogType: DialogType.warning,
-                                          headerAnimationLoop: false,
-                                          animType: AnimType.bottomSlide,
-                                          title: 'هل أنت موافق',
-                                          desc:
-                                              'على تعديل حالة الطلب : ${snapshot.data![index].id}',
-                                          buttonsTextStyle: const TextStyle(
-                                              color: Colors.black),
-                                          showCloseIcon: true,
-                                          btnCancelOnPress: () {},
-                                          btnOkOnPress: () async {
-                                            final x = await bookingProvider
-                                                .updateBookingStateByBranch(
-                                                    snapshot.data![index].id!,
-                                                    Booking(
-                                                        status: type!.value));
-                                            print(
-                                                "updateBookingStateByBranch = $x");
-                                          },
-                                        ).show();
-                                      },
-                                      child: Text("تعديل حالة الحجز")),
+                                  //         // setState(() {
+                                  //         //   type = null;
+                                  //         // });
+                                  //       },
+                                  //       items: BookingStatus.values.map<
+                                  //           DropdownMenuItem<BookingStatus>>(
+                                  //         (BookingStatus e) {
+                                  //           return DropdownMenuItem<
+                                  //               BookingStatus>(
+                                  //             child: Text("${e.value}"),
+                                  //             value: e,
+                                  //           );
+                                  //         },
+                                  //       ).toList(),
+                                  //     ),
+                                  //   ],
+                                  // ),
+
+                                  // ElevatedButton(
+                                  //     onPressed: () async {
+                                  //       AwesomeDialog(
+                                  //         context: context,
+                                  //         dialogType: DialogType.warning,
+                                  //         headerAnimationLoop: false,
+                                  //         animType: AnimType.bottomSlide,
+                                  //         title: 'هل أنت موافق',
+                                  //         desc:
+                                  //             'على تعديل حالة الطلب : ${snapshot.data![index].id}',
+                                  //         buttonsTextStyle: const TextStyle(
+                                  //             color: Colors.black),
+                                  //         showCloseIcon: true,
+                                  //         btnCancelOnPress: () {},
+                                  //         btnOkOnPress: () async {
+                                  //           final x = await bookingProvider
+                                  //               .updateBookingStateByBranch(
+                                  //                   snapshot.data![index].id!,
+                                  //                   Booking(
+                                  //                       status: type!.value));
+                                  //           print(
+                                  //               "updateBookingStateByBranch = $x");
+                                  //         },
+                                  //       ).show();
+                                  //     },
+                                  //     child: Text("تعديل حالة الحجز")),
+
                                   Text(
                                     "معلومات الحجز الاولية",
                                     style: TextStyle(
@@ -157,18 +162,18 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                                       "موديل السيارة : ${snapshot.data![index].cars!.model.toString()}"),
                                   Text(
                                       "سعر السيارة لليوم الواحد : ${snapshot.data![index].cars!.price.toString()}"),
-                                  // Text("معلومات صاحب الفرع",
-                                  //     style: TextStyle(
-                                  //         fontWeight: FontWeight.bold,
-                                  //         fontSize: 17)),
-                                  // Text(
-                                  //     "الايميل : ${snapshot.data![index].cars!.users!.email.toString()}"),
-                                  // Text(
-                                  //     "الاسم : ${snapshot.data![index].cars!.users!.fullName.toString()}"),
-                                  // Text(
-                                  //     "رقم الهاتف : ${snapshot.data![index].cars!.users!.phone.toString()}"),
-                                  // Text(
-                                  //     "العنوان : ${snapshot.data![index].cars!.users!.location.toString()}"),
+                                  Text("معلومات صاحب الفرع",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 17)),
+                                  Text(
+                                      "الايميل : ${snapshot.data![index].cars!.users!.email.toString()}"),
+                                  Text(
+                                      "الاسم : ${snapshot.data![index].cars!.users!.fullName.toString()}"),
+                                  Text(
+                                      "رقم الهاتف : ${snapshot.data![index].cars!.users!.phone.toString()}"),
+                                  Text(
+                                      "العنوان : ${snapshot.data![index].cars!.users!.location.toString()}"),
                                   Text("الصورة للسيارة",
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold,
