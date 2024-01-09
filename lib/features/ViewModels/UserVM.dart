@@ -76,6 +76,17 @@ class UserVM with ChangeNotifier {
     return _usersRole;
   }
 
+  //delete user By Admin
+  Future deleteUser({required int id}) async {
+    Response response =
+        await connect.delete(APIurl.deleteuserUrl + id.toString());
+    print(response.data);
+    final code = response.data['code'];
+    print(code);
+    notifyListeners();
+    return code;
+  }
+
   Future<List<Profile>> getAllUsersFromAPi() async {
     Response responce = await connect.get(APIurl.indexByAdminUrl);
     print(responce.data['data']);
@@ -88,9 +99,21 @@ class UserVM with ChangeNotifier {
     return _allUsers;
   }
 
-  Future<List<Profile>> getAllBranchesActiveFromAPi() async {
+  Future<List<Profile>> getAllBranchesActiveOrAllUserFromAPi({required String url}) async {
+    print(url);
+    Response responce = await connect.get(url);
+    print(responce.data['data']);
+    List<dynamic> dataProfile = responce.data['data'];
+    print(responce.data['data']);
+    _allUsers = dataProfile
+        .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+        .toList();
+    print(_allUsers);
+    return _allUsers;
+  }
+   Future<List<Profile>> viewAlluserByRoleName({required String name,int id=0}) async {
     print(APIurl.viewAllBranchActive);
-    Response responce = await connect.get(APIurl.viewAllBranchActive);
+    Response responce = await connect.get(APIurl.viewAlluserByRoleNameUrl+name+'/'+id.toString());
     print(responce.data['data']);
     List<dynamic> dataProfile = responce.data['data'];
     print(responce.data['data']);
@@ -186,17 +209,19 @@ class UserVM with ChangeNotifier {
         }
         var token_login = responce.data['data']['token'];
         var user_id = responce.data['data']['id'];
-        var role_user = responce.data['data']['role'];
+        var role_user = responce.data['data']['roles'];
         var active_user = responce.data['data']['active'];
         var username = responce.data['data']['username'];
         var full_name = responce.data['data']['full_name'];
         var email = responce.data['data']['email'];
         var phone = responce.data['data']['phone'];
+        var image = responce.data['data']['image'];
         var location = responce.data['data']['location'];
         box.write('username', username);
         box.write('full_name', full_name);
         box.write('email', email);
         box.write('phone', phone);
+        box.write('image', image);
         box.write('location', location);
         box.write('token_login', token_login);
         box.write('role_user', role_user);

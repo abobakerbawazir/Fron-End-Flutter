@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/Profile.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.dart';
@@ -97,7 +98,7 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                   height: MediaQuery.of(context).size.height - 150,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
-                    future: userProvider.getAllBranchesActiveFromAPi(),
+                    future: userProvider.getAllBranchesActiveOrAllUserFromAPi(url: APIurl.viewAllBranchActive),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {

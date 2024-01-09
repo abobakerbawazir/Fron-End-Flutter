@@ -52,7 +52,8 @@ class _getByIDInformationBookingForAllCustomerPageState
     final bookingCoustomerByBranchProvider =
         Provider.of<BookingCoustomerByBranchVM>(context);
     final id = box.read('getByIDInformationBookingForAllCustomerPage') ?? 294;
-    final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
+    //final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
+    final days_booking = box.read('days_booking') ?? 0;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -92,7 +93,8 @@ class _getByIDInformationBookingForAllCustomerPageState
                                   "تاريخ نهاية الحجز : ${snapshot.data!.to.toString()}"),
                               Text(
                                   "التكلفة الاجمالية للحجز : ${snapshot.data!.total.toString()}"),
-                              Text("عدد ايام الحجز : ${xx.toString()} يوم"),
+                              Text(
+                                  "عدد ايام الحجز : ${days_booking.toString()} يوم"),
                               Text("معلومات  السيارة",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,

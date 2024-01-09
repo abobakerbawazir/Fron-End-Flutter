@@ -5,6 +5,7 @@ import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart'
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -76,6 +77,10 @@ class _SignupPageState extends State<SignupPage> {
                                   ),
                                 ),
                                 MyTextFormField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
+                                  keyboardType: TextInputType.number,
                                   hintText: "رقم الهاتف",
                                   controller: phoneTxt,
                                   suffixIcon: Icon(

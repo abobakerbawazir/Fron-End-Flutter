@@ -1,3 +1,4 @@
+import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingCoustomerByBranchVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
@@ -257,7 +258,7 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                               width: w,
                               child: FutureBuilder(
                                   future: userProvider
-                                      .getAllBranchesActiveFromAPi(),
+                                      .getAllBranchesActiveOrAllUserFromAPi(url: APIurl.viewAllBranchActive),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return ListView.builder(

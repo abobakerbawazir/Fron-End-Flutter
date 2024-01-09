@@ -62,6 +62,7 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                               box.write(
                                   'id_getByIDInformationBookingForAllCustomerPage',
                                   snapshot.data![index].user!.id);
+                              box.write('days_booking', x);
                               return getByIDInformationBookingForAllCustomerPage();
                             },
                           ));

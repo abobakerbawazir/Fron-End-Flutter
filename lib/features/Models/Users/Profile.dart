@@ -40,7 +40,7 @@ class Profile {
     email = json['email'];
     password = json['password'];
     password_confirmation = json['password_confirmation'];
-    role = json['role'];
+    role = json['roles'];
     roles = json['roles'];
     active = json['active'];
     image = json['image'];
@@ -77,7 +77,7 @@ class Profile {
     data['email'] = this.email;
     data['password'] = this.password;
     data['password_confirmation'] = this.password_confirmation;
-    data['role'] = this.role;
+    data['roles'] = this.role;
     data['roles'] = this.roles;
     data['active'] = this.active;
     data['updated_at'] = this.updatedAt;

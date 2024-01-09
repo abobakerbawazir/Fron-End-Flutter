@@ -1,6 +1,7 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/getAllInformationBookingPage.dart';
-import 'package:booking_car_project_flutter/features/Views/Screnns/HomePageScreen.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/HomePageScreen.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
@@ -65,7 +66,7 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
               //showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(Icons.star_border_rounded),
+              icon: const Icon(Icons.people),
               selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
@@ -124,7 +125,7 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
             controller: controller,
             children: const [
               HomePageScreen(),
-              Center(child: Text('Star')),
+              MangeUserPage(),
               getAllInformationBookingPage(),
               ProfileCustomerPage()
             ],

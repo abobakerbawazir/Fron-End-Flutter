@@ -107,14 +107,14 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
                   child: Column(
                     children: [
                       MyTextFormField(
-                        suffixIcon: Icon(Icons.email),
-                        hintText: "الأيميل",
-                        controller: emailTxt,
-                      ),
-                      MyTextFormField(
                         hintText: "الاسم الكامل",
                         suffixIcon: Icon(Icons.person),
                         controller: full_nameTxt,
+                      ),
+                      MyTextFormField(
+                        suffixIcon: Icon(Icons.email),
+                        hintText: "الأيميل",
+                        controller: emailTxt,
                       ),
                       MyTextFormField(
                         hintText: "كلمة المرور",

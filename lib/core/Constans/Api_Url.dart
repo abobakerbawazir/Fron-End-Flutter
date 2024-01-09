@@ -8,9 +8,12 @@ class APIurl {
   static const String deleteBrandUrl = baseUrl + "prand/delete/";
   static const String baseAdmin = baseUrl + 'admin/';
   static const String updateProfile = baseAdmin + 'update/';
+  static const String deleteuserUrl = baseAdmin + 'delete/';
   static const String updateByAdminUrl = baseAdmin + 'update/';
   static const String indexByAdminUrl = baseAdmin + 'index';
   static const String viewAllBranchActive = baseAdmin + 'viewAllBranchActive';
+  static const String viewAlluserDoesNotAdmin = baseAdmin + 'viewAlluserDoesNotAdmin';
+  static const String viewAlluserByRoleNameUrl = baseAdmin + 'viewAlluserByRoleName/';
   static const String baseCarUrl = baseUrl + 'car/';
   static const String getCarWithUserAndPrand =
       baseCarUrl + 'getCarWithUserAndPrand';

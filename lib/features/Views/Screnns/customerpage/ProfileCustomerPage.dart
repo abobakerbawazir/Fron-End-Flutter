@@ -24,6 +24,7 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
     final full_name = box.read('full_name');
     final email = box.read('email');
     final phone = box.read('phone');
+    final image = box.read('image');
     final location = box.read('location');
 
     double h = MediaQuery.of(context).size.height;
@@ -56,13 +57,20 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                           SizedBox(
                             width: 12,
                           ),
-                          Expanded(
-                            child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: AssetImage(
-                                  'assets/images/2021_4_16_14_20_38_182.jpg'),
-                            ),
-                          ),
+                          image == null
+                              ? Expanded(
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: AssetImage(
+                                        'assets/images/user-profile-icon-front-side.jpg'),
+                                  ),
+                                )
+                              : Expanded(
+                                  child: CircleAvatar(
+                                    radius: 50,
+                                    backgroundImage: NetworkImage(image),
+                                  ),
+                                ),
                           SizedBox(
                             width: 20,
                           ),
@@ -140,43 +148,42 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                           ElevatedButton(
                               onPressed: () async {
                                 final x = await userProvider.logout();
-                                if(x[0]=='تم تسجيل الخروج بنجاح'){
+                                if (x[0] == 'تم تسجيل الخروج بنجاح') {
                                   await AwesomeDialog(
-                                  context: context,
-                                  animType: AnimType.leftSlide,
-                                  headerAnimationLoop: false,
-                                  dialogType: DialogType.success,
-                                  showCloseIcon: true,
-                                  title: 'نجاح',
-                                  desc: x[0],
-                                  btnOkOnPress: () {
-                                    debugPrint('OnClcik');
-                                  },
-                                  btnOkIcon: Icons.check_circle,
-                                ).show();
+                                    context: context,
+                                    animType: AnimType.leftSlide,
+                                    headerAnimationLoop: false,
+                                    dialogType: DialogType.success,
+                                    showCloseIcon: true,
+                                    title: 'نجاح',
+                                    desc: x[0],
+                                    btnOkOnPress: () {
+                                      debugPrint('OnClcik');
+                                    },
+                                    btnOkIcon: Icons.check_circle,
+                                  ).show();
 
-                                final prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setBool('token', false);
-                                Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                  builder: (context) {
-                                    return SignupPage();
-                                  },
-                                ));
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setBool('token', false);
+                                  Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                    builder: (context) {
+                                      return SignupPage();
+                                    },
+                                  ));
                                 }
-                                
-                                  //   await userProvider.logout(context: context);
-                                  // final prefs =
-                                  //     await SharedPreferences.getInstance();
-                                  // prefs.setBool('token', false);
-                                  // Navigator.pushReplacement(context,
-                                  //     MaterialPageRoute(
-                                  //   builder: (context) {
-                                  //     return SignupPage();
-                                  //   },
-                                  // ));
-                                
+
+                                //   await userProvider.logout(context: context);
+                                // final prefs =
+                                //     await SharedPreferences.getInstance();
+                                // prefs.setBool('token', false);
+                                // Navigator.pushReplacement(context,
+                                //     MaterialPageRoute(
+                                //   builder: (context) {
+                                //     return SignupPage();
+                                //   },
+                                // ));
                               },
                               child: Text("موافق")),
                         ],
