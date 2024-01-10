@@ -21,6 +21,9 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
     final username = box.read('username');
+    final walletCode = box.read('walletCode');
+    final walletId = box.read('walletId');
+
     final full_name = box.read('full_name');
     final email = box.read('email');
     final phone = box.read('phone');
@@ -34,82 +37,163 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Card(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(username ?? "Abobaker2020aa",
-                            style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                      height: 150,
-                      width: w,
-                      child: Row(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: const Color.fromARGB(255, 223, 218, 218)),
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 207, 203, 203),
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.all(8),
+                      child: Column(
                         children: [
-                          SizedBox(
-                            width: 12,
-                          ),
-                          image == null
-                              ? Expanded(
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: AssetImage(
-                                        'assets/images/user-profile-icon-front-side.jpg'),
-                                  ),
-                                )
-                              : Expanded(
-                                  child: CircleAvatar(
-                                    radius: 50,
-                                    backgroundImage: NetworkImage(image),
-                                  ),
-                                ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              SizedBox(
-                                height: 30,
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Text("اسم المستخدم",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Text(username ?? "Abobaker2020aa",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Text(
-                                    "الاسم الكامل : ${full_name}" ??
-                                        "Abobaker Bawazer",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Text("كود المحفظة",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Text(walletCode ?? "ليس لديك محفظة",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  ),
+                                ],
                               ),
-                              Expanded(
-                                child: Text("الايميل : ${email}" ??
-                                    "Abobaker@gmail.com"),
-                              ),
-                              // SizedBox(
-                              //   height: 5,
-                              // ),
-                              Expanded(
-                                  child: Text(
-                                      "رقم الهاتف : ${phone}" ?? "7756301")),
-                              // SizedBox(
-                              //   height: 5,
-                              // ),
-                              Expanded(
-                                  child:
-                                      Text("الموقع : ${location}" ?? "7756301"))
                             ],
-                          )
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("الرصيد : ",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold)),
+                              ),
+                              FutureBuilder(
+                                future: userProvider.getBalanceByIDWallet(
+                                    id: walletId),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          "${snapshot.data!.balance!.toString()} RY" ??
+                                              "لايوجد",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    );
+                                  }
+                                  return Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('في انتضار الانترنت',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold)),
+                                      ),
+                                      Center(
+                                          child: CircularProgressIndicator()),
+                                    ],
+                                  );
+                                },
+                              )
+                            ],
+                          ),
                         ],
-                      ))
-                ],
+                      ),
+                    ),
+                    SizedBox(
+                        height: 150,
+                        width: w,
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 12,
+                            ),
+                            image == null
+                                ? Expanded(
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: AssetImage(
+                                          'assets/images/user-profile-icon-front-side.jpg'),
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: CircleAvatar(
+                                      radius: 50,
+                                      backgroundImage: NetworkImage(image),
+                                    ),
+                                  ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                      "الاسم الكامل : ${full_name}" ??
+                                          "Abobaker Bawazer",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16)),
+                                ),
+                                Expanded(
+                                  child: Text("الايميل : ${email}" ??
+                                      "Abobaker@gmail.com"),
+                                ),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                Expanded(
+                                    child: Text(
+                                        "رقم الهاتف : ${phone}" ?? "7756301")),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                Expanded(
+                                    child: Text(
+                                        "الموقع : ${location}" ?? "7756301"))
+                              ],
+                            )
+                          ],
+                        ))
+                  ],
+                ),
               ),
             ),
             ListTile_me(

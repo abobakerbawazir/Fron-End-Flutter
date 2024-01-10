@@ -15,7 +15,7 @@ class BookingCoustomerByBranchVM with ChangeNotifier {
       [];
 
   BookingCoustomerByBranch _oneBookings = BookingCoustomerByBranch();
-  BookingCoustomerByBranch get oneCars => _oneBookings;
+  BookingCoustomerByBranch get oneBookings => _oneBookings;
   List<BookingCoustomerByBranch> get allBookings => _allBookings;
   List<BookingCoustomerByBranch> get allBookingByBranchs =>
       _allBookingByBranchs;

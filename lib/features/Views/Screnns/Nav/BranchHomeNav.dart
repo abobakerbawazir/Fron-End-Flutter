@@ -69,7 +69,7 @@ class _BranchHomeNavState extends State<BranchHomeNav> {
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
               // backgroundColor: Colors.orange,
-              title: const Text('المميزة'),
+              title: const Text('محفظتي'),
             ),
             BottomBarItem(
                 icon: const Icon(

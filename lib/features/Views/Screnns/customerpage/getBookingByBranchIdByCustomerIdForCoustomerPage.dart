@@ -3,6 +3,7 @@ import 'package:booking_car_project_flutter/features/ViewModels/BookingCoustomer
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/getByIDInformationBookingForAllCustomerPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,7 @@ class getBookingByBranchIdByCustomerIdForCoustomerPage extends StatefulWidget {
 class _getBookingByBranchIdByCustomerIdForCoustomerPageState
     extends State<getBookingByBranchIdByCustomerIdForCoustomerPage> {
   int x = 0;
+  int z = -1;
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
@@ -41,28 +43,47 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
           padding: EdgeInsets.all(12),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      x = 0;
-
-                      setState(() {});
-                    },
-                    child: Text("عرض جميع الحجوزات"),
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                  ElevatedButton(
+              Container(
+                // color: Colors.amber,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: x != 0
+                              ? colorprimarywhite
+                              : const Color.fromARGB(255, 19, 74, 120)),
                       onPressed: () {
-                        x = 1;
+                        x = 0;
 
                         setState(() {});
                       },
-                      child: Text("الحجوزات حسب الفرع"))
-                ],
+                      child: Text(
+                        "عرض جميع الحجوزات",
+                        style: TextStyle(
+                            color: x != 0 ? Colors.black : colorprimarywhite),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: x != 1
+                                ? colorprimarywhite
+                                : const Color.fromARGB(255, 19, 74, 120)),
+                        onPressed: () {
+                          x = 1;
+
+                          setState(() {});
+                        },
+                        child: Text(
+                          "الحجوزات حسب الفرع",
+                          style: TextStyle(
+                              color: x != 1 ? Colors.black : colorprimarywhite),
+                        ))
+                  ],
+                ),
               ),
               x == 0
                   ? Column(
@@ -240,10 +261,21 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                   ),
                                 );
                               }
-                              return SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: CircularProgressIndicator.adaptive());
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "جاري التحميل",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 15,
+                                  ),
+                                  Center(child: CircularProgressIndicator()),
+                                ],
+                              );
                             },
                           ),
                         ),
@@ -258,7 +290,8 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                               width: w,
                               child: FutureBuilder(
                                   future: userProvider
-                                      .getAllBranchesActiveOrAllUserFromAPi(url: APIurl.viewAllBranchActive),
+                                      .getAllBranchesActiveOrAllUserFromAPi(
+                                          url: APIurl.viewAllBranchActive),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasData) {
                                       return ListView.builder(
@@ -273,6 +306,7 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                                 .height,
                                             child: InkWell(
                                               onTap: () {
+                                                z = index;
                                                 final box = GetStorage();
                                                 box.write('branch_id',
                                                     snapshot.data![index].id);
@@ -291,15 +325,15 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                               },
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(8.0),
+                                                    const EdgeInsets.all(12.0),
                                                 child: Container(
                                                   decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              219,
-                                                              214,
-                                                              214),
+                                                      color: z == index
+                                                          ? Color.fromARGB(255,
+                                                              166, 216, 234)
+                                                          : const Color
+                                                                  .fromARGB(255,
+                                                              219, 214, 214),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               30)),
@@ -307,7 +341,7 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                                     clipBehavior: Clip.none,
                                                     children: [
                                                       Positioned(
-                                                        top: 20,
+                                                        top: 15,
                                                         left: 12,
                                                         child: SizedBox(
                                                           height: 100,
@@ -397,12 +431,23 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                         },
                                       );
                                     }
-                                    return SizedBox(
-                                        width: 70,
-                                        height: 70,
-                                        child: Center(
-                                            child:
-                                                CircularProgressIndicator()));
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "جاري التحميل",
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Center(
+                                            child: CircularProgressIndicator()),
+                                      ],
+                                    );
                                   }),
                             ),
                             // SizedBox(
@@ -569,11 +614,22 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                       ),
                                     );
                                   }
-                                  return SizedBox(
-                                      height: 50,
-                                      width: 50,
-                                      child:
-                                          CircularProgressIndicator.adaptive());
+                                  return Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "جاري التحميل",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        width: 15,
+                                      ),
+                                      Center(
+                                          child: CircularProgressIndicator()),
+                                    ],
+                                  );
                                 },
                               ),
                             ),

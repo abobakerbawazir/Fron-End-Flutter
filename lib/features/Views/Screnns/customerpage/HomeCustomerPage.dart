@@ -23,6 +23,8 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
     final userProvider = Provider.of<UserVM>(context);
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+    final x =
+        'محل الاسطورة لزينة السيارات   الحديثة والقديمة والمستعملة وكل ماتريد ياصديقي';
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -98,7 +100,8 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                   height: MediaQuery.of(context).size.height - 150,
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
-                    future: userProvider.getAllBranchesActiveOrAllUserFromAPi(url: APIurl.viewAllBranchActive),
+                    future: userProvider.getAllBranchesActiveOrAllUserFromAPi(
+                        url: APIurl.viewAllBranchActive),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {
@@ -107,6 +110,34 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                         return ListView.builder(
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
+                            // List<Profile> profiles = snapshot.data!;
+                            // for (Profile profile in profiles) {
+                            //   Widget profileWidget;
+                            //   if (profile.fullName!.length > 5) {
+                            //     List<String> parts = [];
+                            //     int i = 0;
+                            //     while (i < profile.fullName!.length) {
+                            //       int endI = i + 5;
+                            //       if (endI > profile.fullName!.length) {
+                            //         String part =
+                            //             profile.fullName!.substring(i, endI);
+                            //         parts.add(part);
+                            //         i = endI;
+                            //       }
+                            //       String formattedFullName = parts.join('\n');
+                            //       profileWidget = Column(
+                            //         children: [
+                            //           Text(profile.fullName!),
+                            //           Text(formattedFullName),
+                            //         ],
+                            //       );
+                            //     }
+                            //   } else {
+                            //     profileWidget = Column(
+                            //       children: [Text(profile.fullName!)],
+                            //     );
+                            //   }
+                            //}
                             return snapshot.data![index].roles == 'branch'
                                 ? InkWell(
                                     onTap: () {
@@ -119,38 +150,105 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                                         },
                                       ));
                                     },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Card(
-                                        color:
-                                            Color.fromARGB(255, 140, 220, 173),
+                                    child: SizedBox(
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2.3,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
                                         child: Container(
-                                          margin: EdgeInsets.all(10),
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                color: Colors.grey,
-                                                width: 200,
-                                                height: 200,
-                                                child: Image.network(snapshot
-                                                    .data![index].image!),
-                                              ),
-                                              Text(
-                                                  snapshot
-                                                      .data![index].fullName!,
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                              Text(snapshot.data![index].email!,
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                              Text(snapshot.data![index].phone!,
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                              Text(
-                                                  "العنوان : ${snapshot.data![index].location!}",
-                                                  style:
-                                                      TextStyle(fontSize: 20)),
-                                            ],
+                                          padding: EdgeInsets.all(8),
+                                          decoration: BoxDecoration(
+                                              color: Color.fromARGB(
+                                                  255, 209, 221, 224),
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          child: Container(
+                                            margin: EdgeInsets.all(10),
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  top: 0,
+                                                  left: 0,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50)
+                                                        // color: Colors.grey,
+                                                        ),
+                                                    width: 300,
+                                                    height: 150,
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      //clipBehavior: Clip.antiAlias,
+                                                      child: Image.network(
+                                                        snapshot.data![index]
+                                                            .image!,
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  right: 30,
+                                                  top: 230,
+                                                  child: Text(
+                                                      " : ${snapshot.data![index].phone!}",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15)),
+                                                ),
+                                                Positioned(
+                                                    // right: 30,
+                                                    top: 230,
+                                                    child: Icon(Icons.phone)),
+                                                Positioned(
+                                                  right: 0,
+                                                  top: 165,
+                                                  child: Text('الفرع : ',
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15)),
+                                                ),
+                                                Positioned(
+                                                  top: 165,
+                                                  right: 55,
+                                                  child: Text(
+                                                      "${snapshot.data![index].fullName!}",
+                                                      style: TextStyle(
+                                                          fontSize: 17)),
+                                                ),
+                                                Positioned(
+                                                    top: 195,
+                                                    child: Icon(
+                                                        Icons.location_on)),
+                                                Positioned(
+                                                  top: 197,
+                                                  right: 30,
+                                                  child: Text(
+                                                      " : ${snapshot.data![index].location!}",
+                                                      style: TextStyle(
+                                                          fontSize: 17)),
+                                                ),
+                                                Positioned(
+                                                    top: 260,
+                                                    child: Icon(Icons.email)),
+                                                Positioned(
+                                                  top: 260,
+                                                  right: 30,
+                                                  child: Text(
+                                                      " : ${snapshot.data![index].email!}",
+                                                      style: TextStyle(
+                                                          fontSize: 17)),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -160,7 +258,20 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                           },
                         );
                       }
-                      return Center(child: CircularProgressIndicator());
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "جاري التحميل",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Center(child: CircularProgressIndicator()),
+                        ],
+                      );
                     },
                   ),
                 )

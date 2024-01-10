@@ -1,7 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
+import 'package:booking_car_project_flutter/core/Constans/Api_Url_Wallet.dart';
 import 'package:booking_car_project_flutter/core/Helpers/Messge.dart';
 import 'package:booking_car_project_flutter/features/Models/Booking/Booking.dart';
+import 'package:booking_car_project_flutter/features/Models/Users/Balance.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/Profile.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/User.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
@@ -99,7 +101,8 @@ class UserVM with ChangeNotifier {
     return _allUsers;
   }
 
-  Future<List<Profile>> getAllBranchesActiveOrAllUserFromAPi({required String url}) async {
+  Future<List<Profile>> getAllBranchesActiveOrAllUserFromAPi(
+      {required String url}) async {
     print(url);
     Response responce = await connect.get(url);
     print(responce.data['data']);
@@ -111,9 +114,12 @@ class UserVM with ChangeNotifier {
     print(_allUsers);
     return _allUsers;
   }
-   Future<List<Profile>> viewAlluserByRoleName({required String name,int id=0}) async {
+
+  Future<List<Profile>> viewAlluserByRoleName(
+      {required String name, int id = 0}) async {
     print(APIurl.viewAllBranchActive);
-    Response responce = await connect.get(APIurl.viewAlluserByRoleNameUrl+name+'/'+id.toString());
+    Response responce = await connect
+        .get(APIurl.viewAlluserByRoleNameUrl + name + '/' + id.toString());
     print(responce.data['data']);
     List<dynamic> dataProfile = responce.data['data'];
     print(responce.data['data']);
@@ -132,7 +138,7 @@ class UserVM with ChangeNotifier {
       email,
       password,
       password_confirmation,
-      role,
+      roles,
       required BuildContext context}) async {
     print(APIurl.SignupUrl);
     try {
@@ -146,7 +152,7 @@ class UserVM with ChangeNotifier {
                 email: email,
                 password: password,
                 password_confirmation: password_confirmation,
-                role: role)
+                roles: roles)
             .toJson(),
       );
       if (responce.statusCode == 200) {
@@ -208,6 +214,8 @@ class UserVM with ChangeNotifier {
           throw Exception('Failed to login@@@@@@@@@@@@');
         }
         var token_login = responce.data['data']['token'];
+        var walletCode = responce.data['data']['wallet']['code'];
+        var walletId = responce.data['data']['wallet']['id'];
         var user_id = responce.data['data']['id'];
         var role_user = responce.data['data']['roles'];
         var active_user = responce.data['data']['active'];
@@ -227,6 +235,10 @@ class UserVM with ChangeNotifier {
         box.write('role_user', role_user);
         box.write('user_id', user_id);
         box.write('active_user', active_user);
+        box.write('walletCode', walletCode);
+        box.write('walletId', walletId);
+        print(box.read('walletCode'));
+        print(box.read('walletId'));
         print(token_login);
         print(user_id);
         print(role_user);
@@ -326,6 +338,23 @@ class UserVM with ChangeNotifier {
       return code;
     } catch (e) {
       throw Exception("$e");
+    }
+  }
+Balance _oneBalance = Balance();
+  Balance get oneBalance => _oneBalance;
+  Future<Balance> getBalanceByIDWallet({required int id}) async {
+    print('${APIUrlWallet.getBalanceByIdWalletUrl}$id');
+    Dio dio = DioSingelton.getInstance();
+
+    Response response = await dio.get('${APIUrlWallet.getBalanceByIdWalletUrl}$id');
+    try {
+      Map<String, dynamic> dtatBalance = response.data;
+      _oneBalance = Balance.fromJson(dtatBalance);
+      print(_oneBalance);
+      print(dtatBalance);
+      return _oneBalance;
+    } catch (e) {
+      return _oneBalance;
     }
   }
 }

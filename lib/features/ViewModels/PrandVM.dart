@@ -15,8 +15,14 @@ class PrandVM with ChangeNotifier {
   }
 
   final nameController = TextEditingController();
-  changeName(String value) {
-    nameController.text = value;
+  myNotifyListeners() {
+    // textEditingController.text = value;
+    //value = textEditingController.text;
+    notifyListeners();
+  }
+
+  clearControlle(TextEditingController textEditingController) {
+    textEditingController.clear();
     notifyListeners();
   }
 
@@ -46,7 +52,7 @@ class PrandVM with ChangeNotifier {
       _allPrands = dataPrands
           .map((e) => Prand.fromJson(e as Map<String, dynamic>))
           .toList();
-      // notifyListeners();
+      //notifyListeners();
       print(_allPrands);
       return _allPrands;
     } catch (e) {
