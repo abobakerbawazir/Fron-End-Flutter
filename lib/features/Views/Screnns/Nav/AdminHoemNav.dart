@@ -1,4 +1,5 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/ManageMony.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/MangeUserPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/getAllInformationBookingPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/AdminPage/HomePageScreen.dart';
@@ -61,19 +62,39 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
               selectedIcon: const Icon(Icons.house_rounded),
               selectedColor: Colors.teal,
               //backgroundColor: Colors.teal,
-              title: const Text('الرئيسية'),
+              title: const Text(
+                'الرئيسية',
+                style: TextStyle(fontSize: 12.5),
+              ),
               //badge: const Text('9+'),
               //showBadge: true,
             ),
             BottomBarItem(
               icon: const Icon(Icons.people),
-              selectedIcon: const Icon(Icons.star_rounded),
+              selectedIcon: const Icon(
+                Icons.star_rounded,
+                //color: Colors.black,
+              ),
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
               // backgroundColor: Colors.orange,
               title: const Text(
-                'المستخدمين',
-                style: TextStyle(fontSize: 10),
+                'مستخدمين',
+                style: TextStyle(fontSize: 9),
+              ),
+            ),
+            BottomBarItem(
+              icon: const Icon(
+                Icons.attach_money_sharp,
+                //color: Colors.green,
+              ),
+              selectedIcon: const Icon(Icons.star_rounded),
+              selectedColor: Colors.green,
+              // unSelectedColor: Colors.purple,
+              // backgroundColor: Colors.orange,
+              title: const Text(
+                'الأموال',
+                style: TextStyle(fontSize: 14.5),
               ),
             ),
             BottomBarItem(
@@ -85,7 +106,10 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
                 ),
                 //backgroundColor: Colors.amber,
                 selectedColor: Colors.deepOrangeAccent,
-                title: const Text('حجوزاتي')),
+                title: const Text(
+                  'حجوزاتي',
+                  style: TextStyle(fontSize: 13),
+                )),
             BottomBarItem(
                 icon: const Icon(
                   Icons.person_outline,
@@ -126,6 +150,7 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
             children: const [
               HomePageScreen(),
               MangeUserPage(),
+              ManageMonyScreens(),
               getAllInformationBookingPage(),
               ProfileCustomerPage()
             ],

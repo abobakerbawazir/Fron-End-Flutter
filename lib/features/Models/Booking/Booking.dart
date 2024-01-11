@@ -1,4 +1,4 @@
-import 'package:booking_car_project_flutter/features/Models/Booking/enumStatus.dart';
+import 'package:booking_car_project_flutter/features/Enum/enumStatus.dart';
 
 class Booking {
   int? id;

@@ -1,3 +1,4 @@
+import 'package:booking_car_project_flutter/features/ViewModels/TransactionVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/FillterPage/FillterPagePrand.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/AdminHoemNav.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/BranchHomeNav.dart';
@@ -74,7 +75,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BookingCoustomerByBranchVM(),
-        )
+        ),ChangeNotifierProvider(create: (context) => TransactionVM(),)
       ],
       child: ChangeNotifierProvider(
           create: (context) => UserVM(),
