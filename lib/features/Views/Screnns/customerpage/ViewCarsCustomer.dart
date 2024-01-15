@@ -77,7 +77,7 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
     int prand_id_branch = box.read('prand_id_branch');
     int id_user_branch = box.read('id_user_branch');
     int userId = box.read('user_id');
-    int carId = box.read('car_id');
+    int carId = box.read('car_id')??0;
     final new_booking_id = box.read('new_booking_id') ?? 0;
     final new_total = box.read('new_total') ?? 0;
     final walletId = box.read("walletId") ?? 0;

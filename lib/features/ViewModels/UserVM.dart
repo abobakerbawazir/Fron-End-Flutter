@@ -38,6 +38,9 @@ class UserVM with ChangeNotifier {
 
   List<Profile> _allUsers = [];
   List<Profile> get allUsers => _allUsers;
+  List<Branch> _allBranch=[];
+    List<Branch> get allBranch => _allBranch;
+
 
   changeIconStateLogin() {
     if (iconObsecure == false) {
@@ -101,18 +104,23 @@ class UserVM with ChangeNotifier {
     return _allUsers;
   }
 
-  Future<List<Profile>> getAllBranchesActiveOrAllUserFromAPi(
+  Future<List<Branch>> getAllBranchesActiveOrAllUserFromAPi(
       {required String url}) async {
-    print(url);
-    Response responce = await connect.get(url);
-    print(responce.data['data']);
-    List<dynamic> dataProfile = responce.data['data'];
-    print(responce.data['data']);
-    _allUsers = dataProfile
-        .map((e) => Profile.fromJson(e as Map<String, dynamic>))
-        .toList();
-    print(_allUsers);
-    return _allUsers;
+    try {
+      print(url);
+      Response responce = await connect.get(url);
+      print(responce.data['data']);
+      List<dynamic> dataProfile = responce.data['data'];
+      print(responce.data['data']);
+      _allBranch = dataProfile
+          .map((e) => Branch.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print(_allBranch);
+            return _allBranch;
+
+    } catch (e) {
+      return _allBranch;
+    }
   }
 
   Future<List<Profile>> viewAlluserByRoleName(
@@ -130,29 +138,71 @@ class UserVM with ChangeNotifier {
     return _allUsers;
   }
 
+  Future SignUpWithImage(
+      {required FormData formData, required BuildContext context}) async {
+    print(APIurl.baseUrl + 'addUserAndAddImage');
+    Dio dio = DioSingelton.getInstance();
+    Response responce =
+        await dio.post(APIurl.baseUrl + 'addUserAndAddImage', data: formData);
+    var x = responce.data;
+    print(x);
+    if (responce.statusCode == 200) {
+      var code = responce.data['code'];
+      var usernamemessage = responce.data['data']['username'] ?? "";
+      var emailmessage = responce.data['data']['email'] ?? "";
+      var phonemessage = responce.data['data']['phone'] ?? "";
+      var passwordmessage = responce.data['data']['password'] ?? "";
+      //var data = responce.data;
+      if (responce.data['code'] == 200) {
+        print(responce.data);
+        print("User added Successfully $code");
+        SuceessLoginDialog(
+            description: "",
+            context: context,
+            email: '',
+            password: '',
+            title: messageSignupInTitleSeccues);
+      } else if (responce.data['code'] == 400) {
+        print(responce.data);
+
+        print(
+            "User added Faield $code $usernamemessage $emailmessage $phonemessage $passwordmessage");
+        errorLoginDialog(
+            context: context,
+            title: "خطا $code",
+            description: '''تأكد من المعلومات المدخلة
+               $code $usernamemessage $emailmessage $phonemessage $passwordmessage''');
+      }
+    } else {
+      throw Exception('Failed to add User');
+    }
+    notifyListeners();
+    return x;
+  }
+
   Future signUP(
       {required String username,
-      phone,
-      full_name,
-      user_type,
-      email,
-      password,
-      password_confirmation,
-      roles,
+      required String phone,
+      required String full_name,
+      required String user_type,
+      required String email,
+      required String password,
+      required String password_confirmation,
+      required String roles,
       required BuildContext context}) async {
     print(APIurl.SignupUrl);
     try {
       final responce = await connect.post(
         APIurl.SignupUrl,
-        data: Profile(
+        data: UserSignUp(
                 username: username,
                 phone: phone,
                 fullName: full_name,
                 userType: user_type,
                 email: email,
                 password: password,
-                password_confirmation: password_confirmation,
-                roles: roles)
+                passwordConfirmation: password_confirmation,
+                role: roles)
             .toJson(),
       );
       if (responce.statusCode == 200) {
@@ -170,7 +220,7 @@ class UserVM with ChangeNotifier {
               context: context,
               email: email,
               password: password,
-              title: messageLoginInTitleSeccues);
+              title: messageSignupInTitleSeccues);
         } else if (responce.data['code'] == 400) {
           print(responce.data);
 
@@ -193,70 +243,69 @@ class UserVM with ChangeNotifier {
     }
     notifyListeners();
   }
-  Future signUPImage(
-      {required String username,
-      phone,
-      full_name,
-      user_type,
-      email,
-      password,
-      password_confirmation,
-      roles,
-      required BuildContext context}) async {
-    print(APIurl.SignupUrl);
-    try {
-      final responce = await connect.post(
-        APIurl.SignupUrl,
-        data: Profile(
-                username: username,
-                phone: phone,
-                fullName: full_name,
-                userType: user_type,
-                email: email,
-                password: password,
-                password_confirmation: password_confirmation,
-                roles: roles)
-            .toJson(),
-      );
-      if (responce.statusCode == 200) {
-        var code = responce.data['code'];
-        var usernamemessage = responce.data['data']['username'] ?? "";
-        var emailmessage = responce.data['data']['email'] ?? "";
-        var phonemessage = responce.data['data']['phone'] ?? "";
-        var passwordmessage = responce.data['data']['password'] ?? "";
-        //var data = responce.data;
-        if (responce.data['code'] == 200) {
-          print(responce.data);
-          print("User added Successfully $code");
-          SuceessLoginDialog(
-              description: "Email = $email and Password = $password",
-              context: context,
-              email: email,
-              password: password,
-              title: messageLoginInTitleSeccues);
-        } else if (responce.data['code'] == 400) {
-          print(responce.data);
+  // Future signUPImage(
+  //     {required String username,
+  //     phone,
+  //     full_name,
+  //     user_type,
+  //     email,
+  //     password,
+  //     password_confirmation,
+  //     roles,
+  //     required BuildContext context}) async {
+  //   print(APIurl.SignupUrl);
+  //   try {
+  //     final responce = await connect.post(
+  //       APIurl.SignupUrl,
+  //       data: Profile(
+  //               username: username,
+  //               phone: phone,
+  //               fullName: full_name,
+  //               userType: user_type,
+  //               email: email,
+  //               password: password,
+  //               password_confirmation: password_confirmation,
+  //               roles: roles)
+  //           .toJson(),
+  //     );
+  //     if (responce.statusCode == 200) {
+  //       var code = responce.data['code'];
+  //       var usernamemessage = responce.data['data']['username'] ?? "";
+  //       var emailmessage = responce.data['data']['email'] ?? "";
+  //       var phonemessage = responce.data['data']['phone'] ?? "";
+  //       var passwordmessage = responce.data['data']['password'] ?? "";
+  //       //var data = responce.data;
+  //       if (responce.data['code'] == 200) {
+  //         print(responce.data);
+  //         print("User added Successfully $code");
+  //         SuceessLoginDialog(
+  //             description: "Email = $email and Password = $password",
+  //             context: context,
+  //             email: email,
+  //             password: password,
+  //             title: messageLoginInTitleSeccues);
+  //       } else if (responce.data['code'] == 400) {
+  //         print(responce.data);
 
-          print(
-              "User added Faield $code $usernamemessage $emailmessage $phonemessage $passwordmessage");
-          errorLoginDialog(
-              context: context,
-              title: "خطا $code",
-              description: '''تأكد من المعلومات المدخلة
-               $code $usernamemessage $emailmessage $phonemessage $passwordmessage''');
-        }
-      } else {
-        throw Exception('Failed to add User');
-      }
-      notifyListeners();
-      print(responce.data['code']);
-      return responce.data['code'];
-    } catch (e) {
-      throw Exception("Failed to add User $e");
-    }
-    notifyListeners();
-  }
-
+  //         print(
+  //             "User added Faield $code $usernamemessage $emailmessage $phonemessage $passwordmessage");
+  //         errorLoginDialog(
+  //             context: context,
+  //             title: "خطا $code",
+  //             description: '''تأكد من المعلومات المدخلة
+  //              $code $usernamemessage $emailmessage $phonemessage $passwordmessage''');
+  //       }
+  //     } else {
+  //       throw Exception('Failed to add User');
+  //     }
+  //     notifyListeners();
+  //     print(responce.data['code']);
+  //     return responce.data['code'];
+  //   } catch (e) {
+  //     throw Exception("Failed to add User $e");
+  //   }
+  //   notifyListeners();
+  // }
 
   Future<int> login(
       {required String email, password, required BuildContext context}) async {
@@ -404,13 +453,15 @@ class UserVM with ChangeNotifier {
       throw Exception("$e");
     }
   }
-Balance _oneBalance = Balance();
+
+  Balance _oneBalance = Balance();
   Balance get oneBalance => _oneBalance;
   Future<Balance> getBalanceByIDWallet({required int id}) async {
     print('${APIUrlWallet.getBalanceByIdWalletUrl}$id');
     Dio dio = DioSingelton.getInstance();
 
-    Response response = await dio.get('${APIUrlWallet.getBalanceByIdWalletUrl}$id');
+    Response response =
+        await dio.get('${APIUrlWallet.getBalanceByIdWalletUrl}$id');
     try {
       Map<String, dynamic> dtatBalance = response.data;
       _oneBalance = Balance.fromJson(dtatBalance);

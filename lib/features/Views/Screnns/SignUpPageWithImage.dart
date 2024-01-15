@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
@@ -63,8 +65,7 @@ class _SignUpPageWithImageState extends State<SignUpPageWithImage> {
                           decoration: const BoxDecoration(
                             image: DecorationImage(
                                 opacity: 0.7,
-                                image: AssetImage(
-                                    "assets/images/2021_4_16_14_20_38_182.jpg"),
+                                image: AssetImage("assets/Cars/2.png"),
                                 fit: BoxFit.cover),
                             color: Colors.black,
                           )),
@@ -187,105 +188,257 @@ class _SignUpPageWithImageState extends State<SignUpPageWithImage> {
                                                 color: colorprimarygreen,
                                                 size: 35,
                                               )),
+                                    SizedBox(
+                                      width: 20,
+                                    )
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 8,
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            actions: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: IconButton(
+                                                    onPressed: () async {
+                                                      PickedFile = await _picker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery);
+                                                      imageBytes =
+                                                          await PickedFile!
+                                                              .readAsBytes();
+                                                      userProvider
+                                                          .notifyListeners();
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.photo,
+                                                      size: 50,
+                                                    )),
+                                              ),
+                                              Text("           "),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: IconButton(
+                                                    onPressed: () async {
+                                                      PickedFile = await _picker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera);
+                                                      imageBytes =
+                                                          await PickedFile!
+                                                              .readAsBytes();
+                                                      userProvider
+                                                          .notifyListeners();
+                                                      Navigator.pop(context);
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.camera_alt,
+                                                      size: 50,
+                                                    )),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text("اضافة صورة"),
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Icon(Icons.photo)
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                                ElevatedButton(
-                                    onPressed: () async {
-                                      PickedFile = await _picker.pickImage(
-                                          source: ImageSource.gallery);
-                                      imageBytes =
-                                          await PickedFile!.readAsBytes();
-                                      setState(() {});
-                                    },
-                                    child: Text("add image")),
+                                // ElevatedButton(
+                                //     onPressed: () async {
+                                //       PickedFile = await _picker.pickImage(
+                                //           source: ImageSource.gallery);
+                                //       imageBytes =
+                                //           await PickedFile!.readAsBytes();
+                                //       setState(() {});
+                                //     },
+                                //     child: Text("add image")),
+
                                 PickedFile != null
-                                    ? Text(PickedFile!.path.toString())
-                                    : Text("No"),
-                                ElevatedButton(
-                                    onPressed: () async {
-                                      print(imageBytes);
-                                      FormData formData =await FormData.fromMap({
-                                        'username': usernameTxt.text,
-                                        'email': emailTxt.text,
-                                        'full_name': full_nameTxt.text,
-                                        'phone': phoneTxt.text,
-                                        'user_type':
-                                            is_Active ? 'branch' : "customer",
-                                        'role':
-                                            is_Active ? 'branch' : "customer",
-                                            'active':true,
-                                        'password': passwordTxt.text,
-                                        'password_confirmation':
-                                            password_confirmationTxt.text,
-                                        'image_path': MultipartFile.fromBytes(
-                                            imageBytes,
-                                            filename:
-                                                "image_path.${PickedFile?.path.split('.').last}")
-                                      });
-                                      pickImageDio(formData: formData);
-                                    },
-                                    child: Text("save")),
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                              width: 200,
+                                              height: 200,
+                                              child: Image.file(
+                                                  File(PickedFile!.path))),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: InkWell(
+                                              onTap: () {
+                                                PickedFile = null;
+                                                userProvider.notifyListeners();
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text("حذف الصورة"),
+                                                  Icon(Icons.cancel)
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    : Container(),
+                                // ElevatedButton(
+                                //     onPressed: () async {
+                                //       print(imageBytes);
+                                //       FormData formData =
+                                //           await FormData.fromMap({
+                                //         'username': usernameTxt.text,
+                                //         'email': emailTxt.text,
+                                //         'full_name': full_nameTxt.text,
+                                //         'phone': phoneTxt.text,
+                                //         'user_type':
+                                //             is_Active ? 'branch' : "customer",
+                                //         'role':
+                                //             is_Active ? 'branch' : "customer",
+                                //         'active': true,
+                                //         'password': passwordTxt.text,
+                                //         'password_confirmation':
+                                //             password_confirmationTxt.text,
+                                //         'image_path': MultipartFile.fromBytes(
+                                //             imageBytes,
+                                //             filename:
+                                //                 "image_path.${PickedFile?.path.split('.').last}")
+                                //       });
+                                //       pickImageDio(formData: formData);
+                                //     },
+                                //     child: Text("save")),
+
                                 SizedBox(
                                   height: 10,
                                 ),
                                 AnimatedButton(
+                                    width:
+                                        MediaQuery.of(context).size.width - 40,
+                                    text: "أضافة حساب جديد",
+                                    color: colorprimarygreen,
+                                    pressEvent: () async {
+                                      if (PickedFile != null) {
+                                        print(imageBytes);
+                                        FormData formData =
+                                            await FormData.fromMap({
+                                          'username': usernameTxt.text,
+                                          'email': emailTxt.text,
+                                          'full_name': full_nameTxt.text,
+                                          'phone': phoneTxt.text,
+                                          'user_type':
+                                              is_Active ? 'branch' : "customer",
+                                          'role':
+                                              is_Active ? 'branch' : "customer",
+                                          'active': true,
+                                          'password': passwordTxt.text,
+                                          'password_confirmation':
+                                              password_confirmationTxt.text,
+                                          'image_path': MultipartFile.fromBytes(
+                                              imageBytes,
+                                              filename:
+                                                  "image_path.${PickedFile?.path.split('.').last}")
+                                        });
+                                        final x =
+                                            await userProvider.SignUpWithImage(
+                                                formData: formData,
+                                                context: context);
+                                        print(x);
+                                        if (x == 400) {
+                                          Future.delayed(
+                                            Duration(seconds: 5),
+                                            () {
+                                              print(x + 404);
+                                            },
+                                          );
+                                        } else if (x == 200) {
+                                          Future.delayed(
+                                            Duration(seconds: 5),
+                                            () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                builder: (context) {
+                                                  return Login_Page_Ui();
+                                                },
+                                              ));
+                                            },
+                                          );
+                                        }
+                                        //pickImageDio(formData: formData);
+                                      } else {
+                                        final x = await userProvider.signUP(
+                                            context: context,
+                                            username: usernameTxt.text,
+                                            email: emailTxt.text,
+                                            full_name: full_nameTxt.text,
+                                            phone: phoneTxt.text,
+                                            user_type: is_Active
+                                                ? 'branch'
+                                                : "customer",
+                                            roles: is_Active
+                                                ? 'branch'
+                                                : "customer",
+                                            password: passwordTxt.text,
+                                            password_confirmation:
+                                                password_confirmationTxt.text);
+                                        print(x);
+                                        if (x == 400) {
+                                          Future.delayed(
+                                            Duration(seconds: 5),
+                                            () {
+                                              print(x + 404);
+                                            },
+                                          );
+                                        } else if (x == 200) {
+                                          Future.delayed(
+                                            Duration(seconds: 5),
+                                            () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                builder: (context) {
+                                                  return Login_Page_Ui();
+                                                },
+                                              ));
+                                            },
+                                          );
+                                        }
+                                      }
+                                    }),
+                                SizedBox(
+                                  height: 14,
+                                ),
+                                AnimatedButton(
                                   width: MediaQuery.of(context).size.width - 40,
-                                  text: "أضافة حساب جديد",
                                   color: colorprimarygreen,
-                                  pressEvent: () async {
-                                    //       final x = await userProvider.signUPImage(
-                                    //           context: context,
-                                    //           username: usernameTxt.text,
-                                    //           email: emailTxt.text,
-                                    //           full_name: full_nameTxt.text,
-                                    //           phone: phoneTxt.text,
-                                    //           user_type:
-                                    //               is_Active ? 'branch' : "customer",
-                                    //           roles:
-                                    //               is_Active ? 'branch' : "customer",
-                                    //           password: passwordTxt.text,
-                                    //           password_confirmation:
-                                    //               password_confirmationTxt.text);
-                                    //       print(x);
-                                    //       if (x == 400) {
-                                    //         Future.delayed(
-                                    //           Duration(seconds: 5),
-                                    //           () {
-                                    //             print(x + 404);
-                                    //           },
-                                    //         );
-                                    //       } else if (x == 200) {
-                                    //         Future.delayed(
-                                    //           Duration(seconds: 5),
-                                    //           () {
-                                    //             Navigator.push(context,
-                                    //                 MaterialPageRoute(
-                                    //               builder: (context) {
-                                    //                 return Login_Page_Ui();
-                                    //               },
-                                    //             ));
-                                    //           },
-                                    //         );
-                                    //       }
-                                    //     }),
-                                    // SizedBox(
-                                    //   height: 14,
-                                    // ),
-                                    // AnimatedButton(
-                                    //   width: MediaQuery.of(context).size.width - 40,
-                                    //   color: colorprimarygreen,
-                                    //   text: "الانتقال لصفحة تسجيل الدخول",
-                                    //   pressEvent: () {
-                                    //     print("dsdfgh");
-                                    //     Navigator.pushReplacement(context,
-                                    //         MaterialPageRoute(
-                                    //       builder: (context) {
-                                    //         return Login_Page_Ui();
-                                    //       },
-                                    //     ));
+                                  text: "الانتقال لصفحة تسجيل الدخول",
+                                  pressEvent: () {
+                                    print("dsdfgh");
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(
+                                      builder: (context) {
+                                        return Login_Page_Ui();
+                                      },
+                                    ));
                                   },
                                 ),
                               ])),

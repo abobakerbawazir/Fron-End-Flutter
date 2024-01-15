@@ -82,6 +82,114 @@
 //     return data;
 //   }
 // }
+class Branch {
+  int? id;
+  String? username;
+  String? fullName;
+  String? email;
+  String? phone;
+  String? userType;
+  Null? emailVerifiedAt;
+  int? active;
+  String? createdAt;
+  String? updatedAt;
+  String? image;
+  String? location;
+  String? roles;
+
+  Branch(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.email,
+      this.phone,
+      this.userType,
+      this.emailVerifiedAt,
+      this.active,
+      this.createdAt,
+      this.updatedAt,
+      this.image,
+      this.location,
+      this.roles});
+
+  Branch.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    fullName = json['full_name'];
+    email = json['email'];
+    phone = json['phone'];
+    userType = json['user_type'];
+    emailVerifiedAt = json['email_verified_at'];
+    active = json['active'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    image = json['image'];
+    location = json['location'];
+    roles = json['roles'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['full_name'] = this.fullName;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['user_type'] = this.userType;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['active'] = this.active;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['image'] = this.image;
+    data['location'] = this.location;
+    data['roles'] = this.roles;
+    return data;
+  }
+}
+class UserSignUp {
+  String? username;
+  String? phone;
+  String? fullName;
+  String? userType;
+  String? email;
+  String? password;
+  String? passwordConfirmation;
+  String? role;
+
+  UserSignUp(
+      {this.username,
+      this.phone,
+      this.fullName,
+      this.userType,
+      this.email,
+      this.password,
+      this.passwordConfirmation,
+      this.role});
+
+  UserSignUp.fromJson(Map<String, dynamic> json) {
+    username = json['username'];
+    phone = json['phone'];
+    fullName = json['full_name'];
+    userType = json['user_type'];
+    email = json['email'];
+    password = json['password'];
+    passwordConfirmation = json['password_confirmation'];
+    role = json['role'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['phone'] = this.phone;
+    data['full_name'] = this.fullName;
+    data['user_type'] = this.userType;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['password_confirmation'] = this.passwordConfirmation;
+    data['role'] = this.role;
+    return data;
+  }
+}
 class Profile {
   int? id;
   String? username;
@@ -138,7 +246,7 @@ class Profile {
     token = json['token'];
     wallet =
         json['wallet'] != null ? new Wallet.fromJson(json['wallet']) : null;
-    roles = json['roles'];
+    roles = json['role'];
   }
   Map<String, dynamic> toJsonActive() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -179,7 +287,39 @@ class Profile {
     if (this.wallet != null) {
       data['wallet'] = this.wallet!.toJson();
     }
-    data['roles'] = this.roles;
+    data['role'] = this.roles;
+    return data;
+  }
+    Map<String, dynamic> toJsonSignUP() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['phone'] = this.phone;
+    data['full_name'] = this.fullName;
+    data['user_type'] = this.userType;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['password_confirmation'] = this.password_confirmation;
+    data['role'] = this.roles;
+    data['active'] = this.active;
+    data['id'] = this.id;
+    return data;
+  }
+  Map<String, dynamic> toJsonSignUPImage() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['phone'] = this.phone;
+    data['full_name'] = this.fullName;
+    data['user_type'] = this.userType;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['password_confirmation'] = this.password_confirmation;
+    data['role'] = this.roles;
+    data['active'] = this.active;
+    data['updated_at'] = this.updatedAt;
+    data['created_at'] = this.createdAt;
+    data['id'] = this.id;
+    data['image'] = this.image;
+    data['location'] = this.location;
     return data;
   }
 }

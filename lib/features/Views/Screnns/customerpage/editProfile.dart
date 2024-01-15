@@ -50,6 +50,7 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
+    final image = box.read('image');
 
     final user_id = box.read('user_id');
     return Directionality(
@@ -75,11 +76,16 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
                         padding: EdgeInsets.all(20),
                         height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width,
-                        child: const CircleAvatar(
-                          backgroundImage: AssetImage(
-                              "assets/images/2021_4_16_14_20_36_447.jpg"),
-                          minRadius: 15,
-                        )),
+                        child: image == null
+                            ? CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    "assets/images/2021_4_16_14_20_36_447.jpg"),
+                                minRadius: 15,
+                              )
+                            : CircleAvatar(
+                                minRadius: 15,
+                                backgroundImage: NetworkImage(image),
+                              )),
                     Positioned(
                       top: 27,
                       right: 120,

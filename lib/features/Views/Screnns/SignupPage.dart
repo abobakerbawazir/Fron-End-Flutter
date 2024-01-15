@@ -47,7 +47,7 @@ class _SignupPageState extends State<SignupPage> {
                             image: DecorationImage(
                                 opacity: 0.7,
                                 image: AssetImage(
-                                    "assets/images/2021_4_16_14_20_38_182.jpg"),
+                                    "assets/Cars/2.png"),
                                 fit: BoxFit.cover),
                             color: Colors.black,
                           )),
@@ -181,7 +181,7 @@ class _SignupPageState extends State<SignupPage> {
                                     text: "أضافة حساب جديد",
                                     color: colorprimarygreen,
                                     pressEvent: () async {
-                                      final x = await userProvider.signUP(
+                                      int x = await userProvider.signUP(
                                           context: context,
                                           username: usernameTxt.text,
                                           email: emailTxt.text,

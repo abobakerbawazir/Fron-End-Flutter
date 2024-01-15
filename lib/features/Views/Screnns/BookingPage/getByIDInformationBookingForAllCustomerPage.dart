@@ -60,7 +60,7 @@ class _getByIDInformationBookingForAllCustomerPageState
         Provider.of<BookingCoustomerByBranchVM>(context);
     final id = box.read('getByIDInformationBookingForAllCustomerPage') ?? 294;
     //final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
-    final days_booking = box.read('days_booking') ?? 0;
+    final days_booking = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
     final role_user = box.read('role_user');
     final walletId = box.read("walletId");
     final transactionProvider = Provider.of<TransactionVM>(context);

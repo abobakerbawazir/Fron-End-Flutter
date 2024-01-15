@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
                               child: Test_page_Screens())
                           : Directionality(
                               textDirection: TextDirection.rtl,
-                              child: SignupPage())),
+                              child: SignUpPageWithImage())),
                 ),
               );
             },

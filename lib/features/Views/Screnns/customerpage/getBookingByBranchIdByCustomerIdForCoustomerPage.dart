@@ -341,15 +341,23 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                                     clipBehavior: Clip.none,
                                                     children: [
                                                       Positioned(
-                                                        top: 15,
-                                                        left: 12,
+                                                        top: 55,
+                                                        left: 18,
                                                         child: SizedBox(
-                                                          height: 100,
-                                                          width: 100,
-                                                          child: Image.network(
-                                                            snapshot
-                                                                .data![index]
-                                                                .image!,
+                                                          height: 60,
+                                                          width: 120,
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        6),
+                                                            child:
+                                                                Image.network(
+                                                              snapshot
+                                                                  .data![index]
+                                                                  .image!,
+                                                              fit: BoxFit.fill,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),

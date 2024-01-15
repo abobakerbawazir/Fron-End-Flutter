@@ -50,8 +50,8 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
                                     decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           opacity: 0.7,
-                                          image: AssetImage(
-                                              "assets/images/2021_4_16_14_20_42_541.jpg"),
+                                          image:
+                                              AssetImage("assets/Cars/2.png"),
                                           fit: BoxFit.cover),
                                       color: Colors.black,
                                     )),
@@ -113,9 +113,7 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
                                                 Duration(seconds: 3),
                                                 () {
                                                   isLoading = false;
-                                                  setState(() {
-
-                                                  });
+                                                  setState(() {});
                                                 },
                                               );
                                               final code =
@@ -132,22 +130,24 @@ class _Login_Page_UiState extends State<Login_Page_Ui> {
                                                     await SharedPreferences
                                                         .getInstance();
                                                 prefs.setBool('token', true);
-                                                if(isLoading==false){
+                                                if (isLoading == false) {
                                                   await AwesomeDialog(
-                                                  context: context,
-                                                  animType: AnimType.leftSlide,
-                                                  headerAnimationLoop: false,
-                                                  dialogType:
-                                                      DialogType.success,
-                                                  showCloseIcon: true,
-                                                  title:
-                                                      messageLoginInTitleSeccues,
-                                                  desc: "",
-                                                  btnOkOnPress: () {
-                                                    debugPrint('OnClcik');
-                                                  },
-                                                  btnOkIcon: Icons.check_circle,
-                                                ).show();
+                                                    context: context,
+                                                    animType:
+                                                        AnimType.leftSlide,
+                                                    headerAnimationLoop: false,
+                                                    dialogType:
+                                                        DialogType.success,
+                                                    showCloseIcon: true,
+                                                    title:
+                                                        messageLoginInTitleSeccues,
+                                                    desc: "",
+                                                    btnOkOnPress: () {
+                                                      debugPrint('OnClcik');
+                                                    },
+                                                    btnOkIcon:
+                                                        Icons.check_circle,
+                                                  ).show();
                                                 }
                                                 Navigator.pushReplacement(
                                                     context, MaterialPageRoute(
