@@ -8,9 +8,10 @@ class MyTextFormField extends StatelessWidget {
       this.controller,
       required this.hintText,
       this.readOnly,
-      this.suffixIcon,
+      this.suffixIcon,this.maxLines=1,
       this.obscureText,
-      this.keyboardType,this.inputFormatters});
+      this.keyboardType,
+      this.inputFormatters});
   late String hintText;
   String? Function(String?)? validator;
   TextEditingController? controller;
@@ -19,6 +20,7 @@ class MyTextFormField extends StatelessWidget {
   bool? obscureText = false;
   TextInputType? keyboardType;
   List<TextInputFormatter>? inputFormatters;
+  int? maxLines = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class MyTextFormField extends StatelessWidget {
         decoration: BoxDecoration(
             color: Color(0xfff8f9fb), borderRadius: BorderRadius.circular(10)),
         child: TextFormField(
+            maxLines: maxLines,
             inputFormatters: inputFormatters,
             validator: validator,
             keyboardType: keyboardType,

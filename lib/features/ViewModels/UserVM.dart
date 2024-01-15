@@ -193,6 +193,70 @@ class UserVM with ChangeNotifier {
     }
     notifyListeners();
   }
+  Future signUPImage(
+      {required String username,
+      phone,
+      full_name,
+      user_type,
+      email,
+      password,
+      password_confirmation,
+      roles,
+      required BuildContext context}) async {
+    print(APIurl.SignupUrl);
+    try {
+      final responce = await connect.post(
+        APIurl.SignupUrl,
+        data: Profile(
+                username: username,
+                phone: phone,
+                fullName: full_name,
+                userType: user_type,
+                email: email,
+                password: password,
+                password_confirmation: password_confirmation,
+                roles: roles)
+            .toJson(),
+      );
+      if (responce.statusCode == 200) {
+        var code = responce.data['code'];
+        var usernamemessage = responce.data['data']['username'] ?? "";
+        var emailmessage = responce.data['data']['email'] ?? "";
+        var phonemessage = responce.data['data']['phone'] ?? "";
+        var passwordmessage = responce.data['data']['password'] ?? "";
+        //var data = responce.data;
+        if (responce.data['code'] == 200) {
+          print(responce.data);
+          print("User added Successfully $code");
+          SuceessLoginDialog(
+              description: "Email = $email and Password = $password",
+              context: context,
+              email: email,
+              password: password,
+              title: messageLoginInTitleSeccues);
+        } else if (responce.data['code'] == 400) {
+          print(responce.data);
+
+          print(
+              "User added Faield $code $usernamemessage $emailmessage $phonemessage $passwordmessage");
+          errorLoginDialog(
+              context: context,
+              title: "خطا $code",
+              description: '''تأكد من المعلومات المدخلة
+               $code $usernamemessage $emailmessage $phonemessage $passwordmessage''');
+        }
+      } else {
+        throw Exception('Failed to add User');
+      }
+      notifyListeners();
+      print(responce.data['code']);
+      return responce.data['code'];
+    } catch (e) {
+      throw Exception("Failed to add User $e");
+    }
+    notifyListeners();
+  }
+
 
   Future<int> login(
       {required String email, password, required BuildContext context}) async {

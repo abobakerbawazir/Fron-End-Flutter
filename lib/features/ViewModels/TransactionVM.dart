@@ -1,5 +1,6 @@
 import 'package:booking_car_project_flutter/core/Constans/Api_Url_Transaction.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
+import 'package:booking_car_project_flutter/features/Models/Transaction/TransactionBooking.dart';
 import 'package:booking_car_project_flutter/features/Models/Transaction/TransactionHistoreyDiposit.dart';
 import 'package:booking_car_project_flutter/features/Models/Transaction/TransactionHistory.dart';
 import 'package:booking_car_project_flutter/features/Models/Transaction/getInfoAllTransactionHistoryToTransfer.dart';
@@ -53,9 +54,11 @@ class TransactionVM with ChangeNotifier {
         .get(APIUrlTransaction.getConutTransactionHistoryDipositStateFalse);
     _countDiposit = response.data['data'];
     return _countDiposit;
-  }Future<int> getConutTransactionHistory({required String id}) async {
-    Response response = await connect
-        .get(APIUrlTransaction.getConutTransactionHistory+id);
+  }
+
+  Future<int> getConutTransactionHistory({required String id}) async {
+    Response response =
+        await connect.get(APIUrlTransaction.getConutTransactionHistory + id);
     _countDiposit = response.data['data'];
     return _countDiposit;
   }
@@ -74,6 +77,35 @@ class TransactionVM with ChangeNotifier {
     print(_getInfoAllTransactionHistoryToTransferLists);
     return _getInfoAllTransactionHistoryToTransferLists;
   }
+  Future<List<TransactionHistoryToAllTransfer>>
+      getCustomerTransactionHistoryToTransfer({required int id}) async {
+    Response responce = await connect
+        .get("${APIUrlTransaction.getCustomerTransactionHistoryToTransferURL}${id.toString()}");
+    print(responce.data['data']);
+    List<dynamic> dataAll = responce.data['data'];
+    print(responce.data['data']);
+    _getInfoAllTransactionHistoryToTransferLists = dataAll
+        .map((e) =>
+            TransactionHistoryToAllTransfer.fromJson(e as Map<String, dynamic>))
+        .toList();
+    print(_getInfoAllTransactionHistoryToTransferLists);
+    return _getInfoAllTransactionHistoryToTransferLists;
+  }
+  Future<List<TransactionHistoryToAllTransfer>>
+      getBranchInfoAllTransactionHistoryToTransfer({required int id}) async {
+    Response responce = await connect
+        .get("${APIUrlTransaction.getBranchInfoAllTransactionHistoryToTransferURL}${id.toString()}");
+    print(responce.data['data']);
+    List<dynamic> dataAll = responce.data['data'];
+    print(responce.data['data']);
+    _getInfoAllTransactionHistoryToTransferLists = dataAll
+        .map((e) =>
+            TransactionHistoryToAllTransfer.fromJson(e as Map<String, dynamic>))
+        .toList();
+    print(_getInfoAllTransactionHistoryToTransferLists);
+    return _getInfoAllTransactionHistoryToTransferLists;
+  }
+  
 
   Future<List<TransactionHistoryNotTransfer>> transactionHistoryNotTransfer(
       {required String id}) async {
@@ -93,11 +125,84 @@ class TransactionVM with ChangeNotifier {
     return [];
   }
 
+  Future<List<TransactionHistoryNotTransfer>>
+      getInfoAllTransactionHistoryforCustomer(
+          {required String id, required int walletId}) async {
+    print(
+        "${APIUrlTransaction.getInfoAllTransactionHistoryforCustomer}$id/${walletId.toString()}");
+    if (id != "2") {
+      Response responce = await connect.get(
+          "${APIUrlTransaction.getInfoAllTransactionHistoryforCustomer}$id/${walletId.toString()}");
+      print(responce.data['data']);
+      List<dynamic> dataAll = responce.data['data'];
+      print(responce.data['data']);
+      _getInfoAllTransactionHistoryNotTransfer = dataAll
+          .map((e) =>
+              TransactionHistoryNotTransfer.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print(_getInfoAllTransactionHistoryNotTransfer);
+      return _getInfoAllTransactionHistoryNotTransfer;
+    }
+    return [];
+  }
+
+  Future<List<TransactionHistoryNotTransfer>>
+      getonlyTransactionHistoryDipositWithStatusFalse() async {
+    Response responce = await connect.get(
+        "${APIUrlTransaction.getonlyTransactionHistoryDipositWithStatusFalseURL}");
+    print(responce.data['data']);
+    List<dynamic> dataAll = responce.data['data'];
+    print(responce.data['data']);
+    _getInfoAllTransactionHistoryNotTransfer = dataAll
+        .map((e) =>
+            TransactionHistoryNotTransfer.fromJson(e as Map<String, dynamic>))
+        .toList();
+    print(_getInfoAllTransactionHistoryNotTransfer);
+    return _getInfoAllTransactionHistoryNotTransfer;
+  }
+
   Future updateDiposit(int id) async {
     Response response =
         await connect.get(APIUrlTransaction.updateDipositURL + id.toString());
     notifyListeners();
     final code = response.data['code'];
+    return code;
+  }
+
+  Future withdraw(Treansaction t) async {
+    Response response = await connect.post(APIUrlTransaction.withdrawURL,
+        data: t.withdrawtoJson());
+    notifyListeners();
+    print(APIUrlTransaction.withdrawURL);
+    final code = response.data['code'];
+    print(response.data);
+    return code;
+  }
+  Future diposit(Treansaction t) async {
+    Response response = await connect.post(APIUrlTransaction.dipositURL,
+        data: t.diposittoJson());
+    notifyListeners();
+    print(APIUrlTransaction.withdrawURL);
+    final code = response.data['code'];
+    print(response.data);
+    return code;
+  }
+  Future transferBooking(TreansactionBooking t) async {
+    Response response = await connect.post(APIUrlTransaction.transferURL,
+        data: t.transferToJson());
+    notifyListeners();
+    print(APIUrlTransaction.transferURL);
+    final code = response.data['code'];
+    print(response.data);
+    return code;
+  }
+   Future transfer(Treansaction t) async {
+    Response response = await connect.post(APIUrlTransaction.transferURL,
+        data: t.transferToJson());
+    notifyListeners();
+    print(APIUrlTransaction.withdrawURL);
+    final code = response.data['code'];
+    print(response.data);
     return code;
   }
 }

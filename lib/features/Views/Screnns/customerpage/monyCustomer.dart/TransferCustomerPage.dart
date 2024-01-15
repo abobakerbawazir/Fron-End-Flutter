@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
-class GetInfoAllTransactionHistoryToTransferPage extends StatefulWidget {
-  const GetInfoAllTransactionHistoryToTransferPage({super.key});
+class TransferCustomerPage extends StatefulWidget {
+  const TransferCustomerPage({super.key});
 
   @override
-  State<GetInfoAllTransactionHistoryToTransferPage> createState() =>
-      _GetInfoAllTransactionHistoryToTransferPageState();
+  State<TransferCustomerPage> createState() => _TransferCustomerPageState();
 }
 
-class _GetInfoAllTransactionHistoryToTransferPageState
-    extends State<GetInfoAllTransactionHistoryToTransferPage> {
+class _TransferCustomerPageState extends State<TransferCustomerPage> {
+  final box = GetStorage();
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     final transactionProvider = Provider.of<TransactionVM>(context);
+    final walletId = box.read('walletId');
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -60,11 +60,12 @@ class _GetInfoAllTransactionHistoryToTransferPageState
                             top: 3.5,
                             child: FutureBuilder(
                               future: transactionProvider
-                                  .getConutTransactionHistory(id: '2'),
+                                  .getCustomerTransactionHistoryToTransfer(
+                                      id: walletId),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return Text(
-                                    "${snapshot.data!.toString()}",
+                                    "${snapshot.data!.length}",
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
@@ -97,7 +98,7 @@ class _GetInfoAllTransactionHistoryToTransferPageState
               width: w,
               child: FutureBuilder(
                 future: transactionProvider
-                    .getInfoAllTransactionHistoryToTransfer(),
+                    .getCustomerTransactionHistoryToTransfer(id: walletId),
                 builder: (context, snapshot) {
                   //List<TransactionHistoryDiposit> listx = snapshot.data!;
                   if (snapshot.hasData) {

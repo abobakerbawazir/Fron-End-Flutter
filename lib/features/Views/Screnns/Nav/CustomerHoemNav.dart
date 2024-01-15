@@ -1,6 +1,7 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/WalletCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/getBookingByBranchIdByCustomerIdForCoustomerPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _CustomerHoemNavState extends State<CustomerHoemNav> {
               //showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(Icons.star_border_rounded),
+              icon: const Icon(Icons.wallet),
               selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
@@ -118,7 +119,7 @@ class _CustomerHoemNavState extends State<CustomerHoemNav> {
             controller: controller,
             children: const [
               HoemCustomerPage(),
-              Center(child: Text('Star')),
+              WalletCustomerPage(),
               getBookingByBranchIdByCustomerIdForCoustomerPage(),
               ProfileCustomerPage()
             ],

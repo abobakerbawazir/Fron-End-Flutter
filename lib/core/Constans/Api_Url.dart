@@ -15,6 +15,8 @@ class APIurl {
   static const String viewAlluserDoesNotAdmin = baseAdmin + 'viewAlluserDoesNotAdmin';
   static const String viewAlluserByRoleNameUrl = baseAdmin + 'viewAlluserByRoleName/';
   static const String baseCarUrl = baseUrl + 'car/';
+  static const String addCarAndImageURL = baseCarUrl + 'addCarAndImage';
+  
   static const String getCarWithUserAndPrand =
       baseCarUrl + 'getCarWithUserAndPrand';
   static const String viewAllCarsUlrl = baseCarUrl + 'index';

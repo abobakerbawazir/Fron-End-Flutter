@@ -19,4 +19,14 @@ class APIUrlTransaction {
       baseTransactionUrl + 'getConutTransactionHistoryDipositStateFalse';
   static const String getConutTransactionHistory =
       baseTransactionUrl + 'getConutTransactionHistory/';
+  static const String getonlyTransactionHistoryDipositWithStatusFalseURL =
+      baseTransactionUrl + "getonlyTransactionHistoryDipositWithStatusFalse";
+      static const String getInfoAllTransactionHistoryforCustomer =
+      baseTransactionUrl + "getInfoAllTransactionHistoryforCustomer/";
+      static const String getCustomerTransactionHistoryToTransferURL =
+      baseTransactionUrl + "getCustomerTransactionHistoryToTransfer/";
+       static const String getBranchInfoAllTransactionHistoryToTransferURL =
+      baseTransactionUrl + "getBranchInfoAllTransactionHistoryToTransfer/";
+      
+      
 }

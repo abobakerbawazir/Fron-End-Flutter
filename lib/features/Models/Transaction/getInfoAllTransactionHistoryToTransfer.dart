@@ -291,7 +291,7 @@ class User {
   int? active;
   String? createdAt;
   String? updatedAt;
-  Null? image;
+  String? image;
   String? location;
 
   User(

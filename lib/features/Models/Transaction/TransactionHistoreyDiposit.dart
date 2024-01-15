@@ -203,7 +203,7 @@ class TransactionHistoryNotTransfer {
   int? transactionTypeId;
   int? walletId;
   int? bookingId;
-  int? amount;
+  dynamic? amount;
   Null? deletedAt;
   String? createdAt;
   String? updatedAt;
@@ -299,7 +299,7 @@ class Wallet {
   int? id;
   String? code;
   int? userId;
-  int? balance;
+  double? balance;
   Null? deletedAt;
   String? createdAt;
   String? updatedAt;
@@ -319,7 +319,7 @@ class Wallet {
     id = json['id'];
     code = json['code'];
     userId = json['user_id'];
-    balance = json['balance'];
+    balance = double.parse(json['balance'].toString());
     deletedAt = json['deleted_at'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

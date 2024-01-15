@@ -1,5 +1,10 @@
+import 'package:booking_car_project_flutter/features/Models/Transaction/TransactionHistory.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingCoustomerByBranchVM.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/TransactionVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +52,8 @@ class _getByIDInformationBookingForAllCustomerPageState
   // }
 
   final box = GetStorage();
+  TextEditingController amountTxt = TextEditingController();
+  TextEditingController descriptionTxt = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final bookingCoustomerByBranchProvider =
@@ -54,6 +61,9 @@ class _getByIDInformationBookingForAllCustomerPageState
     final id = box.read('getByIDInformationBookingForAllCustomerPage') ?? 294;
     //final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
     final days_booking = box.read('days_booking') ?? 0;
+    final role_user = box.read('role_user');
+    final walletId = box.read("walletId");
+    final transactionProvider = Provider.of<TransactionVM>(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -78,6 +88,114 @@ class _getByIDInformationBookingForAllCustomerPageState
                           //margin: EdgeInsets.all(8),
                           child: Column(
                             children: [
+                              snapshot.data!.status == "معلق" &&
+                                      role_user == "customer"
+                                  ? ElevatedButton(
+                                      onPressed: () async {
+                                        amountTxt.text =
+                                            snapshot.data!.total.toString();
+
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return AlertDialog(
+                                              title: Center(
+                                                  child: Text(
+                                                      "المبلغ الاجمالي للحجزهو : ${snapshot.data!.total.toString()} RY")),
+                                              actions: [
+                                                MyTextFormField(
+                                                    inputFormatters: [
+                                                      FilteringTextInputFormatter
+                                                          .digitsOnly
+                                                    ],
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    hintText: 'المبلغ',
+                                                    controller: amountTxt,
+                                                    readOnly: true,
+                                                    suffixIcon: Icon(
+                                                        Icons.attach_money)),
+                                                MyTextFormField(
+                                                  maxLines: null,
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  hintText: 'الوصف ان امكن',
+                                                  controller: descriptionTxt,
+                                                  readOnly: false,
+                                                  suffixIcon:
+                                                      Icon(Icons.description),
+                                                ),
+                                                InkWell(
+                                                  onTap: () async {
+                                                    Treansaction t =
+                                                        Treansaction(
+                                                            bookingId: snapshot
+                                                                .data!.id,
+                                                            walletId: walletId,
+                                                            description:
+                                                                descriptionTxt
+                                                                    .text);
+                                                    final x =
+                                                        await transactionProvider
+                                                            .transfer(t);
+                                                    print(x);
+                                                    if (x == 200) {
+                                                      Navigator.pop(context);
+                                                    }
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        color:
+                                                            colorprimarygreen,
+                                                      ),
+                                                      width: 280,
+                                                      height: 60,
+                                                      child: Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text("تحويل",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 18,
+                                                                  color:
+                                                                      colorprimarywhite)),
+                                                          Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(8)),
+                                                          Icon(
+                                                            size: 25,
+                                                            Icons
+                                                                .transfer_within_a_station,
+                                                            color:
+                                                                colorprimarywhite,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Text("أدفع عبر المحفظة"))
+                                  : Container(),
                               Text(
                                 "معلومات الحجز الاولية",
                                 style: TextStyle(

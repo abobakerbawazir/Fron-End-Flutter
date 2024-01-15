@@ -91,6 +91,8 @@ class BookingVM with ChangeNotifier {
             data: response.data['data'],
             type: "${response.data['type']}");
       } else if (code == 201) {
+        box.write("new_booking_id", response.data['data']['id']);
+        box.write("new_total", response.data['data']['total']);
         return successDialog(
             context: context,
             data: '''معلومات الحجز : 

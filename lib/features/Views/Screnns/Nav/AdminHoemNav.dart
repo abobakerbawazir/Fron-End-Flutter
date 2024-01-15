@@ -89,7 +89,7 @@ class _AdminHomeNavState extends State<AdminHomeNav> {
                 Icons.attach_money_sharp,
                 //color: Colors.green,
               ),
-              selectedIcon: const Icon(Icons.star_rounded),
+              selectedIcon: const Icon(Icons.wallet),
               selectedColor: Colors.green,
               // unSelectedColor: Colors.purple,
               // backgroundColor: Colors.orange,

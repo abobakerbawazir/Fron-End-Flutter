@@ -1,12 +1,15 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/Models/Booking/Booking.dart';
 import 'package:booking_car_project_flutter/features/Enum/enumStatus.dart';
+import 'package:booking_car_project_flutter/features/Models/Transaction/TransactionBooking.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/BookingVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
+import 'package:booking_car_project_flutter/features/ViewModels/TransactionVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/BookingPage/BookingHomePage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/awasome_dialog_page.dart';
@@ -58,6 +61,9 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
     }
   }
 
+  TextEditingController amountTxt = TextEditingController();
+  TextEditingController descriptionTxt = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final carProvider = Provider.of<CarVM>(context);
@@ -66,11 +72,16 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
 
     final prandProvider = Provider.of<PrandVM>(context);
     final bookingProvider = Provider.of<BookingVM>(context);
+    final transactionProvider = Provider.of<TransactionVM>(context);
 
     int prand_id_branch = box.read('prand_id_branch');
     int id_user_branch = box.read('id_user_branch');
     int userId = box.read('user_id');
     int carId = box.read('car_id');
+    final new_booking_id = box.read('new_booking_id') ?? 0;
+    final new_total = box.read('new_total') ?? 0;
+    final walletId = box.read("walletId") ?? 0;
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -477,6 +488,96 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                                   if (x ==
                                                                       201) {
                                                                     print(201);
+                                                                    // AwesomeDialog(
+                                                                    //   context:
+                                                                    //       context,
+                                                                    //   animType:
+                                                                    //       AnimType
+                                                                    //           .leftSlide,
+                                                                    //   headerAnimationLoop:
+                                                                    //       false,
+                                                                    //   dialogType:
+                                                                    //       DialogType
+                                                                    //           .success,
+                                                                    //   showCloseIcon:
+                                                                    //       true,
+                                                                    //   title:
+                                                                    //       'هل تريد ان تدفع من المحفظة',
+                                                                    //   desc:
+                                                                    //       'ماذا تنتظر',
+                                                                    //   btnOkOnPress:
+                                                                    //       () async {
+                                                                    //     amountTxt.text =
+                                                                    //         new_total.toString();
+                                                                    //     showDialog(
+                                                                    //       context:
+                                                                    //           context,
+                                                                    //       builder:
+                                                                    //           (context) {
+                                                                    //         return AlertDialog(
+                                                                    //           title: Center(child: Text("يرجى اضافة المبلغ المطلوب")),
+                                                                    //           actions: [
+                                                                    //             MyTextFormField(inputFormatters: [
+                                                                    //               FilteringTextInputFormatter.digitsOnly
+                                                                    //             ], keyboardType: TextInputType.number, hintText: 'المبلغ', controller: amountTxt, readOnly: false, suffixIcon: Icon(Icons.attach_money)),
+                                                                    //             MyTextFormField(
+                                                                    //               maxLines: null,
+                                                                    //               keyboardType: TextInputType.multiline,
+                                                                    //               hintText: 'الوصف ان امكن',
+                                                                    //               controller: descriptionTxt,
+                                                                    //               readOnly: false,
+                                                                    //               suffixIcon: Icon(Icons.description),
+                                                                    //             ),
+                                                                    //             InkWell(
+                                                                    //               onTap: () async {
+                                                                    //                 TreansactionBooking t = TreansactionBooking(bookingId: new_booking_id, walletId: walletId, description: descriptionTxt.text);
+                                                                    //                 final x = await transactionProvider.transferBooking(t);
+                                                                    //                 Navigator.pop(context);
+
+                                                                    //                 print(x);
+                                                                    //                 if (x == 200) {
+                                                                    //                   Navigator.pop(context);
+                                                                    //                 }
+                                                                    //               },
+                                                                    //               child: Padding(
+                                                                    //                 padding: const EdgeInsets.all(8.0),
+                                                                    //                 child: Container(
+                                                                    //                   decoration: BoxDecoration(
+                                                                    //                     borderRadius: BorderRadius.circular(10),
+                                                                    //                     color: colorprimarygreen,
+                                                                    //                   ),
+                                                                    //                   width: 280,
+                                                                    //                   height: 60,
+                                                                    //                   child: Row(
+                                                                    //                     crossAxisAlignment: CrossAxisAlignment.center,
+                                                                    //                     mainAxisAlignment: MainAxisAlignment.center,
+                                                                    //                     children: [
+                                                                    //                       Text("ايداع", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
+                                                                    //                       Padding(padding: EdgeInsets.all(8)),
+                                                                    //                       Icon(
+                                                                    //                         size: 25,
+                                                                    //                         Icons.transfer_within_a_station,
+                                                                    //                         color: colorprimarywhite,
+                                                                    //                       )
+                                                                    //                     ],
+                                                                    //                   ),
+                                                                    //                 ),
+                                                                    //               ),
+                                                                    //             ),
+                                                                    //           ],
+                                                                    //         );
+                                                                    //       },
+                                                                    //     );
+                                                                    //   },
+                                                                    //   btnCancelOnPress:
+                                                                    //       () {},
+                                                                    //   btnOkIcon:
+                                                                    //       Icons
+                                                                    //           .check_circle,
+                                                                    //   onDismissCallback:
+                                                                    //       (type) {},
+                                                                    // ).show();
+
                                                                     // Navigator
                                                                     //     .canPop(
                                                                     //         context);

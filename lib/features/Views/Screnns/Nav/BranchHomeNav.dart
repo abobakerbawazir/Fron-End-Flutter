@@ -1,4 +1,5 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/MonyBranchPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/HomeCustomerPage.dart';
@@ -64,7 +65,7 @@ class _BranchHomeNavState extends State<BranchHomeNav> {
               //showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(Icons.star_border_rounded),
+              icon: const Icon(Icons.wallet),
               selectedIcon: const Icon(Icons.star_rounded),
               selectedColor: Colors.red,
               // unSelectedColor: Colors.purple,
@@ -120,7 +121,7 @@ class _BranchHomeNavState extends State<BranchHomeNav> {
             controller: controller,
             children: const [
               ViewPrandPage(),
-              Center(child: Text('Star')),
+              MonyBranchPage(),
               getBookingByBranchIdPage(),
               ProfileCustomerPage()
             ],
