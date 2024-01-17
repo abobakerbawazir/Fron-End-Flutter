@@ -58,11 +58,6 @@ class _FillterPagePrandState extends State<FillterPagePrand> {
                                   if(_titleController.text==''){
                                     prandProvider.myNotifyListeners();
                                   }
-                                  // _titleController.text = value;
-                                  // prandProvider.filtterPrandName(
-                                  //     fultterName: _titleController.text);
-                                  //prandProvider.myNotifyListeners();
-                                  // _titleController.text = value;
                                 },
                               )),
                         )),

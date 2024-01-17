@@ -102,101 +102,102 @@ class _WithdrawBranchPageState extends State<WithdrawBranchPage> {
             SizedBox(
               height: 12,
             ),
-            InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Center(child: Text("يرجى اضافة المبلغ المطلوب")),
-                      actions: [
-                        MyTextFormField(
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            keyboardType: TextInputType.number,
-                            hintText: 'المبلغ',
-                            controller: amountTxt,
-                            readOnly: false,
-                            suffixIcon: Icon(Icons.attach_money)),
-                        MyTextFormField(
-                          maxLines: null,
-                          keyboardType: TextInputType.multiline,
-                          hintText: 'الوصف ان امكن',
-                          controller: descriptionTxt,
-                          readOnly: false,
-                          suffixIcon: Icon(Icons.description),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            Treansaction t = Treansaction(
-                                walletId: walletId,
-                                amount: double.parse(amountTxt.text),
-                                description: descriptionTxt.text);
-                            final x = await transactionProvider.diposit(t);
-                            print(x);
-                            if (x == 200) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: colorprimarygreen,
-                              ),
-                              width: 280,
-                              height: 60,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("ايداع",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                          color: colorprimarywhite)),
-                                  Padding(padding: EdgeInsets.all(8)),
-                                  Icon(
-                                    size: 25,
-                                    Icons.transfer_within_a_station,
-                                    color: colorprimarywhite,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                        decoration: BoxDecoration(
-                            color: colorprimarygrey,
-                            borderRadius: BorderRadius.circular(6)),
-                        child: Icon(
-                          Icons.add,
-                          color: colorprimarywhite,
-                        )),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "اضافة عملية ايداع",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     showDialog(
+            //       context: context,
+            //       builder: (context) {
+            //         return AlertDialog(
+            //           title: Center(child: Text("يرجى اضافة المبلغ المطلوب")),
+            //           actions: [
+            //             MyTextFormField(
+            //                 inputFormatters: [
+            //                   FilteringTextInputFormatter.digitsOnly
+            //                 ],
+            //                 keyboardType: TextInputType.number,
+            //                 hintText: 'المبلغ',
+            //                 controller: amountTxt,
+            //                 readOnly: false,
+            //                 suffixIcon: Icon(Icons.attach_money)),
+            //             MyTextFormField(
+            //               maxLines: null,
+            //               keyboardType: TextInputType.multiline,
+            //               hintText: 'الوصف ان امكن',
+            //               controller: descriptionTxt,
+            //               readOnly: false,
+            //               suffixIcon: Icon(Icons.description),
+            //             ),
+            //             InkWell(
+            //               onTap: () async {
+            //                 Treansaction t = Treansaction(
+            //                     walletId: walletId,
+            //                     amount: double.parse(amountTxt.text),
+            //                     description: descriptionTxt.text);
+            //                 final x = await transactionProvider.diposit(t);
+            //                 print(x);
+            //                 if (x == 200) {
+            //                   Navigator.pop(context);
+            //                 }
+            //               },
+            //               child: Padding(
+            //                 padding: const EdgeInsets.all(8.0),
+            //                 child: Container(
+            //                   decoration: BoxDecoration(
+            //                     borderRadius: BorderRadius.circular(10),
+            //                     color: colorprimarygreen,
+            //                   ),
+            //                   width: 280,
+            //                   height: 60,
+            //                   child: Row(
+            //                     crossAxisAlignment: CrossAxisAlignment.center,
+            //                     mainAxisAlignment: MainAxisAlignment.center,
+            //                     children: [
+            //                       Text("ايداع",
+            //                           style: TextStyle(
+            //                               fontWeight: FontWeight.bold,
+            //                               fontSize: 18,
+            //                               color: colorprimarywhite)),
+            //                       Padding(padding: EdgeInsets.all(8)),
+            //                       Icon(
+            //                         size: 25,
+            //                         Icons.transfer_within_a_station,
+            //                         color: colorprimarywhite,
+            //                       )
+            //                     ],
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ],
+            //         );
+            //       },
+            //     );
+            //   },
+            //   child: Row(
+            //     children: [
+            //       Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Container(
+            //             decoration: BoxDecoration(
+            //                 color: colorprimarygrey,
+            //                 borderRadius: BorderRadius.circular(6)),
+            //             child: Icon(
+            //               Icons.add,
+            //               color: colorprimarywhite,
+            //             )),
+            //       ),
+            //       Padding(
+            //         padding: const EdgeInsets.all(8.0),
+            //         child: Text(
+            //           "اضافة عملية ايداع",
+            //           style:
+            //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+
             SizedBox(
               height: h - 330,
               width: w,

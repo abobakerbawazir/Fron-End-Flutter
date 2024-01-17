@@ -35,15 +35,15 @@ class _SignUpPageWithImageState extends State<SignUpPageWithImage> {
   XFile? PickedFile;
   List<int> imageBytes = [];
 
-  pickImageDio({required FormData formData}) async {
-    print(APIurl.baseUrl + 'addUserAndAddImage');
-    Dio dio = DioSingelton.getInstance();
-    Response response =
-        await dio.post(APIurl.baseUrl + 'addUserAndAddImage', data: formData);
-    var x = response.data;
-    print(x);
-    return x;
-  }
+  // pickImageDio({required FormData formData}) async {
+  //   print(APIurl.baseUrl + 'addUserAndAddImage');
+  //   Dio dio = DioSingelton.getInstance();
+  //   Response response =
+  //       await dio.post(APIurl.baseUrl + 'addUserAndAddImage', data: formData);
+  //   var x = response.data;
+  //   print(x);
+  //   return x;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -346,8 +346,6 @@ class _SignUpPageWithImageState extends State<SignUpPageWithImage> {
                                           'email': emailTxt.text,
                                           'full_name': full_nameTxt.text,
                                           'phone': phoneTxt.text,
-                                          'user_type':
-                                              is_Active ? 'branch' : "customer",
                                           'role':
                                               is_Active ? 'branch' : "customer",
                                           'active': true,
@@ -392,9 +390,7 @@ class _SignUpPageWithImageState extends State<SignUpPageWithImage> {
                                             email: emailTxt.text,
                                             full_name: full_nameTxt.text,
                                             phone: phoneTxt.text,
-                                            user_type: is_Active
-                                                ? 'branch'
-                                                : "customer",
+                                          
                                             roles: is_Active
                                                 ? 'branch'
                                                 : "customer",

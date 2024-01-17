@@ -187,8 +187,6 @@ class _SignupPageState extends State<SignupPage> {
                                           email: emailTxt.text,
                                           full_name: full_nameTxt.text,
                                           phone: phoneTxt.text,
-                                          user_type:
-                                              is_Active ? 'branch' : "customer",
                                           roles:
                                               is_Active ? 'branch' : "customer",
                                           password: passwordTxt.text,

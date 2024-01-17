@@ -77,7 +77,7 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
     int prand_id_branch = box.read('prand_id_branch');
     int id_user_branch = box.read('id_user_branch');
     int userId = box.read('user_id');
-    int carId = box.read('car_id')??0;
+    int carId = box.read('car_id') ?? 0;
     final new_booking_id = box.read('new_booking_id') ?? 0;
     final new_total = box.read('new_total') ?? 0;
     final walletId = box.read("walletId") ?? 0;
@@ -756,10 +756,14 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                           child: SizedBox(
                                             width: 150,
                                             height: 150,
-                                            child: Image.network(
-                                              snapshot.data![index]
-                                                  .imageCarOfBrands!,
-                                              fit: BoxFit.fill,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                              child: Image.network(
+                                                snapshot.data![index]
+                                                    .imageCarOfBrands!,
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
                                         )

@@ -222,20 +222,44 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                                                     .imageCarBrands!
                                                                     .length >
                                                                 1
-                                                            ? Image.network(snapshot
-                                                                .data![index]
-                                                                .cars!
-                                                                .imageCarBrands![
-                                                                    0]
-                                                                .url
-                                                                .toString())
-                                                            : Image.network(snapshot
-                                                                .data![index]
-                                                                .cars!
-                                                                .imageCarBrands![
-                                                                    0]
-                                                                .url
-                                                                .toString()),
+                                                            ? SizedBox(
+                                                                height: h / 3,
+                                                                child:
+                                                                    ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                30),
+                                                                        child: Image
+                                                                            .network(
+                                                                          snapshot
+                                                                              .data![index]
+                                                                              .cars!
+                                                                              .imageCarBrands![0]
+                                                                              .url
+                                                                              .toString(),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        )),
+                                                              )
+                                                            : SizedBox(
+                                                                height: h / 3,
+                                                                child:
+                                                                    ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                30),
+                                                                        child: Image
+                                                                            .network(
+                                                                          snapshot
+                                                                              .data![index]
+                                                                              .cars!
+                                                                              .imageCarBrands![0]
+                                                                              .url
+                                                                              .toString(),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        )),
+                                                              ),
                                                     Text(
                                                         "معلومات العميل الذي قام بعملية الحجز",
                                                         style: TextStyle(
@@ -580,22 +604,38 @@ class _getBookingByBranchIdByCustomerIdForCoustomerPageState
                                                                         .imageCarBrands!
                                                                         .length >
                                                                     1
-                                                                ? Image.network(snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .cars!
-                                                                    .imageCarBrands![
-                                                                        0]
-                                                                    .url
-                                                                    .toString())
-                                                                : Image.network(snapshot
-                                                                    .data![
-                                                                        index]
-                                                                    .cars!
-                                                                    .imageCarBrands![
-                                                                        0]
-                                                                    .url
-                                                                    .toString()),
+                                                                ? SizedBox(
+                                                                    height:
+                                                                        h / 3,
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(30),
+                                                                        child: Image.network(
+                                                                          snapshot
+                                                                              .data![index]
+                                                                              .cars!
+                                                                              .imageCarBrands![0]
+                                                                              .url
+                                                                              .toString(),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        )),
+                                                                  )
+                                                                : SizedBox(
+                                                                    height:
+                                                                        h / 3,
+                                                                    child: ClipRRect(
+                                                                        borderRadius: BorderRadius.circular(30),
+                                                                        child: Image.network(
+                                                                          snapshot
+                                                                              .data![index]
+                                                                              .cars!
+                                                                              .imageCarBrands![0]
+                                                                              .url
+                                                                              .toString(),
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                        )),
+                                                                  ),
                                                         Text(
                                                             "معلومات العميل الذي قام بعملية الحجز",
                                                             style: TextStyle(

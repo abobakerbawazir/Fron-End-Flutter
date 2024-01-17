@@ -14,7 +14,6 @@ class MangeUserScreens extends StatefulWidget {
 }
 
 class _MangeUserScreensState extends State<MangeUserScreens> {
-  
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);

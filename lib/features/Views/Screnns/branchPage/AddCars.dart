@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
@@ -28,8 +29,11 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
   final _modelController = TextEditingController();
   final _priceController = TextEditingController();
   final _activeController = TextEditingController();
+  final ImagePicker _pickercar = ImagePicker();
+  XFile? PickedFilecar;
+  List<int> imageBytescar = [];
   int? type;
-  List<int> modelList = List.generate(25, (index) => index + 2000);
+  List<int> modelList = List.generate(26, (index) => index + 2000);
   File? _image;
   final picker = ImagePicker();
   Future getImagegallery() async {
@@ -128,214 +132,528 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
     // final prand_id = box.read('prand_id_forAddCar');
     // final user_id = box.read('user_id');
 
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () async {
-                await getCarsWithApi();
-                setState(() {});
-              },
-              child: Text(
-                "تحديث",
-                style: TextStyle(color: colorprimarywhite),
-              )),
-        ],
-        backgroundColor: colorprimarygreen,
-        title: Center(child: Text(' صفحة أضافة السيارات ')),
-      ),
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.all(12),
-        child: Form(
-          key: _addFormKey,
-          child: Column(
-            children: [
-              Image.asset('assets/images/home.png'),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: colorprimarygreen),
-                  onPressed: () async {
-                    await showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              MyTextFormField(
-                                controller: _nameController,
-                                hintText: 'اسم السيارة',
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter اسم السيارة';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              MyTextFormField(
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                keyboardType: TextInputType.number,
-                                controller: _priceController,
-                                hintText: 'سعر السيارة',
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter سعر السيارة';
-                                  }
-                                  return null;
-                                },
-                              ),
-                              MyTextFormField(
-                                readOnly: true,
-                                controller: _modelController,
-                                hintText: 'موديل السيارة',
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Please enter موديل السيارة';
-                                  }
-                                  return null;
-                                },
-                                suffixIcon: DropdownButton(
-                                  // icon: Icon(Icons
-                                  //     .arrow_drop_down_circle_outlined),
-                                  value: type,
-                                  items: modelList.map(
-                                    (e) {
-                                      return DropdownMenuItem(
-                                          value: e,
-                                          child: Text(e.toString(),
-                                              style: TextStyle(
-                                                  color: Colors.black)));
-                                    },
-                                  ).toList(),
-                                  onChanged: (value) {
-                                    type = value!;
-                                    _modelController.text = type!.toString();
-                                  },
-                                ),
-                              ),
-                              // Container(
-                              //     child: ElevatedButton(
-                              //         onPressed: () async {
-                              //           await showDialog(
-                              //             context: context,
-                              //             builder: (context) {
-                              //               return AlertDialog(
-                              //                 actions: [
-                              //                   ElevatedButton(
-                              //                       onPressed: () {
-                              //                         getImagegallery();
-                              //                       },
-                              //                       child: Text("gallery")),
-                              //                   ElevatedButton(
-                              //                       onPressed: () {
-                              //                         getImageCamera();
-                              //                       },
-                              //                       child: Text("camera"))
-                              //                 ],
-                              //               );
-                              //             },
-                              //           );
-                              //         },
-                              //         child: _buildImage())),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            TextButton(
+                onPressed: () async {
+                  await getCarsWithApi();
+                  setState(() {});
+                },
+                child: Text(
+                  "تحديث",
+                  style: TextStyle(color: colorprimarywhite),
+                )),
+          ],
+          backgroundColor: colorprimarygreen,
+          title: Center(child: Text(' صفحة أضافة السيارات ')),
+        ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.all(12),
+          child: Form(
+            key: _addFormKey,
+            child: Column(
+              children: [
+                Image.asset('assets/images/home.png'),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: colorprimarygreen),
+                    onPressed: () async {
+                      await showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder: (context, setState) {
+                              return SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      MyTextFormField(
+                                        controller: _nameController,
+                                        hintText: 'اسم السيارة',
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please enter اسم السيارة';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      MyTextFormField(
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                        keyboardType: TextInputType.number,
+                                        controller: _priceController,
+                                        hintText: 'سعر السيارة',
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please enter سعر السيارة';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                      MyTextFormField(
+                                        readOnly: true,
+                                        controller: _modelController,
+                                        hintText: 'موديل السيارة',
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Please enter موديل السيارة';
+                                          }
+                                          return null;
+                                        },
+                                        suffixIcon: DropdownButton(
+                                          // icon: Icon(Icons
+                                          //     .arrow_drop_down_circle_outlined),
+                                          value: type,
+                                          items: modelList.map(
+                                            (e) {
+                                              return DropdownMenuItem(
+                                                  value: e,
+                                                  child: Text(e.toString(),
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.black)));
+                                            },
+                                          ).toList(),
+                                          onChanged: (value) {
+                                            type = value!;
+                                            _modelController.text =
+                                                type!.toString();
+                                          },
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: StatefulBuilder(
+                                            builder: (context, setState) {
+                                              return InkWell(
+                                                onTap: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return AlertDialog(
+                                                        actions: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: IconButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  PickedFilecar =
+                                                                      await _picker.pickImage(
+                                                                          source:
+                                                                              ImageSource.gallery);
+                                                                  imageBytescar =
+                                                                      await PickedFilecar!
+                                                                          .readAsBytes();
+                                                                  carProvider
+                                                                      .notifyListeners();
+                                                                  setState(
+                                                                      () {});
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons.photo,
+                                                                  size: 50,
+                                                                )),
+                                                          ),
+                                                          Text("           "),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: IconButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  PickedFilecar =
+                                                                      await _picker.pickImage(
+                                                                          source:
+                                                                              ImageSource.camera);
+                                                                  imageBytescar =
+                                                                      await PickedFilecar!
+                                                                          .readAsBytes();
+                                                                  carProvider
+                                                                      .notifyListeners();
+                                                                  setState(
+                                                                      () {});
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .camera_alt,
+                                                                  size: 50,
+                                                                )),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Column(
+                                                      children: [
+                                                        Text("اضافة صورة"),
+                                                        Text(
+                                                          'اختياري',
+                                                          style: TextStyle(
+                                                              fontSize: 10),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 4,
+                                                    ),
+                                                    Icon(
+                                                      Icons.photo,
+                                                      size: 50,
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            },
+                                          )),
+                                      PickedFilecar != null
+                                          ? Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                    width: 200,
+                                                    height: 200,
+                                                    child: Image.file(File(
+                                                        PickedFilecar!.path))),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      PickedFilecar = null;
+                                                      setState(() {});
+                                                      //carProvider.notifyListeners();
+                                                    },
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text("حذف الصورة"),
+                                                        Icon(Icons.cancel)
+                                                      ],
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            )
+                                          : StatefulBuilder(
+                                              builder: (context, setState) {
+                                                return Container();
+                                              },
+                                            ),
 
-                              SizedBox(
-                                height: 20,
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: colorprimarygreen),
-                                onPressed: () async {
-                                  if (_addFormKey.currentState!.validate()) {
-                                    _addFormKey.currentState!.save();
-                                    var x = await addCarWithApi(
-                                        name: _nameController.text,
-                                        model: _modelController.text,
-                                        price: int.parse(_priceController.text),
-                                        prand_id: prand_id,
-                                        user_id: user_id);
-                                    if (x == 200) {
-                                      print("Succesffuly");
-                                    } else {
-                                      print("Faield");
-                                    }
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                                child: Text(
-                                  'حفظ',
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: Text(
-                    "اضافة سيارة جديدة",
-                    style: TextStyle(color: colorprimarywhite, fontSize: 20),
-                  )),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Text(_image == null ? "" : _image!.path),
+                                      // Container(
+                                      //     child: ElevatedButton(
+                                      //         onPressed: () async {
+                                      //           await showDialog(
+                                      //             context: context,
+                                      //             builder: (context) {
+                                      //               return AlertDialog(
+                                      //                 actions: [
+                                      //                   ElevatedButton(
+                                      //                       onPressed: () {
+                                      //                         getImagegallery();
+                                      //                       },
+                                      //                       child: Text("gallery")),
+                                      //                   ElevatedButton(
+                                      //                       onPressed: () {
+                                      //                         getImageCamera();
+                                      //                       },
+                                      //                       child: Text("camera"))
+                                      //                 ],
+                                      //               );
+                                      //             },
+                                      //           );
+                                      //         },
+                                      //         child: _buildImage())),
 
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.9,
-                  width: MediaQuery.of(context).size.width,
-                  child: FutureBuilder(
-                    future: carProvider.getCarsWithIdUserAndIdPrandWithApi(
-                        user_id: user_id, prand_id: prand_id),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        if (snapshot.data!.isEmpty) {
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 50,
-                              ),
-                              Text(
-                                "الرجاء اضافة سيارة",
-                                style: TextStyle(fontSize: 30),
-                              ),
-                            ],
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: colorprimarygreen),
+                                        onPressed: () async {
+                                          if (_addFormKey.currentState!
+                                              .validate()) {
+                                            _addFormKey.currentState!.save();
+                                            if (PickedFilecar != null) {
+                                              print(imageBytescar);
+                                              FormData formData =
+                                                  await FormData.fromMap({
+                                                'name': _nameController.text,
+                                                'price': _priceController.text,
+                                                'model': _modelController.text,
+                                                'user_id': user_id,
+                                                'prand_id': prand_id,
+                                                'image_car_of_brands':
+                                                    MultipartFile.fromBytes(
+                                                        imageBytescar,
+                                                        filename:
+                                                            "image_car_of_brands.${PickedFilecar?.path.split('.').last}")
+                                              });
+                                              final x = await carProvider
+                                                  .addCarWithImage(
+                                                      formData: formData);
+                                              Navigator.of(context).pop();
+                                            } else {
+                                              var x = await addCarWithApi(
+                                                  name: _nameController.text,
+                                                  model: _modelController.text,
+                                                  price: int.parse(
+                                                      _priceController.text),
+                                                  prand_id: prand_id,
+                                                  user_id: user_id);
+                                              if (x == 200) {
+                                                print("Succesffuly");
+                                              } else {
+                                                print("Faield");
+                                              }
+                                              carProvider.notifyListeners();
+                                              Navigator.of(context).pop();
+                                            }
+                                          }
+                                        },
+                                        child: Text(
+                                          'حفظ',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           );
-                        } else {
-                          return SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: Container(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: List.generate(snapshot.data!.length,
-                                    (index) {
-                                  return SizedBox(
-                                    height: MediaQuery.of(context).size.height /
-                                        2.3,
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 213, 210, 200),
-                                          borderRadius:
-                                              BorderRadius.circular(40)),
-                                      margin: EdgeInsets.all(10),
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          Positioned(
-                                            right: 30,
-                                            top: 10,
-                                            child: TextButton(
-                                                onPressed: () async {
+                        },
+                      );
+                    },
+                    child: Text(
+                      "اضافة سيارة جديدة",
+                      style: TextStyle(color: colorprimarywhite, fontSize: 20),
+                    )),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(_image == null ? "" : _image!.path),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height / 1.9,
+                    width: MediaQuery.of(context).size.width,
+                    child: FutureBuilder(
+                      future: carProvider.getCarsWithIdUserAndIdPrandWithApi(
+                          user_id: user_id, prand_id: prand_id),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isEmpty) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                ),
+                                Text(
+                                  "الرجاء اضافة سيارة",
+                                  style: TextStyle(fontSize: 30),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: List.generate(snapshot.data!.length,
+                                      (index) {
+                                    return SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2.3,
+                                      width: MediaQuery.of(context).size.width,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 213, 210, 200),
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        margin: EdgeInsets.all(10),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            Positioned(
+                                              right: 10,
+                                              top: 50,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    AwesomeDialog(
+                                                      context: context,
+                                                      animType:
+                                                          AnimType.leftSlide,
+                                                      headerAnimationLoop:
+                                                          false,
+                                                      dialogType:
+                                                          DialogType.question,
+                                                      showCloseIcon: true,
+                                                      title:
+                                                          'هل فعلا تريد حذف السيارة',
+                                                      desc:
+                                                          ' سوف تقوم بحذف ${snapshot.data![index].name!}',
+                                                      btnCancelOnPress: () {
+                                                        Navigator.of(context);
+                                                      },
+                                                      btnOkOnPress: () async {
+                                                        final data =
+                                                            await carProvider
+                                                                .deleteCar(
+                                                                    id: snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .id!);
+                                                        if (data['code'] ==
+                                                            405) {
+                                                          AwesomeDialog(
+                                                            context: context,
+                                                            dialogType:
+                                                                DialogType
+                                                                    .error,
+                                                            animType: AnimType
+                                                                .rightSlide,
+                                                            headerAnimationLoop:
+                                                                false,
+                                                            title: 'خطأ',
+                                                            desc:
+                                                                '${data['message']}',
+                                                            btnOkOnPress: () {},
+                                                            btnOkIcon:
+                                                                Icons.cancel,
+                                                            btnOkColor:
+                                                                Colors.red,
+                                                          ).show();
+                                                        } else if (data[
+                                                                'code'] ==
+                                                            404) {
+                                                          AwesomeDialog(
+                                                            context: context,
+                                                            dialogType:
+                                                                DialogType
+                                                                    .error,
+                                                            animType: AnimType
+                                                                .rightSlide,
+                                                            headerAnimationLoop:
+                                                                false,
+                                                            title: 'خطأ',
+                                                            desc:
+                                                                '${data['message']}',
+                                                            btnOkOnPress: () {},
+                                                            btnOkIcon:
+                                                                Icons.cancel,
+                                                            btnOkColor:
+                                                                Colors.red,
+                                                          ).show();
+                                                        }
+                                                        if (data['code'] ==
+                                                            200) {
+                                                          AwesomeDialog(
+                                                            context: context,
+                                                            animType: AnimType
+                                                                .leftSlide,
+                                                            headerAnimationLoop:
+                                                                false,
+                                                            dialogType:
+                                                                DialogType
+                                                                    .success,
+                                                            showCloseIcon: true,
+                                                            title: 'نجاح',
+                                                            desc:
+                                                                '${data['message']}',
+                                                            btnOkOnPress: () {
+                                                              debugPrint(
+                                                                  'OnClcik');
+                                                            },
+                                                            btnOkIcon: Icons
+                                                                .check_circle,
+                                                            onDismissCallback:
+                                                                (type) {
+                                                              debugPrint(
+                                                                  'Dialog Dissmiss from callback $type');
+                                                            },
+                                                          ).show();
+                                                        }
+                                                      },
+                                                      btnOkIcon:
+                                                          Icons.check_circle,
+                                                      onDismissCallback:
+                                                          (type) {},
+                                                    ).show();
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        'حذف السيارة',
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Icon(
+                                                        Icons.delete,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              top: 10,
+                                              right: 10,
+                                              child: InkWell(
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(children: [
+                                                    Text(
+                                                      "أضف صورة جديدة لهذه السيارة",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                          color: Colors.black),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Icon(Icons.add_a_photo)
+                                                  ]),
+                                                ),
+                                                onTap: () async {
                                                   await showModalBottomSheet(
                                                     context: context,
                                                     builder: (context) {
@@ -390,281 +708,350 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                     },
                                                   );
                                                 },
-                                                child: Text(
-                                                  "أضف صورة جديدة لهذه السيارة",
-                                                  style: TextStyle(
-                                                      fontSize: 17,
+                                              ),
+                                            ),
+                                            // Positioned(
+                                            //   right: 50,
+                                            //   top: 5,
+                                            //   child: TextButton(
+                                            //       onPressed: () async {
+                                            //         await showModalBottomSheet(
+                                            //           context: context,
+                                            //           builder: (context) {
+                                            //             return Padding(
+                                            //               padding:
+                                            //                   const EdgeInsets
+                                            //                       .all(8.0),
+                                            //               child: Column(
+                                            //                 children: [
+                                            //                   ElevatedButton(
+                                            //                       style: ElevatedButton
+                                            //                           .styleFrom(
+                                            //                               backgroundColor:
+                                            //                                   colorprimarygreen),
+                                            //                       onPressed:
+                                            //                           () async {
+                                            //                         //getImageCamera();
+                                            //                         _pickImageDio(
+                                            //                             source: ImageSource
+                                            //                                 .camera,
+                                            //                             car_id: snapshot
+                                            //                                 .data![index]
+                                            //                                 .id!);
+                                            //                       },
+                                            //                       child: Text(
+                                            //                           "اضف صورة من الكاميرا")),
+                                            //                   SizedBox(
+                                            //                     height: 30,
+                                            //                   ),
+                                            //                   ElevatedButton(
+                                            //                       style: ElevatedButton
+                                            //                           .styleFrom(
+                                            //                               backgroundColor:
+                                            //                                   colorprimarygreen),
+                                            //                       onPressed:
+                                            //                           () async {
+                                            //                         //getImagegallery();
+                                            //                         _pickImageDio(
+                                            //                             source: ImageSource
+                                            //                                 .gallery,
+                                            //                             car_id: snapshot
+                                            //                                 .data![index]
+                                            //                                 .id!);
+                                            //                       },
+                                            //                       child: Text(
+                                            //                           "اضف صورة من المعرض"))
+                                            //                 ],
+                                            //               ),
+                                            //             );
+                                            //           },
+                                            //         );
+                                            //       },
+                                            //       child: Text(
+                                            //         "أضف صورة جديدة لهذه السيارة",
+                                            //         style: TextStyle(
+                                            //             fontSize: 15,
+                                            //             color: Colors.black),
+                                            //       )),
+                                            // ),
+                                            Positioned(
+                                                top: 120,
+                                                right: 25,
+                                                child: Container(
+                                                  width: 50,
+                                                  height: 50,
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                       color: colorprimarygreen),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${snapshot.data![index].id}",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 25,
+                                                          color:
+                                                              colorprimarywhite),
+                                                    ),
+                                                  ),
                                                 )),
-                                          ),
-                                          Positioned(
-                                              top: 80,
-                                              right: 25,
-                                              child: Container(
-                                                width: 50,
-                                                height: 50,
-                                                decoration: BoxDecoration(
+                                            Positioned(
+                                                top: 220,
+                                                left: 15,
+                                                child: Text(
+                                                  "اسم السيارة",
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                )),
+                                            Positioned(
+                                                top: 240,
+                                                left: 15,
+                                                child: Text(
+                                                  "${snapshot.data![index].name}",
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                )),
+                                            Positioned(
+                                                top: 265,
+                                                left: 15,
+                                                child: Text(
+                                                  "موديل السيارة",
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                )),
+                                            Positioned(
+                                                top: 290,
+                                                left: 15,
+                                                child: Text(
+                                                  "${snapshot.data![index].model}",
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                )),
+                                            Positioned(
+                                                top: 260,
+                                                right: 15,
+                                                child: Text(
+                                                  "RY ${snapshot.data![index].price}",
+                                                  style:
+                                                      TextStyle(fontSize: 25),
+                                                )),
+                                            Positioned(
+                                                top: 235,
+                                                right: 15,
+                                                child: Text(
+                                                  "السعر لليوم الواحد",
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                )),
+                                            Positioned(
+                                              top: 50,
+                                              left: 20,
+                                              child: SizedBox(
+                                                width: 160,
+                                                height: 160,
+                                                child: Container(
+                                                  width: 230,
+                                                  height: 230,
+                                                  child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            25),
-                                                    color: colorprimarygreen),
-                                                child: Center(
-                                                  child: Text(
-                                                    "${snapshot.data![index].id}",
-                                                    style: TextStyle(
-                                                        fontSize: 25,
-                                                        color:
-                                                            colorprimarywhite),
-                                                  ),
-                                                ),
-                                              )),
-                                          Positioned(
-                                              top: 220,
-                                              left: 15,
-                                              child: Text(
-                                                "اسم السيارة",
-                                                style: TextStyle(fontSize: 15),
-                                              )),
-                                          Positioned(
-                                              top: 240,
-                                              left: 15,
-                                              child: Text(
-                                                "${snapshot.data![index].name}",
-                                                style: TextStyle(fontSize: 20),
-                                              )),
-                                          Positioned(
-                                              top: 265,
-                                              left: 15,
-                                              child: Text(
-                                                "موديل السيارة",
-                                                style: TextStyle(fontSize: 15),
-                                              )),
-                                          Positioned(
-                                              top: 290,
-                                              left: 15,
-                                              child: Text(
-                                                "${snapshot.data![index].model}",
-                                                style: TextStyle(fontSize: 20),
-                                              )),
-                                          Positioned(
-                                              top: 260,
-                                              right: 15,
-                                              child: Text(
-                                                "RY ${snapshot.data![index].price}",
-                                                style: TextStyle(fontSize: 25),
-                                              )),
-                                          Positioned(
-                                              top: 235,
-                                              right: 15,
-                                              child: Text(
-                                                "السعر لليوم الواحد",
-                                                style: TextStyle(fontSize: 15),
-                                              )),
-                                          Positioned(
-                                            top: 50,
-                                            left: 20,
-                                            child: SizedBox(
-                                              width: 160,
-                                              height: 160,
-                                              child: Container(
-                                                width: 230,
-                                                height: 230,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(20),
-                                                  child: Image.network(
-                                                    snapshot.data![index]
-                                                        .imageCarOfBrands!,
-                                                    fit: BoxFit.fill,
+                                                            20),
+                                                    child: Image.network(
+                                                      snapshot.data![index]
+                                                          .imageCarOfBrands!,
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                }),
+                                    );
+                                  }),
+                                ),
                               ),
-                            ),
-                          );
-                          // return ListView.builder(
-                          //   itemCount: snapshot.data!.length,
-                          //   itemBuilder: (context, index) {
-                          //     return SizedBox(
-                          //       height:
-                          //           MediaQuery.of(context).size.height / 2.3,
-                          //       width: MediaQuery.of(context).size.width,
-                          //       child: Container(
-                          //         decoration: BoxDecoration(
-                          //             color:
-                          //                 Color.fromARGB(255, 213, 210, 200),
-                          //             borderRadius:
-                          //                 BorderRadius.circular(40)),
-                          //         margin: EdgeInsets.all(10),
-                          //         child: Stack(
-                          //           clipBehavior: Clip.none,
-                          //           children: [
-                          //             Positioned(
-                          //               right: 30,
-                          //               top: 10,
-                          //               child: TextButton(
-                          //                   onPressed: () async {
-                          //                     await showModalBottomSheet(
-                          //                       context: context,
-                          //                       builder: (context) {
-                          //                         return Padding(
-                          //                           padding:
-                          //                               const EdgeInsets.all(
-                          //                                   8.0),
-                          //                           child: Column(
-                          //                             children: [
-                          //                               ElevatedButton(
-                          //                                   style: ElevatedButton
-                          //                                       .styleFrom(
-                          //                                           backgroundColor:
-                          //                                               colorprimarygreen),
-                          //                                   onPressed:
-                          //                                       () async {
-                          //                                     //getImageCamera();
-                          //                                     _pickImageDio(
-                          //                                         source: ImageSource
-                          //                                             .camera,
-                          //                                         car_id: snapshot
-                          //                                                 .data![index]
-                          //                                             ['id']);
-                          //                                   },
-                          //                                   child: Text(
-                          //                                       "اضف صورة من الكاميرا")),
-                          //                               SizedBox(
-                          //                                 height: 30,
-                          //                               ),
-                          //                               ElevatedButton(
-                          //                                   style: ElevatedButton
-                          //                                       .styleFrom(
-                          //                                           backgroundColor:
-                          //                                               colorprimarygreen),
-                          //                                   onPressed:
-                          //                                       () async {
-                          //                                     //getImagegallery();
-                          //                                     _pickImageDio(
-                          //                                         source: ImageSource
-                          //                                             .gallery,
-                          //                                         car_id: snapshot
-                          //                                                 .data![index]
-                          //                                             ['id']);
-                          //                                   },
-                          //                                   child: Text(
-                          //                                       "اضف صورة من المعرض"))
-                          //                             ],
-                          //                           ),
-                          //                         );
-                          //                       },
-                          //                     );
-                          //                   },
-                          //                   child: Text(
-                          //                     "أضف صورة جديدة لهذه السيارة",
-                          //                     style: TextStyle(
-                          //                         fontSize: 17,
-                          //                         color: colorprimarygreen),
-                          //                   )),
-                          //             ),
-                          //             Positioned(
-                          //                 top: 80,
-                          //                 right: 20,
-                          //                 child: Container(
-                          //                   width: 50,
-                          //                   height: 50,
-                          //                   decoration: BoxDecoration(
-                          //                       borderRadius:
-                          //                           BorderRadius.circular(30),
-                          //                       color: colorprimarygreen),
-                          //                   child: Center(
-                          //                     child: Text(
-                          //                       "${snapshot.data![index]['id']}",
-                          //                       style: TextStyle(
-                          //                           fontSize: 25,
-                          //                           color: colorprimarywhite),
-                          //                     ),
-                          //                   ),
-                          //                 )),
-                          //             Positioned(
-                          //                 top: 45,
-                          //                 right: 120,
-                          //                 child: Text(
-                          //                   "${snapshot.data![index]['name']}",
-                          //                   style: TextStyle(fontSize: 25),
-                          //                 )),
-                          //             Positioned(
-                          //               top: 90,
-                          //               left: 20,
-                          //               child: SizedBox(
-                          //                 width: 230,
-                          //                 height: 230,
-                          //                 child: Container(
-                          //                   width: 230,
-                          //                   height: 230,
-                          //                   child: ClipRRect(
-                          //                     borderRadius:
-                          //                         BorderRadius.circular(20),
-                          //                     child: Image.network(
-                          //                       snapshot.data![index]
-                          //                           ['image_car_brands'],
-                          //                       fit: BoxFit.fill,
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             )
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     );
-                          //   },
-                          // );
+                            );
+                            // return ListView.builder(
+                            //   itemCount: snapshot.data!.length,
+                            //   itemBuilder: (context, index) {
+                            //     return SizedBox(
+                            //       height:
+                            //           MediaQuery.of(context).size.height / 2.3,
+                            //       width: MediaQuery.of(context).size.width,
+                            //       child: Container(
+                            //         decoration: BoxDecoration(
+                            //             color:
+                            //                 Color.fromARGB(255, 213, 210, 200),
+                            //             borderRadius:
+                            //                 BorderRadius.circular(40)),
+                            //         margin: EdgeInsets.all(10),
+                            //         child: Stack(
+                            //           clipBehavior: Clip.none,
+                            //           children: [
+                            //             Positioned(
+                            //               right: 30,
+                            //               top: 10,
+                            //               child: TextButton(
+                            //                   onPressed: () async {
+                            //                     await showModalBottomSheet(
+                            //                       context: context,
+                            //                       builder: (context) {
+                            //                         return Padding(
+                            //                           padding:
+                            //                               const EdgeInsets.all(
+                            //                                   8.0),
+                            //                           child: Column(
+                            //                             children: [
+                            //                               ElevatedButton(
+                            //                                   style: ElevatedButton
+                            //                                       .styleFrom(
+                            //                                           backgroundColor:
+                            //                                               colorprimarygreen),
+                            //                                   onPressed:
+                            //                                       () async {
+                            //                                     //getImageCamera();
+                            //                                     _pickImageDio(
+                            //                                         source: ImageSource
+                            //                                             .camera,
+                            //                                         car_id: snapshot
+                            //                                                 .data![index]
+                            //                                             ['id']);
+                            //                                   },
+                            //                                   child: Text(
+                            //                                       "اضف صورة من الكاميرا")),
+                            //                               SizedBox(
+                            //                                 height: 30,
+                            //                               ),
+                            //                               ElevatedButton(
+                            //                                   style: ElevatedButton
+                            //                                       .styleFrom(
+                            //                                           backgroundColor:
+                            //                                               colorprimarygreen),
+                            //                                   onPressed:
+                            //                                       () async {
+                            //                                     //getImagegallery();
+                            //                                     _pickImageDio(
+                            //                                         source: ImageSource
+                            //                                             .gallery,
+                            //                                         car_id: snapshot
+                            //                                                 .data![index]
+                            //                                             ['id']);
+                            //                                   },
+                            //                                   child: Text(
+                            //                                       "اضف صورة من المعرض"))
+                            //                             ],
+                            //                           ),
+                            //                         );
+                            //                       },
+                            //                     );
+                            //                   },
+                            //                   child: Text(
+                            //                     "أضف صورة جديدة لهذه السيارة",
+                            //                     style: TextStyle(
+                            //                         fontSize: 17,
+                            //                         color: colorprimarygreen),
+                            //                   )),
+                            //             ),
+                            //             Positioned(
+                            //                 top: 80,
+                            //                 right: 20,
+                            //                 child: Container(
+                            //                   width: 50,
+                            //                   height: 50,
+                            //                   decoration: BoxDecoration(
+                            //                       borderRadius:
+                            //                           BorderRadius.circular(30),
+                            //                       color: colorprimarygreen),
+                            //                   child: Center(
+                            //                     child: Text(
+                            //                       "${snapshot.data![index]['id']}",
+                            //                       style: TextStyle(
+                            //                           fontSize: 25,
+                            //                           color: colorprimarywhite),
+                            //                     ),
+                            //                   ),
+                            //                 )),
+                            //             Positioned(
+                            //                 top: 45,
+                            //                 right: 120,
+                            //                 child: Text(
+                            //                   "${snapshot.data![index]['name']}",
+                            //                   style: TextStyle(fontSize: 25),
+                            //                 )),
+                            //             Positioned(
+                            //               top: 90,
+                            //               left: 20,
+                            //               child: SizedBox(
+                            //                 width: 230,
+                            //                 height: 230,
+                            //                 child: Container(
+                            //                   width: 230,
+                            //                   height: 230,
+                            //                   child: ClipRRect(
+                            //                     borderRadius:
+                            //                         BorderRadius.circular(20),
+                            //                     child: Image.network(
+                            //                       snapshot.data![index]
+                            //                           ['image_car_brands'],
+                            //                       fit: BoxFit.fill,
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             )
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     );
+                            //   },
+                            // );
+                          }
                         }
-                      }
-                      return Center(child: CircularProgressIndicator());
-                    },
+                        return Center(child: CircularProgressIndicator());
+                      },
+                    ),
                   ),
-                ),
-              )
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height / 2,
-              //   width: MediaQuery.of(context).size.width,
-              //   child: FutureBuilder(
-              //     future: prandProvider.getAllPrandsFromAPi(),
-              //     builder: (context, snapshot) {
-              //       if (snapshot.hasData) {
-              //         if (snapshot.data!.isEmpty) {
-              //           return Text("Empty");
-              //         }
-              //         return ListView.builder(
-              //           itemCount: snapshot.data!.length,
-              //           itemBuilder: (context, index) {
-              //             return Column(
-              //               children: [
-              //                 SizedBox(
-              //                   height: 300,
-              //                   width: 200,
-              //                   child: Image.network(
-              //                       snapshot.data![index].path!,
-              //                       scale: 1.0),
-              //                 ),
-              //                 Text("${snapshot.data![index].name}"),
-              //               ],
-              //             );
-              //           },
-              //         );
-              //       }
-              //       return Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //     },
-              //   ),
-              // )
-            ],
+                )
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height / 2,
+                //   width: MediaQuery.of(context).size.width,
+                //   child: FutureBuilder(
+                //     future: prandProvider.getAllPrandsFromAPi(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         if (snapshot.data!.isEmpty) {
+                //           return Text("Empty");
+                //         }
+                //         return ListView.builder(
+                //           itemCount: snapshot.data!.length,
+                //           itemBuilder: (context, index) {
+                //             return Column(
+                //               children: [
+                //                 SizedBox(
+                //                   height: 300,
+                //                   width: 200,
+                //                   child: Image.network(
+                //                       snapshot.data![index].path!,
+                //                       scale: 1.0),
+                //                 ),
+                //                 Text("${snapshot.data![index].name}"),
+                //               ],
+                //             );
+                //           },
+                //         );
+                //       }
+                //       return Center(
+                //         child: CircularProgressIndicator(),
+                //       );
+                //     },
+                //   ),
+                // )
+              ],
+            ),
           ),
         ),
       ),

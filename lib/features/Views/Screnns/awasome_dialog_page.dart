@@ -144,18 +144,7 @@ class _HomePageState extends State<HomePage> {
                   text: 'Error Dialog',
                   color: Colors.red,
                   pressEvent: () {
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.error,
-                      animType: AnimType.rightSlide,
-                      headerAnimationLoop: false,
-                      title: 'Error',
-                      desc:
-                          'Dialog description here..................................................',
-                      btnOkOnPress: () {},
-                      btnOkIcon: Icons.cancel,
-                      btnOkColor: Colors.red,
-                    ).show();
+                    
                   },
                 ),
                 const SizedBox(

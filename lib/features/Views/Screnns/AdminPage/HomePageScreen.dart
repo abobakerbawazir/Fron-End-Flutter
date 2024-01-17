@@ -115,106 +115,106 @@ class _HomePageScreenState extends State<HomePageScreen> {
         child: Column(
           children: [
             Image.asset('assets/images/home.png'),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: colorprimarygreen),
-                    onPressed: () {
-                      x = 1;
-                      setState(() {});
-                    },
-                    child: Text(
-                      "ادارة الفروع",
-                    )),
-                SizedBox(
-                  width: 30,
-                ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: colorprimarygreen),
-                    onPressed: () {
-                      x = 2;
-                      setState(() {});
-                    },
-                    child: Text(
-                      "ادارة الماركات",
-                    ))
-              ],
-            ),
-            x == 1
-                ? SizedBox(
-                    height: (MediaQuery.of(context).size.height / 2),
-                    width: MediaQuery.of(context).size.width,
-                    child: MangeUserScreens())
-                // Card(
-                //     child: SizedBox(
-                //       height: MediaQuery.of(context).size.height,
-                //       width: MediaQuery.of(context).size.width,
-                //       child: FutureBuilder(
-                //         future: userProvider.allUserslistOfMap(),
-                //         builder: (context, snapshot) {
-                //           if (snapshot.hasData) {
-                //             return ListView.builder(
-                //               itemCount: snapshot.data!.length,
-                //               itemBuilder: (context, index) {
-                //                 return Column(
-                //                   children: [
-                //                     IconButton(
-                //                         onPressed: () {
-                //                           // String x =
-                //                           //     snapshot.data![index]['roles'][0]['name'];
-                //                           // print(x);
-                //                           String x =
-                //                               snapshot.data![index]['roles'];
-                //                           print(x);
-                //                         },
-                //                         icon: snapshot.data![index]
-                //                                     ['roles'] ==
-                //                                 'admin'
-                //                             ? Icon(Icons.accessible)
-                //                             : snapshot.data![index]
-                //                                         ['roles'] ==
-                //                                     'branch'
-                //                                 ? Icon(Icons.delete)
-                //                                 : Icon(Icons.edit)),
-                //                     Text(snapshot.data![index]['username']),
-                //                     Text(snapshot.data![index]['roles']
-                //                         .toString()),
-                //                   ],
-                //                 );
-                //               },
-                //             );
-                //           }
-                //           return Center(child: CircularProgressIndicator());
-                //         },
-                //       ),
-                //     ),
-                //   )
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor: colorprimarygreen),
+            //         onPressed: () {
+            //           x = 1;
+            //           setState(() {});
+            //         },
+            //         child: Text(
+            //           "ادارة الفروع",
+            //         )),
+            //     SizedBox(
+            //       width: 30,
+            //     ),
+            //     ElevatedButton(
+            //         style: ElevatedButton.styleFrom(
+            //             backgroundColor: colorprimarygreen),
+            //         onPressed: () {
+            //           x = 2;
+            //           setState(() {});
+            //         },
+            //         child: Text(
+            //           "ادارة الماركات",
+            //         ))
+            //   ],
+            // ),
+            // x == 1
+            //     ? SizedBox(
+            //         height: (MediaQuery.of(context).size.height / 2),
+            //         width: MediaQuery.of(context).size.width,
+            //         child: MangeUserScreens())
+            //     // Card(
+            //     //     child: SizedBox(
+            //     //       height: MediaQuery.of(context).size.height,
+            //     //       width: MediaQuery.of(context).size.width,
+            //     //       child: FutureBuilder(
+            //     //         future: userProvider.allUserslistOfMap(),
+            //     //         builder: (context, snapshot) {
+            //     //           if (snapshot.hasData) {
+            //     //             return ListView.builder(
+            //     //               itemCount: snapshot.data!.length,
+            //     //               itemBuilder: (context, index) {
+            //     //                 return Column(
+            //     //                   children: [
+            //     //                     IconButton(
+            //     //                         onPressed: () {
+            //     //                           // String x =
+            //     //                           //     snapshot.data![index]['roles'][0]['name'];
+            //     //                           // print(x);
+            //     //                           String x =
+            //     //                               snapshot.data![index]['roles'];
+            //     //                           print(x);
+            //     //                         },
+            //     //                         icon: snapshot.data![index]
+            //     //                                     ['roles'] ==
+            //     //                                 'admin'
+            //     //                             ? Icon(Icons.accessible)
+            //     //                             : snapshot.data![index]
+            //     //                                         ['roles'] ==
+            //     //                                     'branch'
+            //     //                                 ? Icon(Icons.delete)
+            //     //                                 : Icon(Icons.edit)),
+            //     //                     Text(snapshot.data![index]['username']),
+            //     //                     Text(snapshot.data![index]['roles']
+            //     //                         .toString()),
+            //     //                   ],
+            //     //                 );
+            //     //               },
+            //     //             );
+            //     //           }
+            //     //           return Center(child: CircularProgressIndicator());
+            //     //         },
+            //     //       ),
+            //     //     ),
+            //     //   )
 
-                : x == 2
-                    ? TextButton(
-                        child:
-                            Center(child: Text("الذهاب لصفحة ادارة الماركات")),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return AddPrandScrrens();
-                            },
-                          ));
-                        },
-                      )
-                    : Card(
-                        child: Center(
-                            child: Text(
-                          "يرجى اختيار احد الخيارين المتاحة",
-                          style: TextStyle(fontSize: 20),
-                        )),
-                      )
+            //     : x == 2
+
+            TextButton(
+              child: Center(child: Text("الذهاب لصفحة ادارة الماركات")),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return AddPrandScrrens();
+                  },
+                ));
+              },
+            )
+            // : Card(
+            //     child: Center(
+            //         child: Text(
+            //       "يرجى اختيار احد الخيارين المتاحة",
+            //       style: TextStyle(fontSize: 20),
+            //     )),
+            //   )
 
             // FutureBuilder(
             //   future: prsndProvider.getAllPrandsFromAPi(),

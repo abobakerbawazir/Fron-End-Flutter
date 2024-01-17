@@ -3,6 +3,7 @@ import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/Profile.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyElevatedButton.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:dio/dio.dart';
@@ -27,6 +28,9 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
   TextEditingController confirmPasswordTxt = TextEditingController();
   TextEditingController phoneTxt = TextEditingController();
   bool iconObsecure1 = false;
+  final ImagePicker _pickerProfile = ImagePicker();
+  XFile? PickedFileProfile;
+  List<int> imageBytesProfile = [];
   final ImagePicker _picker = ImagePicker();
   _pickImageDio({required int car_id, required ImageSource source}) async {
     print(APIurl.uploadImageImageCarUrl);
@@ -65,47 +69,94 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
           child: Form(
             child: Column(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          //borderRadius: BorderRadius.circular(500)
-                        ),
-                        //color: Colors.black,
-                        padding: EdgeInsets.all(20),
-                        height: MediaQuery.of(context).size.height / 4,
-                        width: MediaQuery.of(context).size.width,
-                        child: image == null
-                            ? CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/images/2021_4_16_14_20_36_447.jpg"),
-                                minRadius: 15,
-                              )
-                            : CircleAvatar(
-                                minRadius: 15,
-                                backgroundImage: NetworkImage(image),
-                              )),
-                    Positioned(
-                      top: 27,
-                      right: 120,
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                            color: Colors.yellow,
-                            borderRadius: BorderRadius.circular(15)),
+                Center(
+                  child: Container(
+                    color: Colors.black,
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width,
+                    child: Card(
+                      color: Colors.black,
+                      child: Stack(
+                        children: [
+                          Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                //borderRadius: BorderRadius.circular(500)
+                              ),
+                              //color: Colors.black,
+                              padding: EdgeInsets.all(20),
+                              height: MediaQuery.of(context).size.height / 4,
+                              width: MediaQuery.of(context).size.width / 2,
+                              child: image == null
+                                  ? CircleAvatar(
+                                      backgroundImage: AssetImage(
+                                          "assets/images/2021_4_16_14_20_36_447.jpg"),
+                                      minRadius: 15,
+                                    )
+                                  : SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              4,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
+                                      child: ClipOval(
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Image.network(
+                                          image,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    )),
+                          Positioned(
+                            top: 27,
+                            right: 120,
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.yellow,
+                                  borderRadius: BorderRadius.circular(15)),
+                            ),
+                          ),
+                          Positioned(
+                            top: 29,
+                            right: 123,
+                            child: InkWell(
+                              onTap: () async {
+                                PickedFileProfile = await _pickerProfile
+                                    .pickImage(source: ImageSource.gallery);
+                                imageBytesProfile =
+                                    await PickedFileProfile!.readAsBytes();
+                                userProvider.notifyListeners();
+                                Navigator.of(context);
+                                print(4554);
+                                print(PickedFileProfile!.path);
+                                if (PickedFileProfile != null) {
+                                  FormData formData = await FormData.fromMap({
+                                    'image_path': MultipartFile.fromBytes(
+                                        imageBytesProfile,
+                                        filename:
+                                            "image_path.${PickedFileProfile?.path.split('.').last}")
+                                  });
+                                  userProvider.updateImageUserProfileURL(
+                                      formData: formData, id: user_id);
+                                }
+                              },
+                              child: Icon(
+                                Icons.camera_alt_rounded,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 4,
+                            width: MediaQuery.of(context).size.width / 2.8,
+                          )
+                        ],
                       ),
                     ),
-                    Positioned(
-                      top: 29,
-                      right: 123,
-                      child: Icon(
-                        Icons.camera_alt_rounded,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.all(10),

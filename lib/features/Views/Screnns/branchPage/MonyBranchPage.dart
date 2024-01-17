@@ -21,8 +21,8 @@ class MonyBranchPage extends StatefulWidget {
 }
 
 class _MonyBranchPageState extends State<MonyBranchPage> {
-  List<String> nameTransations = ['الكل', 'السحب', 'التحويل'];
-  String selectedName = 'الكل';
+  List<String> nameTransations = ['السحب', 'التحويل'];
+  String selectedName = 'السحب';
   final box = GetStorage();
 
   @override

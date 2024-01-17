@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url_Wallet.dart';
+import 'package:booking_car_project_flutter/core/Constans/Api_url_Update.dart';
 import 'package:booking_car_project_flutter/core/Helpers/Messge.dart';
 import 'package:booking_car_project_flutter/features/Models/Booking/Booking.dart';
 import 'package:booking_car_project_flutter/features/Models/Users/Balance.dart';
@@ -38,9 +39,8 @@ class UserVM with ChangeNotifier {
 
   List<Profile> _allUsers = [];
   List<Profile> get allUsers => _allUsers;
-  List<Branch> _allBranch=[];
-    List<Branch> get allBranch => _allBranch;
-
+  List<Branch> _allBranch = [];
+  List<Branch> get allBranch => _allBranch;
 
   changeIconStateLogin() {
     if (iconObsecure == false) {
@@ -116,8 +116,7 @@ class UserVM with ChangeNotifier {
           .map((e) => Branch.fromJson(e as Map<String, dynamic>))
           .toList();
       print(_allBranch);
-            return _allBranch;
-
+      return _allBranch;
     } catch (e) {
       return _allBranch;
     }
@@ -184,7 +183,6 @@ class UserVM with ChangeNotifier {
       {required String username,
       required String phone,
       required String full_name,
-      required String user_type,
       required String email,
       required String password,
       required String password_confirmation,
@@ -198,7 +196,6 @@ class UserVM with ChangeNotifier {
                 username: username,
                 phone: phone,
                 fullName: full_name,
-                userType: user_type,
                 email: email,
                 password: password,
                 passwordConfirmation: password_confirmation,
@@ -471,5 +468,18 @@ class UserVM with ChangeNotifier {
     } catch (e) {
       return _oneBalance;
     }
+  }
+
+  Future updateImageUserProfileURL(
+      {required FormData formData, required int id}) async {
+    print(API_URL_Update.updateImageUserProfileURL + id.toString());
+    Dio dio = DioSingelton.getInstance();
+    Response responce = await dio.post(
+        API_URL_Update.updateImageUserProfileURL + id.toString(),
+        data: formData);
+    final x = responce.data['data']['image'];
+    box.write('image', x);
+    notifyListeners();
+    return responce.data['data']['image'];
   }
 }

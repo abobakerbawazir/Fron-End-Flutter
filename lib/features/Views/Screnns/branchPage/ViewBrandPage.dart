@@ -30,6 +30,8 @@ class ViewPrandPage extends StatefulWidget {
 }
 
 class _ViewPrandPageState extends State<ViewPrandPage> {
+  final _titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
@@ -39,6 +41,9 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        appBar: AppBar(
+          title: Center(child: Text("الماركات")),
+        ),
         // appBar: AppBar(
         //   actions: [
         //     IconButton(
@@ -96,160 +101,202 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
         //   title: Center(child: Text("صفحة الماركات")),
         // ),
 
-        body: Container(
-          padding: EdgeInsets.all(12),
-          child: Form(
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height - 180,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: FutureBuilder(
-                        future: prandProvider.getAllPrandsFromAPi(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return GridView.builder(
-                              clipBehavior: Clip.none,
-                              itemCount: snapshot.data!.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      childAspectRatio: 0.75,
-                                      crossAxisSpacing: 40,
-                                      mainAxisSpacing: 40,
-                                      crossAxisCount: 2),
-                              itemBuilder: (context, index) {
-                                return SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.height,
-                                  child: InkWell(
-                                    onTap: () {
-                                      final box = GetStorage();
-                                      box.write('prand_id_branch',
-                                          snapshot.data![index].id);
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) {
-                                          var x = box.read('role_user');
-                                          if (x == 'branch') {
-                                            return AddCarScrrens();
-                                          } else {
-                                            return ViewCarsCustomer();
-                                          }
-                                        },
-                                      ));
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 219, 214, 214),
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          // Positioned(
-                                          //   left: 100,
-                                          //   top: 14,
-                                          //   child: IconButton(
-                                          //       onPressed: () {},
-                                          //       icon: Icon(
-                                          //         Icons.favorite,
-                                          //         color: colorprimarywhite,
-                                          //       )),
-                                          // ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(12),
+            child: Form(
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            prandProvider.myNotifyListeners();
 
-                                          Positioned(
-                                            top: 35,
-                                            left: 20,
-                                            child: SizedBox(
-                                              height: 100,
-                                              width: 100,
-                                              child: Image.network(
-                                                snapshot.data![index].path!,
+                            // prandProvider.clearControlle(_titleController);
+                          },
+                          icon: Icon(Icons.search)),
+                      SizedBox(
+                          width: 250,
+                          child: Card(
+                            child: Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: TextFormField(
+                                  controller: _titleController,
+                                  decoration:
+                                      InputDecoration(border: InputBorder.none),
+                                  // controller: _titleController,
+                                  onChanged: (value) {
+                                    print(_titleController.text);
+                                    if (_titleController.text == '') {
+                                      prandProvider.myNotifyListeners();
+                                    }
+                                  },
+                                )),
+                          )),
+                      IconButton(
+                          onPressed: () {
+                            prandProvider.clearControlle(_titleController);
+                          },
+                          icon: Icon(Icons.clear))
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height - 240,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: FutureBuilder(
+                          future: prandProvider.filtterPrandName(
+                              fultterName: _titleController.text),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return GridView.builder(
+                                clipBehavior: Clip.none,
+                                itemCount: snapshot.data!.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        childAspectRatio: 0.75,
+                                        crossAxisSpacing: 40,
+                                        mainAxisSpacing: 40,
+                                        crossAxisCount: 2),
+                                itemBuilder: (context, index) {
+                                  return SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height,
+                                    child: InkWell(
+                                      onTap: () {
+                                        final box = GetStorage();
+                                        box.write('prand_id_branch',
+                                            snapshot.data![index].id);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            var x = box.read('role_user');
+                                            if (x == 'branch') {
+                                              return AddCarScrrens();
+                                            } else {
+                                              return ViewCarsCustomer();
+                                            }
+                                          },
+                                        ));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 219, 214, 214),
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            // Positioned(
+                                            //   left: 100,
+                                            //   top: 14,
+                                            //   child: IconButton(
+                                            //       onPressed: () {},
+                                            //       icon: Icon(
+                                            //         Icons.favorite,
+                                            //         color: colorprimarywhite,
+                                            //       )),
+                                            // ),
+
+                                            Positioned(
+                                              top: 35,
+                                              left: 20,
+                                              child: SizedBox(
+                                                height: 100,
+                                                width: 100,
+                                                child: Image.network(
+                                                  snapshot.data![index].path!,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Positioned(
-                                            bottom: 15,
-                                            left: 12,
-                                            child: Wrap(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                      "${snapshot.data![index].name!}",
-                                                      style: TextStyle(
-                                                        // fontWeight: FontWeight.bold,
-                                                        color: Colors.black,
-                                                        fontSize: 20,
-                                                      )),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
+                                            Positioned(
+                                              bottom: 15,
+                                              left: 12,
+                                              child: Wrap(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                        "${snapshot.data![index].name!}",
+                                                        style: TextStyle(
+                                                          // fontWeight: FontWeight.bold,
+                                                          color: Colors.black,
+                                                          fontSize: 20,
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            );
-                          }
-                          return Center(child: CircularProgressIndicator());
-                        }),
+                                  );
+                                },
+                              );
+                            }
+                            return Center(child: CircularProgressIndicator());
+                          }),
+                    ),
                   ),
-                ),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height,
-                //   width: MediaQuery.of(context).size.width,
-                //   child: FutureBuilder(
-                //     future: prandProvider.getAllPrandsFromAPi(),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasData) {
-                //         if (snapshot.data!.isEmpty) {
-                //           return Text("Empty");
-                //         }
-                //         return ListView.builder(
-                //           itemCount: snapshot.data!.length,
-                //           itemBuilder: (context, index) {
-                //             return Column(
-                //               children: [
-                //                 SizedBox(
-                //                   height: 300,
-                //                   width: 200,
-                //                   child: InkWell(
-                //                     onTap: () {
-                //                       Navigator.push(context, MaterialPageRoute(
-                //                         builder: (context) {
-                //                           final box = GetStorage();
-                //                           box.write('prand_id_forAddCar',
-                //                               snapshot.data![index].id!);
-                //                           print(box.read('prand_id_forAddCar'));
+                  // SizedBox(
+                  //   height: MediaQuery.of(context).size.height,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   child: FutureBuilder(
+                  //     future: prandProvider.getAllPrandsFromAPi(),
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         if (snapshot.data!.isEmpty) {
+                  //           return Text("Empty");
+                  //         }
+                  //         return ListView.builder(
+                  //           itemCount: snapshot.data!.length,
+                  //           itemBuilder: (context, index) {
+                  //             return Column(
+                  //               children: [
+                  //                 SizedBox(
+                  //                   height: 300,
+                  //                   width: 200,
+                  //                   child: InkWell(
+                  //                     onTap: () {
+                  //                       Navigator.push(context, MaterialPageRoute(
+                  //                         builder: (context) {
+                  //                           final box = GetStorage();
+                  //                           box.write('prand_id_forAddCar',
+                  //                               snapshot.data![index].id!);
+                  //                           print(box.read('prand_id_forAddCar'));
 
-                //                           return AddCarsByUserAndBrand();
-                //                         },
-                //                       ));
-                //                     },
-                //                     child: Image.network(
-                //                         snapshot.data![index].path!,
-                //                         scale: 1.0),
-                //                   ),
-                //                 ),
-                //                 Text("${snapshot.data![index].name}"),
-                //               ],
-                //             );
-                //           },
-                //         );
-                //       }
-                //       return Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     },
-                //   ),
-                // )
-              ],
+                  //                           return AddCarsByUserAndBrand();
+                  //                         },
+                  //                       ));
+                  //                     },
+                  //                     child: Image.network(
+                  //                         snapshot.data![index].path!,
+                  //                         scale: 1.0),
+                  //                   ),
+                  //                 ),
+                  //                 Text("${snapshot.data![index].name}"),
+                  //               ],
+                  //             );
+                  //           },
+                  //         );
+                  //       }
+                  //       return Center(
+                  //         child: CircularProgressIndicator(),
+                  //       );
+                  //     },
+                  //   ),
+                  // )
+                ],
+              ),
             ),
           ),
         ),

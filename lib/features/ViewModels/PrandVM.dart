@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:booking_car_project_flutter/core/Constans/Api_URL_delete.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url_Prand.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
@@ -60,12 +61,12 @@ class PrandVM with ChangeNotifier {
     }
   }
 
-  Future deleteBrand(int id) async {
+  Future deleteBrand({required int id}) async {
     Response responce =
-        await connect.delete(APIurl.deleteBrandUrl + id.toString());
-    var code = responce.data["code"];
+        await connect.delete(API_URL_Delete.deletePrandUrl + id.toString());
+    var data = responce.data;
     notifyListeners();
-    return code;
+    return data;
   }
 
   Future addBrand() async {

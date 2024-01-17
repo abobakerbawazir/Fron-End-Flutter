@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/SignUpPageWithImage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/SignupPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/editProfile.dart';
 import 'package:flutter/cupertino.dart';
@@ -208,11 +209,13 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                 title: "ادراة حسابي",
                 pageNameRoute: "v"),
             ListTile_me(
-                Name_icon: Icons.person,
+                Name_icon: Icons.accessibility_new_sharp,
                 title: "حول التطبيق",
                 pageNameRoute: "v"),
             ListTile_me(
-                Name_icon: Icons.person, title: "من نحن", pageNameRoute: "v"),
+                Name_icon: Icons.contact_support_rounded,
+                title: "من نحن",
+                pageNameRoute: "v"),
             ListTile_me(
                 onTap: () async {
                   await showDialog(
@@ -253,7 +256,7 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                                   Navigator.pushReplacement(context,
                                       MaterialPageRoute(
                                     builder: (context) {
-                                      return SignupPage();
+                                      return SignUpPageWithImage();
                                     },
                                   ));
                                 }
@@ -275,7 +278,7 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                     },
                   );
                 },
-                Name_icon: Icons.person,
+                Name_icon: Icons.logout,
                 title: "تسجيل الخروج",
                 pageNameRoute: "v"),
             // ListTile_me(

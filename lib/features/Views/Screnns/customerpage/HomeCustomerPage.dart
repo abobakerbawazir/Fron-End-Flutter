@@ -31,6 +31,21 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
             padding: EdgeInsets.all(12),
             child: Column(
               children: [
+                Container(
+                    width: w - 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 209, 221, 227)),
+                    child: Center(
+                        child: Text(
+                      "يرجى أختيار احد المعارض",
+                      style:
+                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                    ))),
+                SizedBox(
+                  height: 5,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height - 150,
                   width: MediaQuery.of(context).size.width,

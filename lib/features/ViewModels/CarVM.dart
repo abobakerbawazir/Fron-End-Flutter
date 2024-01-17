@@ -1,3 +1,4 @@
+import 'package:booking_car_project_flutter/core/Constans/Api_URL_delete.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/Models/Car/Car.dart';
@@ -29,4 +30,22 @@ List<Car> _allCArs = [];
       return _allCArs;
     }
   }
+   Future addCarWithImage(
+      {required FormData formData}) async {
+    print(APIurl.baseCarUrl + 'addCarAndImage');
+    Dio dio = DioSingelton.getInstance();
+    Response responce =
+        await dio.post(APIurl.baseCarUrl + 'addCarAndImage', data: formData);
+    var x = responce.data;
+    notifyListeners();
+    return x;
+  }
+   Future deleteCar({required int id}) async {
+    Response responce =
+        await connect.delete(API_URL_Delete.deleteCarUrl + id.toString());
+    var data = responce.data;
+    notifyListeners();
+    return data;
+  }
+
 }

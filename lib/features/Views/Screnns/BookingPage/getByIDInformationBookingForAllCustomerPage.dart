@@ -56,11 +56,14 @@ class _getByIDInformationBookingForAllCustomerPageState
   TextEditingController descriptionTxt = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     final bookingCoustomerByBranchProvider =
         Provider.of<BookingCoustomerByBranchVM>(context);
     final id = box.read('getByIDInformationBookingForAllCustomerPage') ?? 294;
     //final xx = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
-    final days_booking = box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
+    final days_booking =
+        box.read('id_getByIDInformationBookingForAllCustomerPage') ?? 0;
     final role_user = box.read('role_user');
     final walletId = box.read("walletId");
     final transactionProvider = Provider.of<TransactionVM>(context);
@@ -244,12 +247,30 @@ class _getByIDInformationBookingForAllCustomerPageState
                                   : snapshot.data!.cars!.imageCarBrands!
                                               .length >
                                           1
-                                      ? Image.network(snapshot
-                                          .data!.cars!.imageCarBrands![0].url
-                                          .toString())
-                                      : Image.network(snapshot
-                                          .data!.cars!.imageCarBrands![0].url
-                                          .toString()),
+                                      ? SizedBox(
+                                          height: h / 3,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              child: Image.network(
+                                                snapshot.data!.cars!
+                                                    .imageCarBrands![0].url
+                                                    .toString(),
+                                                fit: BoxFit.fill,
+                                              )),
+                                        )
+                                      : SizedBox(
+                                          height: h / 3,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              child: Image.network(
+                                                snapshot.data!.cars!
+                                                    .imageCarBrands![0].url
+                                                    .toString(),
+                                                fit: BoxFit.fill,
+                                              )),
+                                        ),
                               Text("معلومات العميل الذي قام بعملية الحجز",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -266,7 +287,15 @@ class _getByIDInformationBookingForAllCustomerPageState
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 17)),
-                              Image.network(snapshot.data!.user!.image!)
+                              SizedBox(
+                                height: h / 3,
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30),
+                                    child: Image.network(
+                                      snapshot.data!.user!.image!,
+                                      fit: BoxFit.fill,
+                                    )),
+                              )
                             ],
                           ),
                         ),

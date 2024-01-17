@@ -182,7 +182,6 @@ class UserSignUp {
     data['username'] = this.username;
     data['phone'] = this.phone;
     data['full_name'] = this.fullName;
-    data['user_type'] = this.userType;
     data['email'] = this.email;
     data['password'] = this.password;
     data['password_confirmation'] = this.passwordConfirmation;
@@ -208,6 +207,7 @@ class Profile {
   String? token;
   Wallet? wallet;
   String? roles;
+  String? role;
 
   Profile(
       {this.id,
@@ -226,7 +226,7 @@ class Profile {
       this.location,
       this.token,
       this.wallet,
-      this.roles});
+      this.roles,this.role});
 
   Profile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -247,6 +247,7 @@ class Profile {
     wallet =
         json['wallet'] != null ? new Wallet.fromJson(json['wallet']) : null;
     roles = json['role'];
+    role = json['roles'];
   }
   Map<String, dynamic> toJsonActive() {
     final Map<String, dynamic> data = new Map<String, dynamic>();

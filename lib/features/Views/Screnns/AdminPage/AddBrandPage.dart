@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
@@ -228,12 +229,94 @@ class _AddPrandScrrensState extends State<AddPrandScrrens> {
                                   child: Stack(
                                     clipBehavior: Clip.none,
                                     children: [
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.favorite,
-                                            color: Colors.red,
-                                          )),
+                                      Positioned(
+                                        right: 1,
+                                        child: IconButton(
+                                            onPressed: () async {
+                                              AwesomeDialog(
+                                                context: context,
+                                                animType: AnimType.leftSlide,
+                                                headerAnimationLoop: false,
+                                                dialogType: DialogType.question,
+                                                showCloseIcon: true,
+                                                title:
+                                                    'هل فعلا تريد حذف الماركة',
+                                                desc:
+                                                    '${snapshot.data![index].name!} سوف تقوم بحذف ',
+                                                btnCancelOnPress: () {
+                                                  Navigator.of(context);
+                                                },
+                                                btnOkOnPress: () async {
+                                                  final data =
+                                                      await prandProvider
+                                                          .deleteBrand(
+                                                              id: snapshot
+                                                                  .data![index]
+                                                                  .id!);
+                                                  if (data['code'] == 405) {
+                                                    AwesomeDialog(
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.error,
+                                                      animType:
+                                                          AnimType.rightSlide,
+                                                      headerAnimationLoop:
+                                                          false,
+                                                      title: 'خطأ',
+                                                      desc:
+                                                          '${data['message']}',
+                                                      btnOkOnPress: () {},
+                                                      btnOkIcon: Icons.cancel,
+                                                      btnOkColor: Colors.red,
+                                                    ).show();
+                                                  }
+                                                 else if (data['code'] == 404) {
+                                                    AwesomeDialog(
+                                                      context: context,
+                                                      dialogType:
+                                                          DialogType.error,
+                                                      animType:
+                                                          AnimType.rightSlide,
+                                                      headerAnimationLoop:
+                                                          false,
+                                                      title: 'خطأ',
+                                                      desc:
+                                                          '${data['message']}',
+                                                      btnOkOnPress: () {},
+                                                      btnOkIcon: Icons.cancel,
+                                                      btnOkColor: Colors.red,
+                                                    ).show();
+                                                  }
+                                                  if (data['code'] == 200) {
+                                                    AwesomeDialog(
+                      context: context,
+                      animType: AnimType.leftSlide,
+                      headerAnimationLoop: false,
+                      dialogType: DialogType.success,
+                      showCloseIcon: true,
+                      title: 'نجاح',
+                      desc:
+                          '${data['message']}',
+                      btnOkOnPress: () {
+                        debugPrint('OnClcik');
+                      },
+                      btnOkIcon: Icons.check_circle,
+                      onDismissCallback: (type) {
+                        debugPrint('Dialog Dissmiss from callback $type');
+                      },
+                    ).show();
+                
+                                                  }
+                                                },
+                                                btnOkIcon: Icons.check_circle,
+                                                onDismissCallback: (type) {},
+                                              ).show();
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              color: Colors.red,
+                                            )),
+                                      ),
                                       Positioned(
                                         top: 25,
                                         left: 10,
