@@ -5,6 +5,7 @@ import 'package:booking_car_project_flutter/core/Constans/Api_Url.dart';
 import 'package:booking_car_project_flutter/core/Helpers/DioSingelton.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/CarVM.dart';
 import 'package:booking_car_project_flutter/features/ViewModels/PrandVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ImageCarBYCarIDPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyColor.dart';
 import 'package:booking_car_project_flutter/features/Views/Widgets/MyTextFormField.dart';
 import 'package:dio/dio.dart';
@@ -136,6 +137,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           actions: [
             TextButton(
                 onPressed: () async {
@@ -499,14 +501,14 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                             color: Color.fromARGB(
                                                 255, 213, 210, 200),
                                             borderRadius:
-                                                BorderRadius.circular(40)),
+                                                BorderRadius.circular(20)),
                                         margin: EdgeInsets.all(10),
                                         child: Stack(
                                           clipBehavior: Clip.none,
                                           children: [
                                             Positioned(
                                               right: 10,
-                                              top: 50,
+                                              top: 40,
                                               child: Padding(
                                                 padding:
                                                     const EdgeInsets.all(8.0),
@@ -710,73 +712,9 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                 },
                                               ),
                                             ),
-                                            // Positioned(
-                                            //   right: 50,
-                                            //   top: 5,
-                                            //   child: TextButton(
-                                            //       onPressed: () async {
-                                            //         await showModalBottomSheet(
-                                            //           context: context,
-                                            //           builder: (context) {
-                                            //             return Padding(
-                                            //               padding:
-                                            //                   const EdgeInsets
-                                            //                       .all(8.0),
-                                            //               child: Column(
-                                            //                 children: [
-                                            //                   ElevatedButton(
-                                            //                       style: ElevatedButton
-                                            //                           .styleFrom(
-                                            //                               backgroundColor:
-                                            //                                   colorprimarygreen),
-                                            //                       onPressed:
-                                            //                           () async {
-                                            //                         //getImageCamera();
-                                            //                         _pickImageDio(
-                                            //                             source: ImageSource
-                                            //                                 .camera,
-                                            //                             car_id: snapshot
-                                            //                                 .data![index]
-                                            //                                 .id!);
-                                            //                       },
-                                            //                       child: Text(
-                                            //                           "اضف صورة من الكاميرا")),
-                                            //                   SizedBox(
-                                            //                     height: 30,
-                                            //                   ),
-                                            //                   ElevatedButton(
-                                            //                       style: ElevatedButton
-                                            //                           .styleFrom(
-                                            //                               backgroundColor:
-                                            //                                   colorprimarygreen),
-                                            //                       onPressed:
-                                            //                           () async {
-                                            //                         //getImagegallery();
-                                            //                         _pickImageDio(
-                                            //                             source: ImageSource
-                                            //                                 .gallery,
-                                            //                             car_id: snapshot
-                                            //                                 .data![index]
-                                            //                                 .id!);
-                                            //                       },
-                                            //                       child: Text(
-                                            //                           "اضف صورة من المعرض"))
-                                            //                 ],
-                                            //               ),
-                                            //             );
-                                            //           },
-                                            //         );
-                                            //       },
-                                            //       child: Text(
-                                            //         "أضف صورة جديدة لهذه السيارة",
-                                            //         style: TextStyle(
-                                            //             fontSize: 15,
-                                            //             color: Colors.black),
-                                            //       )),
-                                            // ),
                                             Positioned(
-                                                top: 120,
-                                                right: 25,
+                                                bottom: 15,
+                                                left: 15,
                                                 child: Container(
                                                   width: 50,
                                                   height: 50,
@@ -798,70 +736,131 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                   ),
                                                 )),
                                             Positioned(
+                                                top: 250,
+                                                right: 15,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "اسم السيارة",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      " : ",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      "${snapshot.data![index].name}",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                  ],
+                                                )),
+                                            Positioned(
+                                                top: 280,
+                                                right: 15,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "موديل السيارة",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      " : ",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      "${snapshot.data![index].model}",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                  ],
+                                                )),
+                                            Positioned(
+                                                top: 310,
+                                                right: 15,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "السعر لليوم الواحد",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      " : ",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                    Text(
+                                                      "RY ${snapshot.data![index].price}",
+                                                      style: TextStyle(
+                                                          fontSize: 15),
+                                                    ),
+                                                  ],
+                                                )),
+                                            Positioned(
                                                 top: 220,
-                                                left: 15,
-                                                child: Text(
-                                                  "اسم السيارة",
-                                                  style:
-                                                      TextStyle(fontSize: 15),
+                                                left: 20,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    final car_id_Image =
+                                                        box.write(
+                                                            "car_id_ImageAll",
+                                                            snapshot
+                                                                .data![index]
+                                                                .id);
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                      builder: (context) {
+                                                        return ImageCarByCarIdPage();
+                                                      },
+                                                    ));
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(Icons
+                                                          .photo_filter_outlined),
+                                                      Text(
+                                                        " : شاهد بقية الصور",
+                                                        style: TextStyle(
+                                                            fontSize: 13),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 )),
                                             Positioned(
-                                                top: 240,
-                                                left: 15,
-                                                child: Text(
-                                                  "${snapshot.data![index].name}",
-                                                  style:
-                                                      TextStyle(fontSize: 20),
-                                                )),
-                                            Positioned(
-                                                top: 265,
-                                                left: 15,
-                                                child: Text(
-                                                  "موديل السيارة",
-                                                  style:
-                                                      TextStyle(fontSize: 15),
-                                                )),
-                                            Positioned(
-                                                top: 290,
-                                                left: 15,
-                                                child: Text(
-                                                  "${snapshot.data![index].model}",
-                                                  style:
-                                                      TextStyle(fontSize: 20),
-                                                )),
-                                            Positioned(
-                                                top: 260,
-                                                right: 15,
-                                                child: Text(
-                                                  "RY ${snapshot.data![index].price}",
-                                                  style:
-                                                      TextStyle(fontSize: 25),
-                                                )),
-                                            Positioned(
-                                                top: 235,
-                                                right: 15,
-                                                child: Text(
-                                                  "السعر لليوم الواحد",
-                                                  style:
-                                                      TextStyle(fontSize: 15),
-                                                )),
-                                            Positioned(
-                                              top: 50,
+                                              top: 80,
                                               left: 20,
                                               child: SizedBox(
-                                                width: 160,
-                                                height: 160,
+                                                height: 130,
                                                 child: Container(
-                                                  width: 230,
-                                                  height: 230,
+                                                  height: 130,
                                                   child: ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             20),
-                                                    child: Image.network(
-                                                      snapshot.data![index]
-                                                          .imageCarOfBrands!,
-                                                      fit: BoxFit.fill,
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        box.write(
+                                                            'car_id_ImageAll',
+                                                            snapshot
+                                                                .data![index]
+                                                                .id);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(
+                                                          builder: (context) {
+                                                            return ImageCarByCarIdPage();
+                                                          },
+                                                        ));
+                                                      },
+                                                      child: Image.network(
+                                                        snapshot.data![index]
+                                                            .imageCarOfBrands!,
+                                                        fit: BoxFit.fill,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -875,140 +874,6 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                 ),
                               ),
                             );
-                            // return ListView.builder(
-                            //   itemCount: snapshot.data!.length,
-                            //   itemBuilder: (context, index) {
-                            //     return SizedBox(
-                            //       height:
-                            //           MediaQuery.of(context).size.height / 2.3,
-                            //       width: MediaQuery.of(context).size.width,
-                            //       child: Container(
-                            //         decoration: BoxDecoration(
-                            //             color:
-                            //                 Color.fromARGB(255, 213, 210, 200),
-                            //             borderRadius:
-                            //                 BorderRadius.circular(40)),
-                            //         margin: EdgeInsets.all(10),
-                            //         child: Stack(
-                            //           clipBehavior: Clip.none,
-                            //           children: [
-                            //             Positioned(
-                            //               right: 30,
-                            //               top: 10,
-                            //               child: TextButton(
-                            //                   onPressed: () async {
-                            //                     await showModalBottomSheet(
-                            //                       context: context,
-                            //                       builder: (context) {
-                            //                         return Padding(
-                            //                           padding:
-                            //                               const EdgeInsets.all(
-                            //                                   8.0),
-                            //                           child: Column(
-                            //                             children: [
-                            //                               ElevatedButton(
-                            //                                   style: ElevatedButton
-                            //                                       .styleFrom(
-                            //                                           backgroundColor:
-                            //                                               colorprimarygreen),
-                            //                                   onPressed:
-                            //                                       () async {
-                            //                                     //getImageCamera();
-                            //                                     _pickImageDio(
-                            //                                         source: ImageSource
-                            //                                             .camera,
-                            //                                         car_id: snapshot
-                            //                                                 .data![index]
-                            //                                             ['id']);
-                            //                                   },
-                            //                                   child: Text(
-                            //                                       "اضف صورة من الكاميرا")),
-                            //                               SizedBox(
-                            //                                 height: 30,
-                            //                               ),
-                            //                               ElevatedButton(
-                            //                                   style: ElevatedButton
-                            //                                       .styleFrom(
-                            //                                           backgroundColor:
-                            //                                               colorprimarygreen),
-                            //                                   onPressed:
-                            //                                       () async {
-                            //                                     //getImagegallery();
-                            //                                     _pickImageDio(
-                            //                                         source: ImageSource
-                            //                                             .gallery,
-                            //                                         car_id: snapshot
-                            //                                                 .data![index]
-                            //                                             ['id']);
-                            //                                   },
-                            //                                   child: Text(
-                            //                                       "اضف صورة من المعرض"))
-                            //                             ],
-                            //                           ),
-                            //                         );
-                            //                       },
-                            //                     );
-                            //                   },
-                            //                   child: Text(
-                            //                     "أضف صورة جديدة لهذه السيارة",
-                            //                     style: TextStyle(
-                            //                         fontSize: 17,
-                            //                         color: colorprimarygreen),
-                            //                   )),
-                            //             ),
-                            //             Positioned(
-                            //                 top: 80,
-                            //                 right: 20,
-                            //                 child: Container(
-                            //                   width: 50,
-                            //                   height: 50,
-                            //                   decoration: BoxDecoration(
-                            //                       borderRadius:
-                            //                           BorderRadius.circular(30),
-                            //                       color: colorprimarygreen),
-                            //                   child: Center(
-                            //                     child: Text(
-                            //                       "${snapshot.data![index]['id']}",
-                            //                       style: TextStyle(
-                            //                           fontSize: 25,
-                            //                           color: colorprimarywhite),
-                            //                     ),
-                            //                   ),
-                            //                 )),
-                            //             Positioned(
-                            //                 top: 45,
-                            //                 right: 120,
-                            //                 child: Text(
-                            //                   "${snapshot.data![index]['name']}",
-                            //                   style: TextStyle(fontSize: 25),
-                            //                 )),
-                            //             Positioned(
-                            //               top: 90,
-                            //               left: 20,
-                            //               child: SizedBox(
-                            //                 width: 230,
-                            //                 height: 230,
-                            //                 child: Container(
-                            //                   width: 230,
-                            //                   height: 230,
-                            //                   child: ClipRRect(
-                            //                     borderRadius:
-                            //                         BorderRadius.circular(20),
-                            //                     child: Image.network(
-                            //                       snapshot.data![index]
-                            //                           ['image_car_brands'],
-                            //                       fit: BoxFit.fill,
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //             )
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     );
-                            //   },
-                            // );
                           }
                         }
                         return Center(child: CircularProgressIndicator());
@@ -1016,59 +881,10 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                     ),
                   ),
                 )
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height / 2,
-                //   width: MediaQuery.of(context).size.width,
-                //   child: FutureBuilder(
-                //     future: prandProvider.getAllPrandsFromAPi(),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.hasData) {
-                //         if (snapshot.data!.isEmpty) {
-                //           return Text("Empty");
-                //         }
-                //         return ListView.builder(
-                //           itemCount: snapshot.data!.length,
-                //           itemBuilder: (context, index) {
-                //             return Column(
-                //               children: [
-                //                 SizedBox(
-                //                   height: 300,
-                //                   width: 200,
-                //                   child: Image.network(
-                //                       snapshot.data![index].path!,
-                //                       scale: 1.0),
-                //                 ),
-                //                 Text("${snapshot.data![index].name}"),
-                //               ],
-                //             );
-                //           },
-                //         );
-                //       }
-                //       return Center(
-                //         child: CircularProgressIndicator(),
-                //       );
-                //     },
-                //   ),
-                // )
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildImage() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Row(
-        children: [
-          Text(" اضف من المتصفح"),
-          Icon(
-            Icons.add,
-            color: Colors.grey,
-          ),
-        ],
       ),
     );
   }

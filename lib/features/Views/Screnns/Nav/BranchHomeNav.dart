@@ -1,4 +1,5 @@
 import 'package:booking_car_project_flutter/features/ViewModels/UserVM.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/BranchProfilesPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/MonyBranchPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/ViewBrandPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/branchPage/getBookingByBranchId.dart';
@@ -123,7 +124,7 @@ class _BranchHomeNavState extends State<BranchHomeNav> {
               ViewPrandPage(),
               MonyBranchPage(),
               getBookingByBranchIdPage(),
-              ProfileCustomerPage()
+              BranchProfilesPage()
             ],
           ),
         ),

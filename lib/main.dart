@@ -5,6 +5,7 @@ import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/BranchHom
 import 'package:booking_car_project_flutter/features/Views/Screnns/Nav/CustomerHoemNav.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/SignUpPageWithImage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/asd.dart';
+import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ImageCarBYCarIDPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/ProfileCustomerPage.dart';
 import 'package:booking_car_project_flutter/features/Views/Screnns/customerpage/editProfile.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';

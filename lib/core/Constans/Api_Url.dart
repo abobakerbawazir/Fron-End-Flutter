@@ -12,6 +12,7 @@ class APIurl {
   static const String updateByAdminUrl = baseAdmin + 'update/';
   static const String indexByAdminUrl = baseAdmin + 'index';
   static const String viewAllBranchActive = baseAdmin + 'viewAllBranchActive';
+    static const String viewAllBranchActiveSearch = baseAdmin + 'viewAllBranchActiveSearch?full_name=';
   static const String viewAlluserDoesNotAdmin =
       baseAdmin + 'viewAlluserDoesNotAdmin';
   static const String viewAlluserByRoleNameUrl =
@@ -45,4 +46,7 @@ class APIurl {
       baseBookingUrl + 'updateBookingStateByBranch/';
   static const String getAllInformationBookingForOnlyCustomer =
       baseBookingUrl + 'getAllInformationBookingForOnlyCustomer/';
+      static const String getallImageCarBYCarIdURL =
+      baseUrl + 'image/getImageId?car_id=';
+    
 }

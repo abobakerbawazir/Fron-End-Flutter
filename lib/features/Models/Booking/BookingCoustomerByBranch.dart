@@ -14,6 +14,7 @@ class BookingCoustomerByBranch {
   String? createdAt;
   String? updatedAt;
   String? status;
+  String? paymentStatus;
   Cars? cars;
   Users? user;
 
@@ -28,6 +29,7 @@ class BookingCoustomerByBranch {
       this.createdAt,
       this.updatedAt,
       this.status,
+      this.paymentStatus,
       this.cars,
       this.user});
 
@@ -42,6 +44,7 @@ class BookingCoustomerByBranch {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     status = json['status'];
+    paymentStatus = json['payment_status'];
     cars = json['cars'] != null ? new Cars.fromJson(json['cars']) : null;
     user = json['user'] != null ? new Users.fromJson(json['user']) : null;
   }

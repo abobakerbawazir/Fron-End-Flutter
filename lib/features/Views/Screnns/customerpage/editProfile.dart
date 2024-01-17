@@ -61,8 +61,9 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           backgroundColor: Color.fromARGB(255, 107, 104, 104),
-          title: Text("تعديل الملف الشخصي"),
+          title: Center(child: Text("تعديل الملف الشخصي")),
         ),
         body: SingleChildScrollView(
             child: Container(

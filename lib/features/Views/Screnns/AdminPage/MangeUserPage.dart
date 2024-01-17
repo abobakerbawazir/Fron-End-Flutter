@@ -640,7 +640,7 @@ class _MangeUserPageState extends State<MangeUserPage> {
                                                       Text(
                                                           "الايميل : ${snapshot.data![index].email!}"),
                                                       Text(
-                                                          "نوع المستخدم : ${snapshot.data![index].role!}"),
+                                                          "نوع المستخدم : ${snapshot.data![index].roles!}"),
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -893,7 +893,7 @@ class _MangeUserPageState extends State<MangeUserPage> {
                                                           Text(
                                                               "الايميل : ${snapshot.data![index].email!}"),
                                                           Text(
-                                                              "نوع المستخدم : ${snapshot.data![index].role!}"),
+                                                              "نوع المستخدم : ${snapshot.data![index].roles!}"),
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -1174,7 +1174,7 @@ class _MangeUserPageState extends State<MangeUserPage> {
                                                     Text(
                                                         "الايميل : ${snapshot.data![index].email!}"),
                                                     Text(
-                                                        "نوع المستخدم : ${snapshot.data![index].role!}"),
+                                                        "نوع المستخدم : ${snapshot.data![index].roles!}"),
                                                     Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment

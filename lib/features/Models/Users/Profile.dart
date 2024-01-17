@@ -365,3 +365,52 @@ class Wallet {
     return data;
   }
 }
+
+class ProfileBranch {
+  int? id;
+  String? username;
+  String? fullName;
+  String? email;
+  String? phone;
+  int? active;
+  String? image;
+  String? location;
+  String? roles;
+
+  ProfileBranch(
+      {this.id,
+      this.username,
+      this.fullName,
+      this.email,
+      this.phone,
+      this.active,
+      this.image,
+      this.location,
+      this.roles});
+
+  ProfileBranch.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    fullName = json['full_name'];
+    email = json['email'];
+    phone = json['phone'];
+    active = json['active'];
+    image = json['image'];
+    location = json['location'];
+    roles = json['roles'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['full_name'] = this.fullName;
+    data['email'] = this.email;
+    data['phone'] = this.phone;
+    data['active'] = this.active;
+    data['image'] = this.image;
+    data['location'] = this.location;
+    data['roles'] = this.roles;
+    return data;
+  }
+}

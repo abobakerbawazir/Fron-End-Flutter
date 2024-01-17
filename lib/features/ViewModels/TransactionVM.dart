@@ -77,10 +77,11 @@ class TransactionVM with ChangeNotifier {
     print(_getInfoAllTransactionHistoryToTransferLists);
     return _getInfoAllTransactionHistoryToTransferLists;
   }
+
   Future<List<TransactionHistoryToAllTransfer>>
       getCustomerTransactionHistoryToTransfer({required int id}) async {
-    Response responce = await connect
-        .get("${APIUrlTransaction.getCustomerTransactionHistoryToTransferURL}${id.toString()}");
+    Response responce = await connect.get(
+        "${APIUrlTransaction.getCustomerTransactionHistoryToTransferURL}${id.toString()}");
     print(responce.data['data']);
     List<dynamic> dataAll = responce.data['data'];
     print(responce.data['data']);
@@ -91,10 +92,11 @@ class TransactionVM with ChangeNotifier {
     print(_getInfoAllTransactionHistoryToTransferLists);
     return _getInfoAllTransactionHistoryToTransferLists;
   }
+
   Future<List<TransactionHistoryToAllTransfer>>
       getBranchInfoAllTransactionHistoryToTransfer({required int id}) async {
-    Response responce = await connect
-        .get("${APIUrlTransaction.getBranchInfoAllTransactionHistoryToTransferURL}${id.toString()}");
+    Response responce = await connect.get(
+        "${APIUrlTransaction.getBranchInfoAllTransactionHistoryToTransferURL}${id.toString()}");
     print(responce.data['data']);
     List<dynamic> dataAll = responce.data['data'];
     print(responce.data['data']);
@@ -105,7 +107,6 @@ class TransactionVM with ChangeNotifier {
     print(_getInfoAllTransactionHistoryToTransferLists);
     return _getInfoAllTransactionHistoryToTransferLists;
   }
-  
 
   Future<List<TransactionHistoryNotTransfer>> transactionHistoryNotTransfer(
       {required String id}) async {
@@ -170,23 +171,39 @@ class TransactionVM with ChangeNotifier {
   }
 
   Future withdraw(Treansaction t) async {
+    final token = box.read('token_login');
+    print(token);
     Response response = await connect.post(APIUrlTransaction.withdrawURL,
-        data: t.withdrawtoJson());
+        data: t.withdrawtoJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ));
     notifyListeners();
     print(APIUrlTransaction.withdrawURL);
     final code = response.data['code'];
     print(response.data);
     return code;
   }
+
   Future diposit(Treansaction t) async {
+    final token = box.read('token_login');
+    print(token);
     Response response = await connect.post(APIUrlTransaction.dipositURL,
-        data: t.diposittoJson());
+        data: t.diposittoJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ));
     notifyListeners();
     print(APIUrlTransaction.withdrawURL);
     final code = response.data['code'];
     print(response.data);
     return code;
   }
+
   Future transferBooking(TreansactionBooking t) async {
     Response response = await connect.post(APIUrlTransaction.transferURL,
         data: t.transferToJson());
@@ -196,9 +213,17 @@ class TransactionVM with ChangeNotifier {
     print(response.data);
     return code;
   }
-   Future transfer(Treansaction t) async {
+
+  Future transfer(Treansaction t) async {
+    final token = box.read('token_login');
+    print(token);
     Response response = await connect.post(APIUrlTransaction.transferURL,
-        data: t.transferToJson());
+        data: t.transferToJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ));
     notifyListeners();
     print(APIUrlTransaction.withdrawURL);
     final code = response.data['code'];

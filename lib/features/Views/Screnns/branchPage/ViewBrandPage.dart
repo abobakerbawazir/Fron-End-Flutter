@@ -42,104 +42,59 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Center(child: Text("الماركات")),
         ),
-        // appBar: AppBar(
-        //   actions: [
-        //     IconButton(
-        //         onPressed: () async {
-        //           await showDialog(
-        //             context: context,
-        //             builder: (context) {
-        //               return AlertDialog(
-        //                 content: Text("back from Home Page"),
-        //                 title: Text("Are you sure"),
-        //                 actions: [
-        //                   ElevatedButton(
-        //                       onPressed: () async {
-        //                         final x = await userProvider.logout();
-        //                         await AwesomeDialog(
-        //                           context: context,
-        //                           animType: AnimType.leftSlide,
-        //                           headerAnimationLoop: false,
-        //                           dialogType: DialogType.success,
-        //                           showCloseIcon: true,
-        //                           title: 'نجاح',
-        //                           desc: x[0],
-        //                           btnOkOnPress: () {
-        //                             debugPrint('OnClcik');
-        //                           },
-        //                           btnOkIcon: Icons.check_circle,
-        //                         ).show();
-
-        //                         final prefs =
-        //                             await SharedPreferences.getInstance();
-        //                         prefs.setBool('token', false);
-        //                         Navigator.pushReplacement(context,
-        //                             MaterialPageRoute(
-        //                           builder: (context) {
-        //                             return SignupPage();
-        //                           },
-        //                         ));
-        //                       },
-        //                       child: Text("OK")),
-        //                   ElevatedButton(
-        //                       style: ElevatedButton.styleFrom(
-        //                           backgroundColor: Colors.red),
-        //                       onPressed: () {
-        //                         Navigator.pop(context);
-        //                       },
-        //                       child: Text("Cancel"))
-        //                 ],
-        //               );
-        //             },
-        //           );
-        //         },
-        //         icon: Icon(Icons.logout)),
-        //   ],
-        //   backgroundColor: colorprimarygreen,
-        //   title: Center(child: Text("صفحة الماركات")),
-        // ),
-
         body: SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.all(12),
             child: Form(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            prandProvider.myNotifyListeners();
-
-                            // prandProvider.clearControlle(_titleController);
-                          },
-                          icon: Icon(Icons.search)),
-                      SizedBox(
-                          width: 250,
-                          child: Card(
-                            child: Directionality(
-                                textDirection: TextDirection.rtl,
-                                child: TextFormField(
-                                  controller: _titleController,
-                                  decoration:
-                                      InputDecoration(border: InputBorder.none),
-                                  // controller: _titleController,
-                                  onChanged: (value) {
-                                    print(_titleController.text);
-                                    if (_titleController.text == '') {
-                                      prandProvider.myNotifyListeners();
-                                    }
-                                  },
-                                )),
-                          )),
-                      IconButton(
-                          onPressed: () {
-                            prandProvider.clearControlle(_titleController);
-                          },
-                          icon: Icon(Icons.clear))
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Color.fromARGB(255, 209, 221, 227)),
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                prandProvider.myNotifyListeners();
+                              },
+                              icon: Icon(Icons.search)),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.55,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Color.fromARGB(255, 209, 221, 227)),
+                                child: Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: TextFormField(
+                                      //controller: _titleController,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "ابحث هنا"),
+                                      controller: _titleController,
+                                      onChanged: (value) {
+                                        print(_titleController.text);
+                                        if (_titleController.text == '') {
+                                          prandProvider.myNotifyListeners();
+                                        }
+                                      },
+                                    )),
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                _titleController.clear();
+                                prandProvider.clearControlle(_titleController);
+                              },
+                              icon: Icon(Icons.clear))
+                        ],
+                      ),
+                    ),
                   ),
                   SizedBox(
                     height: 20,
@@ -186,24 +141,12 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 219, 214, 214),
+                                            color: colorprimaryA1,
                                             borderRadius:
                                                 BorderRadius.circular(30)),
                                         child: Stack(
                                           clipBehavior: Clip.none,
                                           children: [
-                                            // Positioned(
-                                            //   left: 100,
-                                            //   top: 14,
-                                            //   child: IconButton(
-                                            //       onPressed: () {},
-                                            //       icon: Icon(
-                                            //         Icons.favorite,
-                                            //         color: colorprimarywhite,
-                                            //       )),
-                                            // ),
-
                                             Positioned(
                                               top: 35,
                                               left: 20,
@@ -247,54 +190,6 @@ class _ViewPrandPageState extends State<ViewPrandPage> {
                           }),
                     ),
                   ),
-                  // SizedBox(
-                  //   height: MediaQuery.of(context).size.height,
-                  //   width: MediaQuery.of(context).size.width,
-                  //   child: FutureBuilder(
-                  //     future: prandProvider.getAllPrandsFromAPi(),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasData) {
-                  //         if (snapshot.data!.isEmpty) {
-                  //           return Text("Empty");
-                  //         }
-                  //         return ListView.builder(
-                  //           itemCount: snapshot.data!.length,
-                  //           itemBuilder: (context, index) {
-                  //             return Column(
-                  //               children: [
-                  //                 SizedBox(
-                  //                   height: 300,
-                  //                   width: 200,
-                  //                   child: InkWell(
-                  //                     onTap: () {
-                  //                       Navigator.push(context, MaterialPageRoute(
-                  //                         builder: (context) {
-                  //                           final box = GetStorage();
-                  //                           box.write('prand_id_forAddCar',
-                  //                               snapshot.data![index].id!);
-                  //                           print(box.read('prand_id_forAddCar'));
-
-                  //                           return AddCarsByUserAndBrand();
-                  //                         },
-                  //                       ));
-                  //                     },
-                  //                     child: Image.network(
-                  //                         snapshot.data![index].path!,
-                  //                         scale: 1.0),
-                  //                   ),
-                  //                 ),
-                  //                 Text("${snapshot.data![index].name}"),
-                  //               ],
-                  //             );
-                  //           },
-                  //         );
-                  //       }
-                  //       return Center(
-                  //         child: CircularProgressIndicator(),
-                  //       );
-                  //     },
-                  //   ),
-                  // )
                 ],
               ),
             ),

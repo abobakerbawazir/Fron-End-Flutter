@@ -209,6 +209,8 @@ class _getByIDInformationBookingForAllCustomerPageState
                               Text(
                                   "حالة الحجز : ${snapshot.data!.status.toString()}"),
                               Text(
+                                  "نوع الدفع : ${snapshot.data!.paymentStatus.toString()}"),
+                              Text(
                                   "تاريخ بداية الحجز : ${snapshot.data!.from.toString()}"),
                               Text(
                                   "تاريخ نهاية الحجز : ${snapshot.data!.to.toString()}"),

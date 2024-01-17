@@ -132,12 +132,12 @@ class BookingVM with ChangeNotifier {
     return _allBookings;
   }
 
-  Future<int> updateBookingStateByBranch(int id, Booking booking) async {
+  Future updateBookingStateByBranch(int id, Booking booking) async {
     print("${APIurl.updateBookingStateByBranch}$id");
     Response result = await connect.put(
         "${APIurl.updateBookingStateByBranch}$id",
         data: booking.toJsonOnlyStatus());
-    var code = result.data["code"];
+    final code = result.data;
     print("%%  code = $code %%");
     notifyListeners();
     return code;

@@ -120,15 +120,75 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                                           showCloseIcon: true,
                                           btnCancelOnPress: () {},
                                           btnOkOnPress: () async {
-                                            final x = await bookingProvider
+                                            final data = await bookingProvider
                                                 .updateBookingStateByBranch(
                                                     snapshot.data![index].id!,
                                                     Booking(
                                                         status: type!.value));
                                             print(
-                                                "updateBookingStateByBranch = $x");
+                                                "updateBookingStateByBranch = ${data['code']}");
+                                                if(data['code']==202){
+                                                  AwesomeDialog(
+                                                            context: context,
+                                                            dialogType:
+                                                                DialogType
+                                                                    .error,
+                                                            animType: AnimType
+                                                                .rightSlide,
+                                                            headerAnimationLoop:
+                                                                false,
+                                                            title: 'خطأ',
+                                                            desc:
+                                                                '${data['data']}',
+                                                            btnOkOnPress: () {},
+                                                            btnOkIcon:
+                                                                Icons.cancel,
+                                                            btnOkColor:
+                                                                Colors.red,
+                                                          ).show();
+                                                }
+                                                else if (data['code']==205){
+                                                  AwesomeDialog(
+                                                            context: context,
+                                                            dialogType:
+                                                                DialogType
+                                                                    .error,
+                                                            animType: AnimType
+                                                                .rightSlide,
+                                                            headerAnimationLoop:
+                                                                false,
+                                                            title: 'خطأ',
+                                                            desc:
+                                                                '${data['data']}',
+                                                            btnOkOnPress: () {},
+                                                            btnOkIcon:
+                                                                Icons.cancel,
+                                                            btnOkColor:
+                                                                Colors.red,
+                                                          ).show();
+                                                }
+                                                else if(data['code']==200){
+                                                  AwesomeDialog(
+                      context: context,
+                      animType: AnimType.leftSlide,
+                      headerAnimationLoop: false,
+                      dialogType: DialogType.success,
+                      showCloseIcon: true,
+                      title: 'Succes',
+                      desc:
+                          '${data['data'][0]['status']}',
+                      btnOkOnPress: () {
+                        debugPrint('OnClcik');
+                      },
+                      btnOkIcon: Icons.check_circle,
+                      onDismissCallback: (type) {
+                        debugPrint('Dialog Dissmiss from callback $type');
+                      },
+                    ).show();
+                                                }
                                           },
                                         ).show();
+                                        
                                       },
                                       child: Text("تعديل حالة الحجز")),
                                   Text(
@@ -141,6 +201,8 @@ class _getBookingByBranchIdPageState extends State<getBookingByBranchIdPage> {
                                       "رقم الحجز : ${snapshot.data![index].id.toString()}"),
                                   Text(
                                       "حالة الحجز : ${snapshot.data![index].status.toString()}"),
+                                  Text(
+                                      "نوع الدفع : ${snapshot.data![index].paymentStatus.toString()}"),
                                   Text(
                                       "تاريخ بداية الحجز : ${snapshot.data![index].from.toString()}"),
                                   Text(

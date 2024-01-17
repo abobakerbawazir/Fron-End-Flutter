@@ -18,6 +18,8 @@ class HoemCustomerPage extends StatefulWidget {
 }
 
 class _HoemCustomerPageState extends State<HoemCustomerPage> {
+  final _titleController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserVM>(context);
@@ -43,19 +45,64 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                     ))),
-                SizedBox(
-                  height: 5,
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color.fromARGB(255, 209, 221, 227)),
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              userProvider.notifyListeners();
+                            },
+                            icon: Icon(Icons.search)),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.6,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Color.fromARGB(255, 209, 221, 227)),
+                              child: Directionality(
+                                  textDirection: TextDirection.rtl,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        hintText: "ابحث هنا"),
+                                    controller: _titleController,
+                                    onChanged: (value) {
+                                      print(_titleController.text);
+                                      if (_titleController.text == '') {
+                                        userProvider.notifyListeners();
+                                      }
+                                    },
+                                  )),
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              _titleController.clear();
+                              userProvider.clearControlle(_titleController);
+                            },
+                            icon: Icon(Icons.clear))
+                      ],
+                    ),
+                  ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height - 150,
+                  height: MediaQuery.of(context).size.height -
+                      (MediaQuery.of(context).size.height / 3.4),
                   width: MediaQuery.of(context).size.width,
                   child: FutureBuilder(
-                    future: userProvider.getAllBranchesActiveOrAllUserFromAPi(
-                        url: APIurl.viewAllBranchActive),
+                    future:
+                        userProvider.getAllBranchesActiveOrAllUserFromAPiSearch(
+                            fultterName: _titleController.text,
+                            url: APIurl.viewAllBranchActiveSearch +
+                                _titleController.text),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         if (snapshot.data!.isEmpty) {
-                          return Center(child: Text("Empty"));
+                          return Center(child: Text("لاتوجد نتائج للبحث"));
                         }
                         return ListView.builder(
                           itemCount: snapshot.data!.length,

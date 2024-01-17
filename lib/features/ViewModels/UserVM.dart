@@ -39,6 +39,8 @@ class UserVM with ChangeNotifier {
 
   List<Profile> _allUsers = [];
   List<Profile> get allUsers => _allUsers;
+  List<ProfileBranch> _allUsersBranches = [];
+  List<ProfileBranch> get allUsersBranches => _allUsersBranches;
   List<Branch> _allBranch = [];
   List<Branch> get allBranch => _allBranch;
 
@@ -48,6 +50,10 @@ class UserVM with ChangeNotifier {
     } else {
       iconObsecure = false;
     }
+    notifyListeners();
+  }
+  clearControlle(TextEditingController textEditingController) {
+    textEditingController.clear();
     notifyListeners();
   }
 
@@ -121,8 +127,25 @@ class UserVM with ChangeNotifier {
       return _allBranch;
     }
   }
+  Future<List<Branch>> getAllBranchesActiveOrAllUserFromAPiSearch(
+      {required String url,String? fultterName}) async {
+    try {
+      print(url);
+      Response responce = await connect.get(url);
+      print(responce.data['data']);
+      List<dynamic> dataProfile = responce.data['data'];
+      print(responce.data['data']);
+      _allBranch = dataProfile
+          .map((e) => Branch.fromJson(e as Map<String, dynamic>))
+          .toList();
+      print(_allBranch);
+      return _allBranch;
+    } catch (e) {
+      return _allBranch;
+    }
+  }
 
-  Future<List<Profile>> viewAlluserByRoleName(
+  Future<List<ProfileBranch>> viewAlluserByRoleName(
       {required String name, int id = 0}) async {
     print(APIurl.viewAllBranchActive);
     Response responce = await connect
@@ -130,11 +153,11 @@ class UserVM with ChangeNotifier {
     print(responce.data['data']);
     List<dynamic> dataProfile = responce.data['data'];
     print(responce.data['data']);
-    _allUsers = dataProfile
-        .map((e) => Profile.fromJson(e as Map<String, dynamic>))
+    _allUsersBranches = dataProfile
+        .map((e) => ProfileBranch.fromJson(e as Map<String, dynamic>))
         .toList();
-    print(_allUsers);
-    return _allUsers;
+    print(_allUsersBranches);
+    return _allUsersBranches;
   }
 
   Future SignUpWithImage(

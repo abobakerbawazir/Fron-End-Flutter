@@ -9,14 +9,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileCustomerPage extends StatefulWidget {
-  const ProfileCustomerPage({super.key});
+class BranchProfilesPage extends StatefulWidget {
+  const BranchProfilesPage({super.key});
 
   @override
-  State<ProfileCustomerPage> createState() => _ProfileCustomerPageState();
+  State<BranchProfilesPage> createState() => _BranchProfilesPageState();
 }
 
-class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
+class _BranchProfilesPageState extends State<BranchProfilesPage> {
   final box = GetStorage();
   @override
   Widget build(BuildContext context) {
@@ -134,63 +134,74 @@ class _ProfileCustomerPageState extends State<ProfileCustomerPage> {
                       ),
                     ),
                     SizedBox(
-                        height: 150,
+                        height: 300,
                         width: w,
-                        child: Row(
+                        child: Column(
                           children: [
                             SizedBox(
-                              width: 12,
-                            ),
-                            image == null
-                                ? Expanded(
-                                    child: CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage: AssetImage(
-                                          'assets/images/user-profile-icon-front-side.jpg'),
-                                    ),
-                                  )
-                                : Expanded(
-                                    child: CircleAvatar(
-                                      radius: 50,
-                                      backgroundImage: NetworkImage(image),
-                                    ),
-                                  ),
-                            SizedBox(
-                              width: 20,
+                              height: 12,
                             ),
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                      "الاسم الكامل : ${full_name}" ??
-                                          "Abobaker Bawazer",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16)),
-                                ),
-                                Expanded(
-                                  child: Text("الايميل : ${email}" ??
-                                      "Abobaker@gmail.com"),
-                                ),
-                                // SizedBox(
-                                //   height: 5,
-                                // ),
-                                Expanded(
-                                    child: Text(
-                                        "رقم الهاتف : ${phone}" ?? "7756301")),
-                                // SizedBox(
-                                //   height: 5,
-                                // ),
-                                Expanded(
-                                    child: Text(
-                                        "الموقع : ${location}" ?? "7756301"))
+                                image == null
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: Image.network(
+                                            fit: BoxFit.fill,
+                                            'assets/images/user-profile-icon-front-side.jpg'),
+                                      )
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: Image.network(image,
+                                            fit: BoxFit.fill)),
                               ],
-                            )
+                            ),
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                            "الاسم الكامل : ${full_name}" ??
+                                                "Abobaker Bawazer",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16)),
+                                      ),
+                                      Expanded(
+                                        child: Text("الايميل : ${email}" ??
+                                            "Abobaker@gmail.com"),
+                                      ),
+                                      // SizedBox(
+                                      //   height: 5,
+                                      // ),
+                                      Expanded(
+                                          child: Text("رقم الهاتف : ${phone}" ??
+                                              "7756301")),
+                                      // SizedBox(
+                                      //   height: 5,
+                                      // ),
+                                      Expanded(
+                                          child: Text("الموقع : ${location}" ??
+                                              "7756301"))
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         )),
                   ],
