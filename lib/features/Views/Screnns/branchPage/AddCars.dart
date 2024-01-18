@@ -83,6 +83,8 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
       int? price,
       int? user_id,
       int? prand_id}) async {
+            final token = box.read('token_login');
+
     // XFile? PickedFile = await _picker.pickImage(source: ImageSource.gallery);
     // List<int> imageBytes = await PickedFile!.readAsBytes();
     FormData formData = FormData.fromMap({
@@ -93,7 +95,11 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
       'prand_id': prand_id,
     });
     Dio dio = DioSingelton.getInstance();
-    Response response = await dio.post(APIurl.storeCarsUlrl, data: formData);
+    Response response = await dio.post(APIurl.storeCarsUlrl, data: formData, options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     var x = response.data['code'];
     print(x);
     print(response.data);

@@ -51,6 +51,7 @@ dependencies:
   intl: any
   stylish_bottom_bar: ^1.0.3
   carousel_slider: ^4.2.1
+  url_launcher: ^6.1.14
 dev_dependencies:
   flutter_test:
     sdk: flutter

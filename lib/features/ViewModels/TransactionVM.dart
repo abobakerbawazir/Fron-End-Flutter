@@ -163,8 +163,14 @@ class TransactionVM with ChangeNotifier {
   }
 
   Future updateDiposit(int id) async {
+        final token = box.read('token_login');
+
     Response response =
-        await connect.get(APIUrlTransaction.updateDipositURL + id.toString());
+        await connect.get(APIUrlTransaction.updateDipositURL + id.toString(), options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     notifyListeners();
     final code = response.data['code'];
     return code;
@@ -198,7 +204,7 @@ class TransactionVM with ChangeNotifier {
           },
         ));
     notifyListeners();
-    print(APIUrlTransaction.withdrawURL);
+    print(APIUrlTransaction.dipositURL);
     final code = response.data['code'];
     print(response.data);
     return code;

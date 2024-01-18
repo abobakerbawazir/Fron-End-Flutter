@@ -77,7 +77,13 @@ class UserVM with ChangeNotifier {
   }
 
   Future<List<dynamic>> allUserslistOfMap() async {
-    Response responce = await connect.get(APIurl.indexByAdminUrl);
+        final token = box.read('token_login');
+
+    Response responce = await connect.get(APIurl.indexByAdminUrl,options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     var x = await responce.data['data'];
     var y = x[0]['username'];
     print(y);
@@ -89,8 +95,14 @@ class UserVM with ChangeNotifier {
 
   //delete user By Admin
   Future deleteUser({required int id}) async {
+            final token = box.read('token_login');
+
     Response response =
-        await connect.delete(APIurl.deleteuserUrl + id.toString());
+        await connect.delete(APIurl.deleteuserUrl + id.toString(),options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     print(response.data);
     final code = response.data['code'];
     print(code);

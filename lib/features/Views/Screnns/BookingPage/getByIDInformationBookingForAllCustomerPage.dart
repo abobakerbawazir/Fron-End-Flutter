@@ -72,7 +72,8 @@ class _getByIDInformationBookingForAllCustomerPageState
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("getByIDInformationBookingForAllCustomerPage"),
+          automaticallyImplyLeading: false,
+          title: Center(child: Text("جميع معلومات الحجز")),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -199,53 +200,111 @@ class _getByIDInformationBookingForAllCustomerPageState
                                       },
                                       child: Text("أدفع عبر المحفظة"))
                                   : Container(),
-                              Text(
-                                "معلومات الحجز الاولية",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 17),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  "معلومات الحجز الاولية",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17),
+                                ),
                               ),
-                              Text(
-                                  "رقم الحجز : ${snapshot.data!.id.toString()}"),
-                              Text(
-                                  "حالة الحجز : ${snapshot.data!.status.toString()}"),
-                              Text(
-                                  "نوع الدفع : ${snapshot.data!.paymentStatus.toString()}"),
-                              Text(
-                                  "تاريخ بداية الحجز : ${snapshot.data!.from.toString()}"),
-                              Text(
-                                  "تاريخ نهاية الحجز : ${snapshot.data!.to.toString()}"),
-                              Text(
-                                  "التكلفة الاجمالية للحجز : ${snapshot.data!.total.toString()}"),
-                              Text(
-                                  "عدد ايام الحجز : ${days_booking.toString()} يوم"),
-                              Text("معلومات  السيارة",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17)),
-                              Text(
-                                  "اسم السيارة : ${snapshot.data!.cars!.name.toString()}"),
-                              Text(
-                                  "موديل السيارة : ${snapshot.data!.cars!.model.toString()}"),
-                              Text(
-                                  "سعر السيارة لليوم الواحد : ${snapshot.data!.cars!.price.toString()}"),
-                              // Text("معلومات صاحب الفرع",
-                              //     style: TextStyle(
-                              //         fontWeight: FontWeight.bold,
-                              //         fontSize: 17)),
-                              // Text(
-                              //     "الايميل : ${snapshot.data!.cars!.users!.email.toString()}"),
-                              // Text(
-                              //     "الاسم : ${snapshot.data!.cars!.users!.fullName.toString()}"),
-                              // Text(
-                              //     "رقم الهاتف : ${snapshot.data!.cars!.users!.phone.toString()}"),
-                              // Text(
-                              //     "العنوان : ${snapshot.data!.cars!.users!.location.toString()}"),
-                              Text("الصورة للسيارة",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17)),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "رقم الحجز : ${snapshot.data!.id.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "حالة الحجز : ${snapshot.data!.status.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "نوع الدفع : ${snapshot.data!.paymentStatus.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "تاريخ بداية الحجز : ${snapshot.data!.from.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "تاريخ نهاية الحجز : ${snapshot.data!.to.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "التكلفة الاجمالية للحجز : ${snapshot.data!.total.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "عدد ايام الحجز : ${days_booking.toString()} يوم"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("معلومات  السيارة",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "اسم السيارة : ${snapshot.data!.cars!.name.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "موديل السيارة : ${snapshot.data!.cars!.model.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "سعر السيارة لليوم الواحد : ${snapshot.data!.cars!.price.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("معلومات صاحب الفرع",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "الايميل : ${snapshot.data!.cars!.users!.email.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "الاسم : ${snapshot.data!.cars!.users!.fullName.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "رقم الهاتف : ${snapshot.data!.cars!.users!.phone.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "العنوان : ${snapshot.data!.cars!.users!.location.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("الصورة للسيارة",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                              ),
                               snapshot.data!.cars!.imageCarBrands!.length == 0
-                                  ? Text("لاتوجد صورة")
+                                  ? Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text("لاتوجد صورة"),
+                                    )
                                   : snapshot.data!.cars!.imageCarBrands!
                                               .length >
                                           1
@@ -273,22 +332,41 @@ class _getByIDInformationBookingForAllCustomerPageState
                                                 fit: BoxFit.fill,
                                               )),
                                         ),
-                              Text("معلومات العميل الذي قام بعملية الحجز",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17)),
-                              Text(
-                                  "الايميل : ${snapshot.data!.user!.email.toString()}"),
-                              Text(
-                                  "الاسم : ${snapshot.data!.user!.fullName.toString()}"),
-                              Text(
-                                  "رقم الهاتف : ${snapshot.data!.user!.phone.toString()}"),
-                              Text(
-                                  "العنوان : ${snapshot.data!.user!.location.toString()}"),
-                              Text("صورة الزبون",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17)),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                    "معلومات العميل الذي قام بعملية الحجز",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "الايميل : ${snapshot.data!.user!.email.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "الاسم : ${snapshot.data!.user!.fullName.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "رقم الهاتف : ${snapshot.data!.user!.phone.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                    "العنوان : ${snapshot.data!.user!.location.toString()}"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("صورة الزبون",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17)),
+                              ),
                               SizedBox(
                                 height: h / 3,
                                 child: ClipRRect(

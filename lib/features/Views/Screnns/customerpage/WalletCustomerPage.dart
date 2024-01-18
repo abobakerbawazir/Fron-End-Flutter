@@ -44,7 +44,7 @@ class _WalletCustomerPageState extends State<WalletCustomerPage> {
               )),
               Container(
                 decoration: BoxDecoration(
-                    color: colorprimarygrey,
+                    color: colorprimaryA1,
                     borderRadius: BorderRadius.circular(8)),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -61,7 +61,7 @@ class _WalletCustomerPageState extends State<WalletCustomerPage> {
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: selectedName == nameTransations[index]
-                                      ? Color.fromARGB(255, 5, 19, 215)
+                                      ? Color.fromARGB(255, 3, 59, 79)
                                       : Colors.white,
                                 ),
                                 child: Padding(

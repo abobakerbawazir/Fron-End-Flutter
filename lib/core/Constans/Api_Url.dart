@@ -1,5 +1,6 @@
 class APIurl {
-  static const String baseUrl = 'http://192.168.129.98:8000/api/';
+  static const String baseUrl = 'https://abubakr.hadramout-bootcamps.com/api/';
+  //static const String baseUrl = 'http://192.168.129.98:8000/api/';
   static const String loginUrl = baseUrl + "login";
   static const String SignupUrl = baseUrl + 'signup';
   static const String logoutUrl = baseUrl + 'logout';
@@ -12,7 +13,8 @@ class APIurl {
   static const String updateByAdminUrl = baseAdmin + 'update/';
   static const String indexByAdminUrl = baseAdmin + 'index';
   static const String viewAllBranchActive = baseAdmin + 'viewAllBranchActive';
-    static const String viewAllBranchActiveSearch = baseAdmin + 'viewAllBranchActiveSearch?full_name=';
+  static const String viewAllBranchActiveSearch =
+      baseAdmin + 'viewAllBranchActiveSearch?full_name=';
   static const String viewAlluserDoesNotAdmin =
       baseAdmin + 'viewAlluserDoesNotAdmin';
   static const String viewAlluserByRoleNameUrl =
@@ -46,7 +48,6 @@ class APIurl {
       baseBookingUrl + 'updateBookingStateByBranch/';
   static const String getAllInformationBookingForOnlyCustomer =
       baseBookingUrl + 'getAllInformationBookingForOnlyCustomer/';
-      static const String getallImageCarBYCarIdURL =
+  static const String getallImageCarBYCarIdURL =
       baseUrl + 'image/getImageId?car_id=';
-    
 }

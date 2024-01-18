@@ -6,9 +6,11 @@ import 'package:booking_car_project_flutter/features/Models/Car/ImageCar.dart';
 import 'package:booking_car_project_flutter/features/Models/ImageCar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CarVM with ChangeNotifier {
   Dio connect = DioSingelton.getInstance();
+    final box = GetStorage();
 
   List<Car> _allCArs = [];
   List<Car> get allCArs => _allCArs;
@@ -63,8 +65,14 @@ class CarVM with ChangeNotifier {
   }
 
   Future deleteCar({required int id}) async {
+                final token = box.read('token_login');
+
     Response responce =
-        await connect.delete(API_URL_Delete.deleteCarUrl + id.toString());
+        await connect.delete(API_URL_Delete.deleteCarUrl + id.toString(),options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     var data = responce.data;
     notifyListeners();
     return data;

@@ -120,29 +120,74 @@ class _AllcustomerwalletPageState extends State<AllcustomerwalletPage> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: snapshot.data![index].status!
                                     // Color.fromARGB(255, 185, 197, 198)
-                                    ? Color.fromARGB(255, 176, 249, 191)
+                                    ? colorprimaryA1
                                     : Color.fromARGB(255, 252, 197, 197)),
-                            child: Column(
+                            child: 
+                            Column(
                               children: [
-                                Text(
-                                    "رقم العملية : ${snapshot.data![index].id!.toString()}"),
-                                Text(
-                                    "اسم حساب العميل : ${snapshot.data![index].wallet!.user!.username!.toString()}"),
-                                Text(
-                                    "اسم العميل : ${snapshot.data![index].wallet!.user!.fullName!.toString()}"),
-                                Text(
-                                    "ايميل العميل : ${snapshot.data![index].wallet!.user!.email!.toString()}"),
-                                Text(
-                                    "رقم العميل : ${snapshot.data![index].wallet!.user!.phone!.toString()}"),
-                                Text(
-                                    "المبلغ الذي تم ايداعه : ${snapshot.data![index].amount!.toString()}"),
-                                Text(snapshot.data![index].status!
-                                    ? ' حالة العملية : تم التأكيد'
-                                    : " حالة العملية : لم يتم التأكيد"),
-                                Text(
-                                    "رقم حساب العميل : ${snapshot.data![index].wallet!.code!.toString()}"),
-                                Text(
-                                    "المبلغ الذي في محفظته : ${snapshot.data![index].wallet!.balance!.toString()}"),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "رقم العملية : ${snapshot.data![index].id!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "اسم حساب العميل : ${snapshot.data![index].wallet!.user!.username!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "اسم العميل : ${snapshot.data![index].wallet!.user!.fullName!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "ايميل العميل : ${snapshot.data![index].wallet!.user!.email!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "رقم العميل : ${snapshot.data![index].wallet!.user!.phone!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "المبلغ الذي تم ايداعه : ${snapshot.data![index].amount!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(snapshot.data![index].status!
+                                      ? ' حالة العملية : تم التأكيد'
+                                      : " حالة العملية : لم يتم التأكيد"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "رقم حساب العميل : ${snapshot.data![index].wallet!.code!.toString()}"),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "المبلغ الذي في محفظته : ${snapshot.data![index].wallet!.balance!.toString()}"),
+                                ),
+                                snapshot.data![index].transactionType!.name ==
+                                        'تحويل'
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                            "المبلغ الذي  تم تحويله : ${snapshot.data![index].amount!.toString()}"),
+                                      )
+                                    : Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text(
+                                            "المبلغ الذي تم إيداعه : ${snapshot.data![index].amount!.toString()}"),
+                                      ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Text(
+                                      "  الوصف : ${snapshot.data![index].description!.toString()}"),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -156,7 +201,7 @@ class _AllcustomerwalletPageState extends State<AllcustomerwalletPage> {
                   return Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(4.0),
                         child: Text('في انتضار الانترنت',
                             style: TextStyle(fontWeight: FontWeight.bold)),
                       ),

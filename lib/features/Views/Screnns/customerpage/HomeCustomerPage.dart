@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HoemCustomerPage extends StatefulWidget {
   const HoemCustomerPage({super.key});
@@ -165,17 +166,48 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                                                 Positioned(
                                                   right: 30,
                                                   top: 230,
-                                                  child: Text(
-                                                      " : ${snapshot.data![index].phone!}",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 15)),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      final Uri url = Uri(
+                                                          scheme: 'tel',
+                                                          path:
+                                                              '${snapshot.data![index].phone!}');
+                                                      if (await canLaunchUrl(
+                                                          url)) {
+                                                        await launchUrl(url);
+                                                      } else {
+                                                        print(
+                                                            'can not launch this url');
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                        " : ${snapshot.data![index].phone!}",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 15)),
+                                                  ),
                                                 ),
                                                 Positioned(
                                                     // right: 30,
                                                     top: 230,
-                                                    child: Icon(Icons.phone)),
+                                                    child: InkWell(
+                                                        onTap: () async {
+                                                          final Uri url = Uri(
+                                                              scheme: 'tel',
+                                                              path:
+                                                                  '${snapshot.data![index].phone!}');
+                                                          if (await canLaunchUrl(
+                                                              url)) {
+                                                            await launchUrl(
+                                                                url);
+                                                          } else {
+                                                            print(
+                                                                'can not launch this url');
+                                                          }
+                                                        },
+                                                        child:
+                                                            Icon(Icons.phone))),
                                                 Positioned(
                                                   right: 0,
                                                   top: 165,
@@ -211,10 +243,43 @@ class _HoemCustomerPageState extends State<HoemCustomerPage> {
                                                 Positioned(
                                                   top: 260,
                                                   right: 30,
-                                                  child: Text(
-                                                      " : ${snapshot.data![index].email!}",
-                                                      style: TextStyle(
-                                                          fontSize: 17)),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      String?
+                                                          encodeQueryParameters(
+                                                              Map<String,
+                                                                      String>
+                                                                  params) {
+                                                        return params.entries
+                                                            .map((MapEntry<
+                                                                        String,
+                                                                        String>
+                                                                    e) =>
+                                                                '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                                            .join('&');
+                                                      }
+
+// ···
+                                                      final Uri emailLaunchUri =
+                                                          Uri(
+                                                        scheme: 'mailto',
+                                                        path:
+                                                            '${snapshot.data![index].email!}',
+                                                        query:
+                                                            encodeQueryParameters(<String,
+                                                                String>{
+                                                          'subject':
+                                                              'مرحبا ${snapshot.data![index].fullName}',
+                                                        }),
+                                                      );
+
+                                                      launchUrl(emailLaunchUri);
+                                                    },
+                                                    child: Text(
+                                                        " : ${snapshot.data![index].email!}",
+                                                        style: TextStyle(
+                                                            fontSize: 17)),
+                                                  ),
                                                 ),
                                               ],
                                             ),

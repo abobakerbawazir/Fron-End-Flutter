@@ -25,80 +25,87 @@ class _ManageMonyScreensState extends State<ManageMonyScreens> {
     double w = MediaQuery.of(context).size.width;
     final transactionProvider = Provider.of<TransactionVM>(context);
 
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-            child: Column(
-          children: [
-            Center(
-                child: Text(
-              "ادارة الاموال",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            )),
-            Container(
-              decoration: BoxDecoration(
-                  color: colorprimarygrey,
-                  borderRadius: BorderRadius.circular(8)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: List.generate(
-                      nameTransations.length,
-                      (index) => InkWell(
-                            onTap: () {
-                              selectedName = nameTransations[index];
-                              transactionProvider.notifyListeners();
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: selectedName == nameTransations[index]
-                                    ? Color.fromARGB(255, 5, 19, 215)
-                                    : Colors.white,
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  nameTransations[index],
-                                  style: TextStyle(
-                                      color:
-                                          selectedName == nameTransations[index]
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Container(
+                child: Column(
+              children: [
+                Center(
+                    child: Text(
+                  "ادارة الاموال",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                )),
+                Container(
+                  decoration: BoxDecoration(
+                      color: colorprimarygrey,
+                      borderRadius: BorderRadius.circular(8)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List.generate(
+                          nameTransations.length,
+                          (index) => InkWell(
+                                onTap: () {
+                                  selectedName = nameTransations[index];
+                                  transactionProvider.notifyListeners();
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color:
+                                        selectedName == nameTransations[index]
+                                            ? Color.fromARGB(255, 5, 19, 215)
+                                            : Colors.white,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      nameTransations[index],
+                                      style: TextStyle(
+                                          color: selectedName ==
+                                                  nameTransations[index]
                                               ? Colors.white
                                               : Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          )),
+                              )),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            selectedName == 'الايداع'
-                ? SizedBox(
-                    height: h - 224,
-                    width: w,
-                    child: ManageDipositPage(),
-                  )
-                : selectedName == 'السحب'
+                selectedName == 'الايداع'
                     ? SizedBox(
                         height: h - 224,
                         width: w,
-                        child: MangeWithdrawPage(),
+                        child: ManageDipositPage(),
                       )
-                    : selectedName == 'التحويل'
+                    : selectedName == 'السحب'
                         ? SizedBox(
                             height: h - 224,
                             width: w,
-                            child: GetInfoAllTransactionHistoryToTransferPage())
-                        : SizedBox(
-                            height: h - 224,
-                            width: w,
-                            child: ManageAllTransactionPage())
-          ],
-        )),
+                            child: MangeWithdrawPage(),
+                          )
+                        : selectedName == 'التحويل'
+                            ? SizedBox(
+                                height: h - 224,
+                                width: w,
+                                child:
+                                    GetInfoAllTransactionHistoryToTransferPage())
+                            : SizedBox(
+                                height: h - 224,
+                                width: w,
+                                child: ManageAllTransactionPage())
+              ],
+            )),
+          ),
+        ),
       ),
     );
   }

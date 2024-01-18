@@ -133,10 +133,16 @@ class BookingVM with ChangeNotifier {
   }
 
   Future updateBookingStateByBranch(int id, Booking booking) async {
+          final token = box.read('token_login');
+
     print("${APIurl.updateBookingStateByBranch}$id");
     Response result = await connect.put(
         "${APIurl.updateBookingStateByBranch}$id",
-        data: booking.toJsonOnlyStatus());
+        data: booking.toJsonOnlyStatus(), options: Options(
+            headers: {
+              'Authorization': 'Bearer $token',
+            },
+          ));
     final code = result.data;
     print("%%  code = $code %%");
     notifyListeners();

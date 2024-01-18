@@ -90,7 +90,7 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                   style: TextStyle(color: colorprimarywhite),
                 )),
           ],
-          backgroundColor: colorprimarygreen,
+          // backgroundColor: colorprimarygreen,
           title: Center(child: Text(' صفحة أضافة السيارات ')),
         ),
         body: SingleChildScrollView(
@@ -146,8 +146,13 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                       // },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: Color.fromARGB(
-                                                255, 213, 210, 200),
+                                            color:
+                                                snapshot.data![index].active ==
+                                                        0
+                                                    ? Color.fromARGB(
+                                                        255, 213, 210, 200)
+                                                    : const Color.fromARGB(
+                                                        255, 223, 168, 164),
                                             borderRadius:
                                                 BorderRadius.circular(20)),
                                         margin: EdgeInsets.all(10),
@@ -164,227 +169,220 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                           .size
                                                           .width /
                                                       2,
-                                                  child: ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              backgroundColor:
-                                                                  colorprimarygrey),
-                                                      onPressed: () {
-                                                        final box =
-                                                            GetStorage();
-                                                        box.write(
-                                                            'car_id',
-                                                            snapshot
-                                                                .data![index]
-                                                                .id);
-                                                        print(
-                                                            "car_id = ${box.read('car_id')}");
-                                                        final token = box.read(
-                                                            'token_login');
-                                                        print(box.read(
-                                                            'token_login'));
-                                                        if (token == null) {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return AlertDialog(
-                                                                title: Center(
-                                                                    child: Text(
-                                                                        "يرجى تسجيل الدخول")),
-                                                                actions: [
-                                                                  MyTextFormField(
-                                                                      hintText:
-                                                                          'الايميل',
-                                                                      controller:
-                                                                          emailTxt,
-                                                                      readOnly:
-                                                                          false,
-                                                                      suffixIcon:
-                                                                          Icon(Icons
-                                                                              .email)),
-                                                                  MyTextFormField(
-                                                                    hintText:
-                                                                        'كلمة المرور',
-                                                                    controller:
-                                                                        passwordTxt,
-                                                                    readOnly:
-                                                                        false,
-                                                                    suffixIcon:
-                                                                        Icon(Icons
-                                                                            .visibility),
-                                                                  ),
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      final code =
-                                                                          await userProvider
-                                                                              .login(
-                                                                        context:
-                                                                            context,
-                                                                        email: emailTxt
-                                                                            .text,
-                                                                        password:
-                                                                            passwordTxt.text,
-                                                                      );
-                                                                      print(
-                                                                          code);
-                                                                      if (code ==
-                                                                          200) {
-                                                                        final prefs =
-                                                                            await SharedPreferences.getInstance();
-                                                                        prefs.setBool(
-                                                                            'token',
-                                                                            true);
-                                                                        Navigator.pop(
-                                                                            context);
+                                                  child: snapshot.data![index]
+                                                              .active ==
+                                                          0
+                                                      ? ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  backgroundColor:
+                                                                      colorprimarygrey),
+                                                          onPressed: () {
+                                                            final box =
+                                                                GetStorage();
+                                                            box.write(
+                                                                'car_id',
+                                                                snapshot
+                                                                    .data![
+                                                                        index]
+                                                                    .id);
+                                                            print(
+                                                                "car_id = ${box.read('car_id')}");
+                                                            final token = box.read(
+                                                                'token_login');
+                                                            print(box.read(
+                                                                'token_login'));
+                                                            if (token == null) {
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return AlertDialog(
+                                                                    title: Center(
+                                                                        child: Text(
+                                                                            "يرجى تسجيل الدخول")),
+                                                                    actions: [
+                                                                      MyTextFormField(
+                                                                          hintText:
+                                                                              'الايميل',
+                                                                          controller:
+                                                                              emailTxt,
+                                                                          readOnly:
+                                                                              false,
+                                                                          suffixIcon:
+                                                                              Icon(Icons.email)),
+                                                                      MyTextFormField(
+                                                                        hintText:
+                                                                            'كلمة المرور',
+                                                                        controller:
+                                                                            passwordTxt,
+                                                                        readOnly:
+                                                                            false,
+                                                                        suffixIcon:
+                                                                            Icon(Icons.visibility),
+                                                                      ),
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          final code =
+                                                                              await userProvider.login(
+                                                                            context:
+                                                                                context,
+                                                                            email:
+                                                                                emailTxt.text,
+                                                                            password:
+                                                                                passwordTxt.text,
+                                                                          );
+                                                                          print(
+                                                                              code);
+                                                                          if (code ==
+                                                                              200) {
+                                                                            final prefs =
+                                                                                await SharedPreferences.getInstance();
+                                                                            prefs.setBool('token',
+                                                                                true);
+                                                                            Navigator.pop(context);
 
-                                                                        return showDialog(
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return AlertDialog(
-                                                                              title: Center(child: Text("اضف التاريخ")),
-                                                                              actions: [
-                                                                                MyTextFormField(
-                                                                                  hintText: 'تاريخ بداية الحجز',
-                                                                                  controller: fromTxt,
-                                                                                  readOnly: true,
-                                                                                  suffixIcon: IconButton(
-                                                                                      onPressed: () async {
-                                                                                        DateTime? startDate = await showDatePicker(
-                                                                                            builder: (context, child) {
-                                                                                              return Theme(data: ThemeData.dark(), child: child!);
-                                                                                            },
-                                                                                            context: context,
-                                                                                            initialDate: DateTime.now(),
-                                                                                            firstDate: DateTime(2023),
-                                                                                            lastDate: DateTime(2100));
-                                                                                        this.startDate = startDate;
-                                                                                        fromTxt.text = this.startDate.toString().split(' 00:00:00.000').join();
-                                                                                        setState(() {});
+                                                                            return showDialog(
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return AlertDialog(
+                                                                                  title: Center(child: Text("اضف التاريخ")),
+                                                                                  actions: [
+                                                                                    MyTextFormField(
+                                                                                      hintText: 'تاريخ بداية الحجز',
+                                                                                      controller: fromTxt,
+                                                                                      readOnly: true,
+                                                                                      suffixIcon: IconButton(
+                                                                                          onPressed: () async {
+                                                                                            DateTime? startDate = await showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(data: ThemeData.dark(), child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                initialDate: DateTime.now(),
+                                                                                                firstDate: DateTime(2023),
+                                                                                                lastDate: DateTime(2100));
+                                                                                            this.startDate = startDate;
+                                                                                            fromTxt.text = this.startDate.toString().split(' 00:00:00.000').join();
+                                                                                            setState(() {});
+                                                                                          },
+                                                                                          icon: Icon(Icons.calendar_month)),
+                                                                                    ),
+                                                                                    MyTextFormField(
+                                                                                      hintText: 'تاريخ نهاية الحجز',
+                                                                                      controller: toTxt,
+                                                                                      readOnly: true,
+                                                                                      suffixIcon: IconButton(
+                                                                                          onPressed: () async {
+                                                                                            DateTime? startDate = await showDatePicker(
+                                                                                                builder: (context, child) {
+                                                                                                  return Theme(data: ThemeData.dark(), child: child!);
+                                                                                                },
+                                                                                                context: context,
+                                                                                                initialDate: DateTime.now(),
+                                                                                                firstDate: DateTime(2023),
+                                                                                                lastDate: DateTime(2100));
+                                                                                            this.lastDate = startDate;
+                                                                                            toTxt.text = this.lastDate.toString().split(' 00:00:00.000').join();
+                                                                                            setState(() {});
+                                                                                          },
+                                                                                          icon: Icon(Icons.calendar_month)),
+                                                                                    ),
+                                                                                    InkWell(
+                                                                                      onTap: () async {
+                                                                                        print("555");
+                                                                                        final x = await bookingProvider.addBookingwithObjectByUserIdAndCarId(context: context, b: Booking(from: fromTxt.text, to: toTxt.text), carId: snapshot.data![index].id!, userId: userId);
+                                                                                        print(x);
                                                                                       },
-                                                                                      icon: Icon(Icons.calendar_month)),
-                                                                                ),
-                                                                                MyTextFormField(
-                                                                                  hintText: 'تاريخ نهاية الحجز',
-                                                                                  controller: toTxt,
-                                                                                  readOnly: true,
-                                                                                  suffixIcon: IconButton(
-                                                                                      onPressed: () async {
-                                                                                        DateTime? startDate = await showDatePicker(
-                                                                                            builder: (context, child) {
-                                                                                              return Theme(data: ThemeData.dark(), child: child!);
-                                                                                            },
-                                                                                            context: context,
-                                                                                            initialDate: DateTime.now(),
-                                                                                            firstDate: DateTime(2023),
-                                                                                            lastDate: DateTime(2100));
-                                                                                        this.lastDate = startDate;
-                                                                                        toTxt.text = this.lastDate.toString().split(' 00:00:00.000').join();
-                                                                                        setState(() {});
-                                                                                      },
-                                                                                      icon: Icon(Icons.calendar_month)),
-                                                                                ),
-                                                                                InkWell(
-                                                                                  onTap: () async {
-                                                                                    print("555");
-                                                                                    final x = await bookingProvider.addBookingwithObjectByUserIdAndCarId(context: context, b: Booking(from: fromTxt.text, to: toTxt.text), carId: snapshot.data![index].id!, userId: userId);
-                                                                                    print(x);
-                                                                                  },
-                                                                                  child: Padding(
-                                                                                    padding: const EdgeInsets.all(8.0),
-                                                                                    child: Container(
-                                                                                      decoration: BoxDecoration(
-                                                                                        borderRadius: BorderRadius.circular(10),
-                                                                                        color: colorprimarygreen,
-                                                                                      ),
-                                                                                      width: 280,
-                                                                                      height: 60,
-                                                                                      child: Row(
-                                                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                                        children: [
-                                                                                          Text("حفظ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
-                                                                                          Padding(padding: EdgeInsets.all(8)),
-                                                                                          Icon(
-                                                                                            size: 25,
-                                                                                            Icons.add,
-                                                                                            color: colorprimarywhite,
-                                                                                          )
-                                                                                        ],
+                                                                                      child: Padding(
+                                                                                        padding: const EdgeInsets.all(8.0),
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                            borderRadius: BorderRadius.circular(10),
+                                                                                            color: colorprimarygreen,
+                                                                                          ),
+                                                                                          width: 280,
+                                                                                          height: 60,
+                                                                                          child: Row(
+                                                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                                                            children: [
+                                                                                              Text("حفظ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
+                                                                                              Padding(padding: EdgeInsets.all(8)),
+                                                                                              Icon(
+                                                                                                size: 25,
+                                                                                                Icons.add,
+                                                                                                color: colorprimarywhite,
+                                                                                              )
+                                                                                            ],
+                                                                                          ),
+                                                                                        ),
                                                                                       ),
                                                                                     ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
+                                                                                  ],
+                                                                                );
+                                                                              },
                                                                             );
-                                                                          },
-                                                                        );
-                                                                      }
-                                                                    },
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Container(
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10),
-                                                                          color:
-                                                                              colorprimarygreen,
-                                                                        ),
-                                                                        width:
-                                                                            280,
-                                                                        height:
-                                                                            60,
+                                                                          }
+                                                                        },
                                                                         child:
-                                                                            Row(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text("تسجيل الدخول",
-                                                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
-                                                                            Padding(padding: EdgeInsets.all(8)),
-                                                                            Icon(
-                                                                              size: 25,
-                                                                              Icons.login,
-                                                                              color: colorprimarywhite,
-                                                                            )
-                                                                          ],
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              color: colorprimarygreen,
+                                                                            ),
+                                                                            width:
+                                                                                280,
+                                                                            height:
+                                                                                60,
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Text("تسجيل الدخول", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
+                                                                                Padding(padding: EdgeInsets.all(8)),
+                                                                                Icon(
+                                                                                  size: 25,
+                                                                                  Icons.login,
+                                                                                  color: colorprimarywhite,
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                                    ],
+                                                                  );
+                                                                },
                                                               );
-                                                            },
-                                                          );
-                                                        } else {
-                                                          showDialog(
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return AlertDialog(
-                                                                title: Center(
-                                                                    child: Text(
-                                                                        "اضف التاريخ")),
-                                                                actions: [
-                                                                  MyTextFormField(
-                                                                    hintText:
-                                                                        'تاريخ بداية الحجز',
-                                                                    controller:
-                                                                        fromTxt,
-                                                                    readOnly:
-                                                                        true,
-                                                                    suffixIcon:
-                                                                        IconButton(
-                                                                            onPressed:
-                                                                                () async {
+                                                            } else {
+                                                              showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (context) {
+                                                                  return AlertDialog(
+                                                                    title: Center(
+                                                                        child: Text(
+                                                                            "اضف التاريخ")),
+                                                                    actions: [
+                                                                      MyTextFormField(
+                                                                        hintText:
+                                                                            'تاريخ بداية الحجز',
+                                                                        controller:
+                                                                            fromTxt,
+                                                                        readOnly:
+                                                                            true,
+                                                                        suffixIcon: IconButton(
+                                                                            onPressed: () async {
                                                                               DateTime? startDate = await showDatePicker(
                                                                                   builder: (context, child) {
                                                                                     return Theme(data: ThemeData.dark(), child: child!);
@@ -397,20 +395,17 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                                               fromTxt.text = this.startDate.toString().split(' 00:00:00.000').join();
                                                                               setState(() {});
                                                                             },
-                                                                            icon:
-                                                                                Icon(Icons.calendar_month)),
-                                                                  ),
-                                                                  MyTextFormField(
-                                                                    hintText:
-                                                                        'تاريخ نهاية الحجز',
-                                                                    controller:
-                                                                        toTxt,
-                                                                    readOnly:
-                                                                        true,
-                                                                    suffixIcon:
-                                                                        IconButton(
-                                                                            onPressed:
-                                                                                () async {
+                                                                            icon: Icon(Icons.calendar_month)),
+                                                                      ),
+                                                                      MyTextFormField(
+                                                                        hintText:
+                                                                            'تاريخ نهاية الحجز',
+                                                                        controller:
+                                                                            toTxt,
+                                                                        readOnly:
+                                                                            true,
+                                                                        suffixIcon: IconButton(
+                                                                            onPressed: () async {
                                                                               DateTime? startDate = await showDatePicker(
                                                                                   builder: (context, child) {
                                                                                     return Theme(data: ThemeData.dark(), child: child!);
@@ -423,93 +418,110 @@ class _ViewCarsCustomerState extends State<ViewCarsCustomer> {
                                                                               toTxt.text = this.lastDate.toString().split(' 00:00:00.000').join();
                                                                               setState(() {});
                                                                             },
-                                                                            icon:
-                                                                                Icon(Icons.calendar_month)),
-                                                                  ),
-                                                                  InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      print(
-                                                                          "555");
-                                                                      final x = await bookingProvider.addBookingwithObjectByUserIdAndCarId(
-                                                                          context:
-                                                                              context,
-                                                                          b: Booking(
-                                                                              from: fromTxt.text,
-                                                                              to: toTxt.text,
-                                                                              status: BookingStatus.Pending.value),
-                                                                          carId: snapshot.data![index].id!,
-                                                                          userId: userId);
-                                                                      print(x);
-                                                                      if (x ==
-                                                                          201) {
-                                                                        print(
-                                                                            201);
-                                                                      }
-                                                                    },
-                                                                    child:
-                                                                        Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.all(
-                                                                              8.0),
-                                                                      child:
-                                                                          Container(
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(10),
-                                                                          color:
-                                                                              colorprimarygreen,
-                                                                        ),
-                                                                        width:
-                                                                            280,
-                                                                        height:
-                                                                            60,
+                                                                            icon: Icon(Icons.calendar_month)),
+                                                                      ),
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () async {
+                                                                          print(
+                                                                              "555");
+                                                                          final x = await bookingProvider.addBookingwithObjectByUserIdAndCarId(
+                                                                              context: context,
+                                                                              b: Booking(from: fromTxt.text, to: toTxt.text, status: BookingStatus.Pending.value),
+                                                                              carId: snapshot.data![index].id!,
+                                                                              userId: userId);
+                                                                          print(
+                                                                              x);
+                                                                          if (x ==
+                                                                              201) {
+                                                                            print(201);
+                                                                          }
+                                                                        },
                                                                         child:
-                                                                            Row(
-                                                                          crossAxisAlignment:
-                                                                              CrossAxisAlignment.center,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text("حفظ",
-                                                                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
-                                                                            Padding(padding: EdgeInsets.all(8)),
-                                                                            Icon(
-                                                                              size: 25,
-                                                                              Icons.add,
-                                                                              color: colorprimarywhite,
-                                                                            )
-                                                                          ],
+                                                                            Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.all(8.0),
+                                                                          child:
+                                                                              Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(10),
+                                                                              color: colorprimarygreen,
+                                                                            ),
+                                                                            width:
+                                                                                280,
+                                                                            height:
+                                                                                60,
+                                                                            child:
+                                                                                Row(
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              mainAxisAlignment: MainAxisAlignment.center,
+                                                                              children: [
+                                                                                Text("حفظ", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: colorprimarywhite)),
+                                                                                Padding(padding: EdgeInsets.all(8)),
+                                                                                Icon(
+                                                                                  size: 25,
+                                                                                  Icons.add,
+                                                                                  color: colorprimarywhite,
+                                                                                )
+                                                                              ],
+                                                                            ),
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                    ),
-                                                                  ),
-                                                                ],
+                                                                    ],
+                                                                  );
+                                                                },
                                                               );
-                                                            },
-                                                          );
-                                                        }
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Icon(Icons
-                                                                .car_rental),
+                                                            }
+                                                          },
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child: Icon(Icons
+                                                                    .car_rental),
+                                                              ),
+                                                              Text(
+                                                                "احجز السيارة",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        17),
+                                                              ),
+                                                            ],
+                                                          ))
+                                                      : Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Container(
+                                                            height: 40,
+                                                            decoration: BoxDecoration(
+                                                                color:
+                                                                    colorprimarywhite,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10)),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "السيارة مؤجرة",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ),
                                                           ),
-                                                          Text(
-                                                            "احجز السيارة",
-                                                            style: TextStyle(
-                                                                fontSize: 17),
-                                                          ),
-                                                        ],
-                                                      )),
+                                                        ),
                                                 ),
                                               ),
                                             ),

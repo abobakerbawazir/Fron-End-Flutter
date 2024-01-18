@@ -62,7 +62,7 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color.fromARGB(255, 107, 104, 104),
+          // backgroundColor: Color.fromARGB(255, 107, 104, 104),
           title: Center(child: Text("تعديل الملف الشخصي")),
         ),
         body: SingleChildScrollView(
@@ -251,6 +251,13 @@ class _EdtiProfileCoustomerState extends State<EdtiProfileCoustomer> {
                                       password_confirmation:
                                           confirmPasswordTxt.text,
                                       phone: phoneTxt.text));
+                              userProvider.notifyListeners();
+                              emailTxt.clear();
+                              full_nameTxt.clear();
+                              passwordTxt.clear();
+                              confirmPasswordTxt.clear();
+                              phoneTxt.clear();
+                              userProvider.notifyListeners();
                             },
                             btnCancelOnPress: () {},
                           ).show();
