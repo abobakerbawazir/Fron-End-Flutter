@@ -115,7 +115,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
-              Image.asset('assets/images/home.png'),
+              Image.asset('assets/images/best.png'),
               // SizedBox(
               //   height: 20,
               // ),

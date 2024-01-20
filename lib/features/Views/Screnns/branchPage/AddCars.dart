@@ -83,7 +83,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
       int? price,
       int? user_id,
       int? prand_id}) async {
-            final token = box.read('token_login');
+    final token = box.read('token_login');
 
     // XFile? PickedFile = await _picker.pickImage(source: ImageSource.gallery);
     // List<int> imageBytes = await PickedFile!.readAsBytes();
@@ -95,11 +95,13 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
       'prand_id': prand_id,
     });
     Dio dio = DioSingelton.getInstance();
-    Response response = await dio.post(APIurl.storeCarsUlrl, data: formData, options: Options(
-            headers: {
-              'Authorization': 'Bearer $token',
-            },
-          ));
+    Response response = await dio.post(APIurl.storeCarsUlrl,
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        ));
     var x = response.data['code'];
     print(x);
     print(response.data);
@@ -155,7 +157,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                   style: TextStyle(color: colorprimarywhite),
                 )),
           ],
-          backgroundColor: colorprimarygreen,
+          //backgroundColor: colorprimarygreen,
           title: Center(child: Text(' صفحة أضافة السيارات ')),
         ),
         body: Container(
@@ -165,7 +167,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
             key: _addFormKey,
             child: Column(
               children: [
-                Image.asset('assets/images/home.png'),
+                Image.asset('assets/images/best1.png'),
                 SizedBox(
                   height: 20,
                 ),
@@ -731,7 +733,7 @@ class _AddCarScrrensState extends State<AddCarScrrens> {
                                                       color: colorprimarygreen),
                                                   child: Center(
                                                     child: Text(
-                                                      "${snapshot.data![index].id}",
+                                                      "${index + 1}",
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,

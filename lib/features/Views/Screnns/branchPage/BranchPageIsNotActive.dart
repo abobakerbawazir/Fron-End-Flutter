@@ -71,7 +71,7 @@ class _BranchpageIsNotActiveState extends State<BranchpageIsNotActive> {
                 SizedBox(
                   height: 40,
                 ),
-                Image.asset('assets/images/home.png'),
+                Image.asset('assets/images/best.png'),
                 SizedBox(
                   height: 20,
                 ),
